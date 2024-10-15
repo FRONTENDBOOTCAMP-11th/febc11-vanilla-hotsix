@@ -7,3 +7,5 @@ export function setupCounter(element) {
   element.addEventListener('click', () => setCounter(counter + 1));
   setCounter(0);
 }
+
+console.log(`package_test_juseok`);
