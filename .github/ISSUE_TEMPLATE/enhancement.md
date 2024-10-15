@@ -1,8 +1,8 @@
 ---
 name: 기능 요청 (Feature Request)
 about: 새로운 기능이나 개선 사항을 제안합니다.
-title: "[FEAT] <제목을 입력하세요>"
-labels: ["feat"]
+title: "[Enhancement] <제목을 입력하세요>"
+labels: ["enhancement"]
 assignees: ""
 ---
 
