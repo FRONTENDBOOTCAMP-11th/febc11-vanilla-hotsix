@@ -50,3 +50,13 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+/* font reset */
+@font-face {
+  font-family: "pretendard";
+  src: url(./src/assets/fonts/Pretendard-Regular.otf);
+}
+
+* {
+  font-family: "pretendard";
+}
