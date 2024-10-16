@@ -1,6 +1,68 @@
 /* CSS Resets */
+/* CSS Reset with Modern Enhancements */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 elements display reset */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+/* Body defaults */
 body {
-  margin: unset;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased; /* Smooth fonts on macOS */
+  -moz-osx-font-smoothing: grayscale; /* Smooth fonts on Firefox */
+  text-rendering: optimizeLegibility; /* Better font rendering */
+}
+
+/* List styles reset */
+ol,
+ul {
+  list-style: none;
+}
+
+/* Blockquote and quote reset */
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: '';
+}
+
+/* Table reset */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Anchor reset */
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Layouts */
@@ -17,6 +79,62 @@ body {
 
 .header {
   box-shadow: inset 0 0 20px yellow;
+  padding: 0 0 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-bar {
+  background-color: coral;
+  height: 50px;
+  margin-bottom: 79px;
+}
+
+.header-title {
+  font-size: 28px;
+  color: #333;
+  font-weight: 400; /* pretendard로 폰트 교체 후 재조정 필요 */
+  line-height: 120%;
+}
+
+.header-subtitle {
+  font-size: 16px;
+  color: #666;
+  font-weight: 400; /* pretendard로 폰트 교체 후 재조정 필요 */
+  line-height: 130%;
+}
+
+.header-info {
+  /* line-height: 162%; */
+  margin-top: 31px;
+  display: flex;
+  align-items: center;
+}
+
+.author-by {
+  min-width: 13px;
+  height: 13px;
+  background-color: #666;
+  margin-right: 3px;
+}
+
+.article-author {
+  font-size: 12px;
+  color: #666;
+  margin-right: 7.5px;
+}
+
+.info-dot {
+  width: 2px;
+  height: 2px;
+  background-color: #666;
+  border-radius: 50%;
+}
+
+.article-time {
+  margin-left: 4px;
+  font-size: 12px;
+  color: #959595;
+  opacity: 0.5;
 }
 
 .main {
