@@ -1,0 +1,28 @@
+/* CSS Resets */
+body {
+  margin: unset;
+}
+
+/* Layouts */
+.l_wrapper {
+  padding: 0 20px;
+}
+
+/* Components */
+.wrapper {
+  box-shadow: inset 0 0 20px red;
+  max-width: 360px;
+  margin: auto;
+}
+
+.header {
+  box-shadow: inset 0 0 20px yellow;
+}
+
+.main {
+  box-shadow: inset 0 0 20px purple;
+}
+
+.footer {
+  box-shadow: inset 0 0 20px blue;
+}
