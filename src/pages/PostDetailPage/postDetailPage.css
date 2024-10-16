@@ -308,13 +308,26 @@
   flex-grow: 1;
 }
 
-.author-info__footer .subscirber {
+.author-info__footer .subscriber {
   color: #666;
   letter-spacing: -1%;
 }
 
-.author-info__footer button {
-  flex-shrink: 0;
+.author-info__subscribe-button {
+  padding: 9px 15px;
+  border-radius: 40px;
+  border: 1px solid #00c6be;
+  cursor: pointer;
+  color: #00c6be;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+.subscribed {
+  padding: 0 10px;
+  background-color: #00c6be;
+  line-height: 258%;
+  color: white;
 }
 
 .footer {
