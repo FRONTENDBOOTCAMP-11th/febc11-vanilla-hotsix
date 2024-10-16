@@ -77,7 +77,6 @@
   padding: 70px 0 40px;
   display: flex;
   flex-direction: column;
-  box-shadow: inset 0 0 20px red;
 }
 
 .main__article p {
@@ -102,12 +101,97 @@
 
 .main__tags {
   margin-bottom: 30px;
-  box-shadow: inset 0 0 20px blue;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.main__tags .tag {
+  padding: 0 10px;
+  border: 1px solid #eee;
+  border-radius: 30px;
+  font-size: 14px;
+  line-height: 214%;
+  color: #666;
 }
 
 .main__comments {
   margin-bottom: 64px;
-  box-shadow: inset 0 0 20px yellowgreen;
+}
+
+.comments-count {
+  margin-bottom: 26px;
+  color: #1b1b1b;
+  font-size: 15px;
+  line-height: 150%;
+}
+
+.count-num {
+  color: #00c6be;
+}
+
+.comment {
+  display: flex;
+  gap: 8px;
+}
+
+.comment__profile {
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.profile-img {
+  width: 32px;
+  height: 32px;
+  background-color: rebeccapurple;
+}
+
+.comment__contents {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.comment__header {
+  margin-bottom: 12px;
+}
+
+.comment__header .name {
+  display: flex;
+  align-items: center;
+  color: #111111;
+  font-size: 14px;
+  line-height: 150%;
+}
+
+.comment__header .time {
+  color: #959595;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 150%;
+}
+
+.kebab-menu {
+  background-color: gray;
+  width: 2px;
+  height: 16px;
+  margin-left: auto;
+  margin-right: 13px;
+  padding: 0;
+}
+
+.comment__text {
+  color: #111;
+  font-size: 16px;
+  line-height: 150%;
+  margin-bottom: 14px;
+}
+
+.comment__footer button {
+  color: #959595;
+  font-size: 13px;
+  line-height: 150%;
+  padding: 0;
+  background-color: unset;
 }
 
 .main__author-info {
