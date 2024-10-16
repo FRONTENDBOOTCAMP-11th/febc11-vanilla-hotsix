@@ -133,6 +133,8 @@
 .comment {
   display: flex;
   gap: 8px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 31px;
 }
 
 .comment__profile {
