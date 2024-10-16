@@ -21,48 +21,48 @@
   border-bottom: 1px solid #eee;
 }
 
-.header-title {
+.header__title {
   font-size: 28px;
   color: #333;
   font-weight: 400; /* pretendard로 폰트 교체 후 재조정 필요 */
   line-height: 120%;
 }
 
-.header-subtitle {
+.header__subtitle {
   font-size: 16px;
   color: #666;
   font-weight: 400; /* pretendard로 폰트 교체 후 재조정 필요 */
   line-height: 130%;
 }
 
-.header-info {
+.header__info {
   /* line-height: 162%; */
   margin-top: 31px;
   display: flex;
   align-items: center;
 }
 
-.author-by {
+.info__by {
   min-width: 13px;
   height: 13px;
   background-color: #666;
   margin-right: 3px;
 }
 
-.article-author {
+.info__uthor {
   font-size: 12px;
   color: #666;
   margin-right: 7.5px;
 }
 
-.info-dot {
+.info__dot {
   width: 2px;
   height: 2px;
   background-color: #666;
   border-radius: 50%;
 }
 
-.article-time {
+.info__time {
   margin-left: 4px;
   font-size: 12px;
   color: #959595;
