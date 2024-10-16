@@ -1,70 +1,3 @@
-/* CSS Resets */
-/* CSS Reset with Modern Enhancements */
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  box-sizing: border-box;
-  font: inherit;
-  vertical-align: baseline;
-}
-
-/* HTML5 elements display reset */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-  display: block;
-}
-
-/* Body defaults */
-body {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased; /* Smooth fonts on macOS */
-  -moz-osx-font-smoothing: grayscale; /* Smooth fonts on Firefox */
-  text-rendering: optimizeLegibility; /* Better font rendering */
-}
-
-/* List styles reset */
-ol,
-ul {
-  list-style: none;
-}
-
-/* Blockquote and quote reset */
-blockquote,
-q {
-  quotes: none;
-}
-
-blockquote::before,
-blockquote::after,
-q::before,
-q::after {
-  content: '';
-}
-
-/* Table reset */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* Anchor reset */
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
 /* Layouts */
 .l_wrapper {
   padding: 0 20px;
@@ -77,16 +10,15 @@ a {
   margin: auto;
 }
 
-.header {
-  box-shadow: inset 0 0 20px yellow;
-  padding: 0 0 16px;
-  border-bottom: 1px solid #eee;
-}
-
 .nav-bar {
   background-color: coral;
   height: 50px;
-  margin-bottom: 79px;
+}
+
+.header {
+  box-shadow: inset 0 0 20px yellow;
+  padding: 80px 0 16px;
+  border-bottom: 1px solid #eee;
 }
 
 .header-title {
