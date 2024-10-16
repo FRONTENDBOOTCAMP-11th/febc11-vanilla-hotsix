@@ -54,7 +54,7 @@ a {
 /* font reset */
 @font-face {
   font-family: "pretendard";
-  src: url(./src/assets/fonts/Pretendard-Regular.otf);
+  src: url(./src/assets/fonts/Pretendard-Light.otf);
 }
 
 * {
