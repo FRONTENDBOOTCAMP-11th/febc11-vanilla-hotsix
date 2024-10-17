@@ -10,7 +10,6 @@
 }
 
 .header {
-  box-shadow: inset 0 0 20px red;
   border-bottom: 1px solid #eee;
 }
 
@@ -36,6 +35,73 @@
   background-color: transparent;
 }
 
-.main {
-  box-shadow: inset 0 0 20px yellow;
+.input-container {
+  height: 70px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+#titleInput {
+  height: 40px;
+  line-height: 40px;
+}
+
+/* placeholder의 글자가 가운데 정렬이 안 됨. */
+#titleInput::placeholder {
+  color: #959595;
+  font-size: 24px;
+  line-height: 108%;
+}
+
+#subtitleInput::placeholder {
+  color: #959595;
+  font-size: 20px;
+  line-height: 90%;
+}
+
+.contents-input {
+  padding: 25px 0 0;
+}
+
+#contentsTextArea {
+  width: 100%;
+  min-height: 600px;
+  resize: none;
+  line-height: 90%;
+}
+
+#contentsTextArea::placeholder {
+  color: #959595;
+  font-size: 20px;
+  line-height: 90%;
+}
+
+.controls {
+  background-color: #f8f8f8;
+  padding: 22px 0;
+  margin-bottom: 86px;
+}
+
+.controls__icons {
+  display: flex;
+}
+
+.controls img {
+  width: 40px;
+  height: 40px;
+}
+
+.controls img:nth-child(2) {
+  margin-left: 24px;
+}
+
+.controls img:last-child {
+  margin-left: auto;
 }

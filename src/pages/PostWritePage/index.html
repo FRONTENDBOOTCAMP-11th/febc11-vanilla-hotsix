@@ -20,23 +20,41 @@
         </div>
       </header>
       <main class="main">
-        <section class="title-input">
+        <section class="title-input input-container">
           <div class="l_wrapper">
-            <input type="text" id="titleInput" placeholder="제목" />
+            <input
+              type="text"
+              id="titleInput"
+              class="input"
+              placeholder="제목"
+            />
           </div>
         </section>
-        <section class="subtitle-input">
+        <section class="subtitle-input input-container">
           <div class="l_wrapper">
-            <input type="text" id="subtitleInput" placeholder="소제목" />
+            <input
+              type="text"
+              id="subtitleInput"
+              class="input"
+              placeholder="소제목"
+            />
           </div>
         </section>
         <section class="contents-input">
           <div class="l_wrapper">
-            <input
-              type="text"
-              id="contentsInput"
+            <textarea
+              id="contentsTextArea"
               placeholder="내용을 입력하세요."
-            />
+            ></textarea>
+          </div>
+        </section>
+        <section class="controls">
+          <div class="l_wrapper">
+            <div class="controls__icons">
+              <img src="../../assets/images/icon-add_img.svg" alt="" />
+              <img src="../../assets/images/icon-text-alignment.svg" alt="" />
+              <img src="../../assets/images/icon-hide-keyboard.svg" alt="" />
+            </div>
           </div>
         </section>
       </main>
