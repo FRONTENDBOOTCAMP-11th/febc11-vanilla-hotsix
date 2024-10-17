@@ -1,3 +1,8 @@
+/* CSS Resets */
+img {
+  max-width: 100%;
+}
+
 /* Layouts */
 .l_wrapper {
   padding: 0 20px;
@@ -118,7 +123,7 @@
   height: 40px;
 }
 
-.controls img:nth-child(2) {
+.controls img:nth-child(3) {
   margin-left: 24px;
 }
 
