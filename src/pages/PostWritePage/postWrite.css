@@ -35,6 +35,10 @@
   background-color: transparent;
 }
 
+.input-filled {
+  color: #00c6be;
+}
+
 .input-container {
   height: 70px;
   border-bottom: 1px solid #eee;
