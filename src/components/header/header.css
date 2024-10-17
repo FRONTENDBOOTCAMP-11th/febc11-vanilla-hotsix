@@ -9,9 +9,11 @@
   z-index: 2;
   background-color: #fff;
   max-width: 480px;
+  border-bottom: 1px solid #E0E0E0;
 }
 .change_container {
   background-color: #f8f8f8;
+  border-bottom: none;
 }
 .brunchstory {
   color: transparent;
