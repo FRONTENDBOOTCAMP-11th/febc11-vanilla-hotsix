@@ -1,4 +1,4 @@
-.navbar-container{
+.navbar-container {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -6,11 +6,11 @@
   position: fixed;
   z-index: 2;
   bottom: 0;
-  background-color: #FFF;
+  background-color: #fff;
   width: 100%;
   max-width: 480px;
 }
-.navbar-controller{
+.navbar-controller {
   display: flex;
   flex-direction: column;
   align-items: center;

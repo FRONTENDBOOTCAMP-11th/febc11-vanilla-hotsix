@@ -1,4 +1,4 @@
-"use strict"
+'use strict';
 
 // 헤더 컴포넌트
 const header = document.querySelector('.header-container');

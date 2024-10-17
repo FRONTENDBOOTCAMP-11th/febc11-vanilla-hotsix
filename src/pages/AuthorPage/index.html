@@ -1,47 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>작가 홈</title>
-  <link rel="stylesheet" href="/style.css"/>
-  <link rel="stylesheet" href="./author.css"/>
-  <link rel="stylesheet" href="../../components/header/header.css"/>
-  <link rel="stylesheet" href="../../components/navbar/navbar.css"/>
-  <link rel="stylesheet" href="../../components/subscribe/subscribe.css"/>
-  <script src="../../components/header/header.js" type="module"></script>
-  <script src="../../components/navbar/navbar.js" type="module"></script>
-  <script src="../../components//subscribe/subscribe.js" type="module"></script>
-</head>
-<body>
-  <div class="l_wrapper">
-    <header class="header-container"></header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>작가 홈</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="./author.css" />
+    <link rel="stylesheet" href="../../components/header/header.css" />
+    <link rel="stylesheet" href="../../components/navbar/navbar.css" />
+    <link rel="stylesheet" href="../../components/subscribe/subscribe.css" />
+    <script src="../../components/header/header.js" type="module"></script>
+    <script src="../../components/navbar/navbar.js" type="module"></script>
+    <script
+      src="../../components//subscribe/subscribe.js"
+      type="module"
+    ></script>
+  </head>
+  <body>
+    <div class="l_wrapper">
+      <header class="header-container"></header>
 
-    <div class="container">
-      <section class="author-info"> 
-        <div class="author-info__profile">
-          <h2 class="author-info__name">AB</h2>
-          <p class="author-info__role">기획자</p>
-          <div class="author-info__avatar"></div>
-        </div>
-
-        <div class="author-info__stats">
-          <div class="author-info__stat">
-            <span class="author-info__label">구독자</span>
-            <span class="author-info__value">30</span>
+      <div class="container">
+        <section class="author-info">
+          <div class="author-info__profile">
+            <h2 class="author-info__name">AB</h2>
+            <p class="author-info__role">기획자</p>
+            <div class="author-info__avatar"></div>
           </div>
-          <div class="author-info__stat">
-            <span class="author-info__label">관심작가</span>
-            <span class="author-info__value">16</span>
-          </div>
-          <button class="author-info__subscribe-button"></button>
-        </div>
-      </section>
-      <ul class="post-list--container"></ul>
 
+          <div class="author-info__stats">
+            <div class="author-info__stat">
+              <span class="author-info__label">구독자</span>
+              <span class="author-info__value">30</span>
+            </div>
+            <div class="author-info__stat">
+              <span class="author-info__label">관심작가</span>
+              <span class="author-info__value">16</span>
+            </div>
+            <button class="author-info__subscribe-button"></button>
+          </div>
+        </section>
+        <ul class="post-list--container"></ul>
+      </div>
+      <nav class="navbar-container"></nav>
     </div>
-    <nav class="navbar-container"></nav>
-  </div>
-  <script src="./author.js"></script>
-</body>
+    <script src="./author.js"></script>
+  </body>
 </html>
