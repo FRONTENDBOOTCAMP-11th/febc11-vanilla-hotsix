@@ -61,7 +61,7 @@
             <div class="comment">
               <section class="comment__profile">
                 <!-- 나중에 이미지로 전환 -->
-                <img class="profile-img"></img>
+                <div class="profile-img"></div>
               </section>
               <section class="comment__contents">
                 <div class="comment__header">
@@ -86,7 +86,7 @@
             <div class="comment">
               <section class="comment__profile">
                 <!-- 나중에 이미지로 전환 -->
-                <img class="profile-img"></img>
+                <div class="profile-img"></div>
               </section>
               <section class="comment__contents">
                 <div class="comment__header">
@@ -111,10 +111,14 @@
             <section class="comments__comment-input">
               <div class="input-area">
                 <div class="input-area__profile">
-                  <img class="img"></img>
+                  <div class="img"></div>
                   주정
                 </div>
-                <textarea name="" id="commentInput" placeholder="댓글을 입력하세요."></textarea>
+                <textarea
+                  name=""
+                  id="commentInput"
+                  placeholder="댓글을 입력하세요."
+                ></textarea>
               </div>
               <div class="submit-area">
                 <button>등록</button>
@@ -130,20 +134,33 @@
               <!-- 나중에 이미지로 변경 -->
               <div class="author__photo"></div>
             </header>
-            <p class="author-info__contents">12년 차 국내 항공사 승무원의 겨울 산티아고 순례길 이야기 연재 중.
+            <p class="author-info__contents">
+              12년 차 국내 항공사 승무원의 겨울 산티아고 순례길 이야기 연재 중.
               커피 한 잔을 벗 삼아 편하게 읽을 수 있는 글쓰기에 꽤나 진심인 편입
-              니다. 후후.</p>
+              니다. 후후.
+            </p>
             <footer class="author-info__footer">
-             <div>
-              구독자 <span class="subscriber" id="subscriber">108</span>
-             </div>
-             <button class="author-info__subscribe-button">+ 구독</button>
+              <div>
+                구독자 <span class="subscriber" id="subscriber">108</span>
+              </div>
+              <button class="author-info__subscribe-button">+ 구독</button>
             </footer>
           </section>
         </div>
       </main>
       <footer class="footer">
-        <div class="l_wrapper">footer</div>
+        <div class="l_wrapper">
+          <div class="footer__icons">
+            <!-- 나중에 아이콘으로 대체 -->
+            <div class="icon-like"></div>
+            <span class="like-count">82</span>
+            <!-- 나중에 아이콘으로 대체 -->
+            <div class="icon-share"></div>
+            <!-- 나중에 아이콘으로 대체 -->
+            <div class="icon-comment"></div>
+            <span class="comment-count">7</span>
+          </div>
+        </div>
       </footer>
     </div>
     <script src="postDetailPage.js"></script>
