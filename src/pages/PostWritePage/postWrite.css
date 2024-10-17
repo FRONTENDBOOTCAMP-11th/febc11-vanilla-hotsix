@@ -92,7 +92,7 @@ img {
   padding: 25px 0 0;
 }
 
-#contentsTextArea {
+#editableDiv {
   width: 100%;
   min-height: 600px;
   resize: none;
@@ -100,12 +100,13 @@ img {
   color: var(--black_90);
   font-size: 20px;
   line-height: 90%;
+  padding: 5px;
 }
 
-#contentsTextArea::placeholder {
+#editableDiv:empty::before {
+  content: attr(data-placeholder);
+  position: absolute;
   color: #959595;
-  font-size: 20px;
-  line-height: 90%;
 }
 
 .controls {

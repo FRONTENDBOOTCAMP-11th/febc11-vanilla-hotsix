@@ -1,6 +1,6 @@
 const titleInputNode = document.querySelector('#titleInput');
 const subtitleInputNode = document.querySelector('#subtitleInput');
-const contentsTextAreaNode = document.querySelector('#contentsTextArea');
+const editableDiv = document.querySelector('#editableDiv');
 let checkBtn = document.querySelector('#checkBtn');
 
 // 제목, 부제목, 내용이 채워졌을 때 체크박스 활성화
@@ -8,7 +8,7 @@ function checkInput() {
   if (
     titleInputNode.value.trim() &&
     subtitleInputNode.value.trim() &&
-    contentsTextAreaNode.value.trim()
+    editableDiv.textContent.trim()
   ) {
     checkBtn.setAttribute('src', '../../assets/images/icon-check_green.svg');
   } else {
@@ -19,7 +19,7 @@ function checkInput() {
 // 각각의 노드에 이벤트리스너 등록
 titleInputNode.addEventListener('input', checkInput);
 subtitleInputNode.addEventListener('input', checkInput);
-contentsTextAreaNode.addEventListener('input', checkInput);
+editableDiv.addEventListener('input', checkInput);
 
 const uploadImgNode = document.querySelector('#uploadImg');
 const fileInputNode = document.querySelector('#fileInput');
@@ -39,7 +39,7 @@ fileInputNode.addEventListener('change', e => {
         let img = document.createElement('img');
         img.src = e.target.result;
         img.marginBottom = '20px';
-        contentsTextAreaNode.appendChild(img);
+        editableDiv.appendChild(img);
       };
       reader.readAsDataURL(file);
       console.log(file);
