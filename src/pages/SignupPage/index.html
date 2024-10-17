@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="signup.css" />
+  </head>
+  <body>
+    <div class="signup-container">
+      <h2 class="signup-title">회원가입</h2>
+
+      <form>
+        <div class="input-group">
+          <input type="text" id="nickname" placeholder="별명" required />
+          <button type="button" class="check-button">중복확인</button>
+        </div>
+
+        <div class="input-group">
+          <input type="email" id="email" placeholder="이메일" required />
+          <button type="button" class="check-button">중복확인</button>
+        </div>
+
+        <div class="input-group">
+          <input
+            type="password"
+            id="password"
+            placeholder="비밀번호"
+            required
+          />
+          <button type="button" class="eye-icon"></button>
+        </div>
+
+        <div class="input-group">
+          <input
+            type="password"
+            id="confirm-password"
+            placeholder="비밀번호 확인"
+            required
+          />
+          <button type="button" class="eye-icon"></button>
+        </div>
+
+        <button type="submit" class="submit-button">회원가입</button>
+      </form>
+    </div>
+  </body>
+</html>
