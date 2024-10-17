@@ -1,0 +1,98 @@
+/* 리셋 */
+img {
+  vertical-align: top;
+}
+
+/* 스타일 */
+.size {
+  max-width: 480px;
+}
+
+/* 레이아웃 */
+.l-wrapper {
+  margin: 0 auto;
+}
+
+/* 헤더 */
+.header {
+  box-shadow: inset 0 0 0 2px orange;
+}
+
+/* 메인 섹션 */
+.main {
+  background-color: #8d4e8e;
+  color: #fff;
+}
+
+.main__content {
+  text-align: center;
+}
+
+/* 책 제목 */
+.main__content__title {
+  padding-top: 55px;
+  font-size: 22px;
+}
+
+/* 작가 이름 */
+.main__content__author {
+  font-size: 12px;
+  padding: 12px 0 66px 0;
+}
+
+.main__content__author span {
+  padding-right: 4px;
+  font-family: Georgia;
+  font-style: italic;
+}
+
+/* 책정보 */
+.book-info {
+  width: 135px;
+  position: relative;
+}
+
+/* 북커버 */
+.book-info__cover {
+  width: 135px;
+  height: 190px;
+}
+
+/* 북커버 제목*/
+.book-info__title {
+  width: 77px;
+  height: 104px;
+  background-color: #fff;
+  font-size: 8px;
+  color: #333;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -54%);
+
+  text-align: start;
+  padding: 7px;
+}
+
+/* 응원 뱃지 */
+.book-info__cheering-badge {
+  position: absolute;
+  top: -5%;
+  right: -11.5%;
+}
+
+/* 응원 수 */
+.main__content__cheering-num {
+  padding: 30px 0;
+  font-size: 13px;
+}
+
+/* 그라디언트 */
+.gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.26) 100%
+  );
+}
