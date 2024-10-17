@@ -1,41 +1,79 @@
-/* CSS Reset with Modern Enhancements */
+/* CSS RESET */
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  border: 0;
+  margin: unset;
+  margin-block: unset;
+  margin-inline: unset;
+  padding: unset;
+  border: unset;
   box-sizing: border-box;
   font: inherit;
-  vertical-align: baseline;
+}
+
+/* TYPOGRAPHY */
+@font-face {
+  font-family: 'pretendard';
+  font-style: normal;
+  font-weight: 200;
+  src: url('/src/assets/fonts/Pretendard-Light.otf') format('truetype');
+}
+
+* {
+  font-family: 'pretendard';
+  font-weight: unset;
+  line-height: 1;
+}
+
+/* CUSTOM PROPERTIES */
+:root {
+  --black_100: #000;
+  --black_90: #111;
+  --grey_80: #8e8e8e;
+  --grey_60: #aaa;
+  --grey_40: #d7d7d7;
+  --white: #fff;
+  --mint: #00c8be;
 }
 
 /* HTML5 elements display reset */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
   display: block;
-} 
+}
 
 /* Body defaults */
 body {
-  line-height: 1.5;
   -webkit-font-smoothing: antialiased; /* Smooth fonts on macOS */
   -moz-osx-font-smoothing: grayscale; /* Smooth fonts on Firefox */
   text-rendering: optimizeLegibility; /* Better font rendering */
 }
 
 /* List styles reset */
-ol, ul {
+ol,
+ul {
   list-style: none;
 }
 
 /* Blockquote and quote reset */
-blockquote, q {
+blockquote,
+q {
   quotes: none;
 }
 
-blockquote::before, blockquote::after,
-q::before, q::after {
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
   content: '';
 }
 
@@ -49,14 +87,4 @@ table {
 a {
   text-decoration: none;
   color: inherit;
-}
-
-/* font reset */
-@font-face {
-  font-family: "pretendard";
-  src: url(./src/assets/fonts/Pretendard-Light.otf);
-}
-
-* {
-  font-family: "pretendard";
 }
