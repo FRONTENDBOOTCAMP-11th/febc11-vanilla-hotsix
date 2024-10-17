@@ -1,0 +1,23 @@
+.author-info__subscribe-button{
+  display: flex;
+  align-items: center;
+  padding: 10px 11px 10px 10px;
+  font-size: 14px;
+  font-weight: 400;
+  height: 36px;
+  gap: 2px;
+  margin-left: auto;
+}
+.sub_now{
+  color: #FFF;
+  background-color: #00C6BE;
+  border-radius: 20px;
+}
+.sub_not{
+  border: 1px solid #00C6BE;
+  background: #FFF;
+  border-radius: 40px;
+  color: #00C6BE;
+  font-weight: 400;
+  font-size: 14px;
+}

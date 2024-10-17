@@ -1,11 +1,14 @@
 .navbar-container{
   display: flex;
   align-items: center;
-  gap: 34px;
+  justify-content: space-evenly;
   padding: 18px 13px 8px;
   position: fixed;
   z-index: 2;
   bottom: 0;
+  background-color: #FFF;
+  width: 100%;
+  max-width: 480px;
 }
 .navbar-controller{
   display: flex;

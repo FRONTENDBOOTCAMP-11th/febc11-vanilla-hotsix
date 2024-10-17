@@ -8,6 +8,10 @@
   top: 0;
   z-index: 2;
   background-color: #FFF;
+  max-width: 480px;
+}
+.change_container{
+  background-color: #F8F8F8;
 }
 .brunchstory{
   color: transparent;

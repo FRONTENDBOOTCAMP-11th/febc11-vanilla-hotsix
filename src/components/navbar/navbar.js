@@ -1,3 +1,5 @@
+"use strict"
+
 const navbar = document.querySelector('.navbar-container');
 navbar.innerHTML = `
   <a class="navbar-controller">
