@@ -1,4 +1,4 @@
-.header-container{
+.header-container {
   display: flex;
   align-items: center;
   height: 50px;
@@ -7,9 +7,13 @@
   position: fixed;
   top: 0;
   z-index: 2;
-  background-color: #FFF;
+  background-color: #fff;
+  max-width: 480px;
 }
-.brunchstory{
+.change_container {
+  background-color: #f8f8f8;
+}
+.brunchstory {
   color: transparent;
   background-image: url('../../assets/images/LOGO.png');
   background-size: cover;
@@ -17,25 +21,25 @@
   width: 120px;
   height: 22px;
 }
-.header-controllers{
+.header-controllers {
   display: flex;
   align-items: center;
   gap: 10px;
   height: 100%;
   margin-left: auto;
 }
-.header-controller{ 
+.header-controller {
   width: 30px;
   height: 30px;
   background-color: transparent;
 }
-.notification{
+.notification {
   background-image: url('../../assets/images/notification.svg');
 }
-.search{
+.search {
   background-image: url('../../assets/images/search.svg');
 }
-.profile{
+.profile {
   border-radius: 50%;
-  background-color: #CCC;
+  background-color: #ccc;
 }
