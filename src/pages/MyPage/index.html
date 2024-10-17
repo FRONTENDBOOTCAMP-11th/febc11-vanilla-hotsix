@@ -3,9 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="./myPage.css" />
+    <link rel="stylesheet" href="../../components/header/header.css" />
+    <link rel="stylesheet" href="../../components/navbar/navbar.css" />
+    <link rel="stylesheet" href="../../components/subscribe/subscribe.css" />
+    <script src="../../components/header/header.js" type="module"></script>
+    <script src="../../components/navbar/navbar.js" type="module"></script>
+    <script
+      src="../../components//subscribe/subscribe.js"
+      type="module"
+    ></script>
+  <title>내 서랍</title>
 </head>
 <body>
-  
+  <div class="l_wrapper">
+    <header class="header-container"></header>
+
+    <div class="container">
+      <div class="mybox-container">
+        <h2 class="mybox-category">관심 작가</h2>
+        <div class="mybox-contents-slider author"></div>
+      </div>
+      <div class="mybox-container">
+        <h2 class="mybox-category">최근 본</h2>
+        <div class="mybox-contents-slider post"></div>
+      </div>
+      <div class="mybox-container">
+        <h2 class="mybox-category">관심 글</h2>
+        <div class="mybox-contents-slider post2"></div>
+      </div>
+    </div>
+
+    <nav class="navbar-container"></nav>
+  </div>
+
+  <script src="./myPage.js"></script>
 </body>
 </html>
