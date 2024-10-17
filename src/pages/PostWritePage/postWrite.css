@@ -49,8 +49,14 @@
 }
 
 #titleInput {
+  width: 100%;
   height: 40px;
   line-height: 40px;
+  color: var(--black_90);
+  font-size: 24px;
+  line-height: 108%;
+  box-sizing: border-box;
+  font-weight: 400;
 }
 
 /* placeholder의 글자가 가운데 정렬이 안 됨. */
@@ -58,6 +64,13 @@
   color: #959595;
   font-size: 24px;
   line-height: 108%;
+  font-weight: 400;
+}
+
+#subtitleInput {
+  color: var(--black_90);
+  font-size: 20px;
+  line-height: 90%;
 }
 
 #subtitleInput::placeholder {
@@ -74,6 +87,9 @@
   width: 100%;
   min-height: 600px;
   resize: none;
+  line-height: 90%;
+  color: var(--black_90);
+  font-size: 20px;
   line-height: 90%;
 }
 
