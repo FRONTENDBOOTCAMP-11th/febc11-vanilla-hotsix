@@ -1,0 +1,41 @@
+.header-container{
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  background-color: #FFF;
+}
+.brunchstory{
+  color: transparent;
+  background-image: url('../../assets/images/LOGO.png');
+  background-size: cover;
+  background-position: center;
+  width: 120px;
+  height: 22px;
+}
+.header-controllers{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+  margin-left: auto;
+}
+.header-controller{ 
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+}
+.notification{
+  background-image: url('../../assets/images/notification.svg');
+}
+.search{
+  background-image: url('../../assets/images/search.svg');
+}
+.profile{
+  border-radius: 50%;
+  background-color: #CCC;
+}

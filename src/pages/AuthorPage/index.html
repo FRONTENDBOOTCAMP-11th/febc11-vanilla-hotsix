@@ -6,9 +6,15 @@
   <title>작가 홈</title>
   <link rel="stylesheet" href="/style.css"/>
   <link rel="stylesheet" href="./author.css"/>
+  <link rel="stylesheet" href="../../components/header/header.css"/>
+  <link rel="stylesheet" href="../../components/navbar/navbar.css"/>
+  <script src="../../components/header/header.js" type="module"></script>
+  <script src="../../components/navbar/navbar.js" type="module"></script>
 </head>
 <body>
   <div class="l_wrapper">
+    <header class="header-container"></header>
+
     <div class="container">
       <section class="author-info"> 
         <div class="author-info__profile">
@@ -29,9 +35,11 @@
           <button class="author-info__subscribe-button">구독중</button>
         </div>
       </section>
-      <ul>
+      <ul style="height: 3000px;">
         
       </ul>
+
+      <nav class="navbar-container"></nav>
     </div>
   </div>
   <script src="./author.js"></script>
