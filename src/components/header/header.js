@@ -1,15 +1,32 @@
 'use strict';
 
-// 헤더 컴포넌트
-const header = document.querySelector('.header-container');
-header.innerHTML = `
-  <h1 class="brunchstory">Brunch Story</h1>
-  <div class="header-controllers">
-    <button class="header-controller notification"></button>
-    <button class="header-controller search"></button>
-    <button class="header-controller profile"></button>
-  </div>
-`;
+// 현재 url 가져와서, 헤더 스타일 변경
+const currentURL = window.location.href;
+
+// 메인페이지면, 시작하기 버튼 생성
+if (currentURL.includes('MainPage')) {
+  // 헤더 컴포넌트
+  const header = document.querySelector('.header-container');
+  header.innerHTML = `
+    <h1 class="brunchstory">Brunch Story</h1>
+    <div class="header-controllers">
+      <button class="header-controller search"></button>
+      <button class="header-controller start">시작하기</button>
+    </div>
+  `;
+} else {
+  // 헤더 컴포넌트
+  const header = document.querySelector('.header-container');
+  header.innerHTML = `
+    <h1 class="brunchstory">Brunch Story</h1>
+    <div class="header-controllers">
+      <button class="header-controller notification"></button>
+      <button class="header-controller search"></button>
+      <button class="header-controller profile"></button>
+    </div>
+  `;
+}
+
 
 const brunchstory = document.querySelector('.brunchstory');
 const notification = document.querySelector('.notification');
@@ -37,8 +54,6 @@ profile.addEventListener('click', () => {
   window.location.href = '/src/pages/MyPage/index.html';
 });
 
-// 현재 url 가져와서, 작가 홈에서만 헤더 배경색 변경
-const currentURL = window.location.href;
 const container = document.querySelector('.header-container');
 // 작가 홈 url이면 클래스 추가(배경색 변경)
 if (currentURL.includes('AuthorPage')) {
