@@ -1,0 +1,8 @@
+/ /src/pages/MainPage/index.html 200
+/search /src/pages/SearchPage/index.html 200
+/write /src/pages/PostWritePage/index.html 200
+/my /src/pages/MyPage/index.html 200
+/login /src/pages/LoginPage/index.html 200
+/author /src/pages/AuthorPage/index.html 200
+
+/* /src/pages/MainPage/index.html 404
