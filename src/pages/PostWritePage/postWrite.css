@@ -1,0 +1,41 @@
+/* Layouts */
+.l_wrapper {
+  padding: 0 20px;
+}
+
+/* Components */
+.wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.header {
+  box-shadow: inset 0 0 20px red;
+  border-bottom: 1px solid #eee;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+
+.header-container span {
+  color: var(--black_90);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 115%;
+}
+
+.header-container button {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  color: #444;
+  background-color: transparent;
+}
+
+.main {
+  box-shadow: inset 0 0 20px yellow;
+}
