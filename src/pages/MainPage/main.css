@@ -8,20 +8,35 @@ img {
   max-width: 480px;
 }
 
+/* 색상 팔레트 */
+:root {
+  --black_100: #000;
+  --black_90: #111;
+  --black_80: #231f20;
+  --black_70: #333;
+  --grey_80: #8e8e8e;
+  --grey_70: #959595;
+  --grey_60: #aaa;
+  --grey-50: #bbb;
+  --grey_35: #d7d7d7;
+  --grey_30: #ddd;
+  --grey_10: #eee;
+  --grey_5: #f8f8f8;
+  --white: #fff;
+  --mint: #00c8be;
+  --purple: #8d4e8e;
+}
+
 /* 레이아웃 */
 .l-wrapper {
   margin: 0 auto;
 }
 
-/* 헤더 */
-.header {
-  box-shadow: inset 0 0 0 2px orange;
-}
-
 /* 메인 섹션 */
 .main {
   background-color: #8d4e8e;
-  color: #fff;
+  color: var(--white);
+  padding-top: 55px;
 }
 
 .main__content {
@@ -32,23 +47,29 @@ img {
 .main__content__title {
   padding-top: 55px;
   font-size: 22px;
+  font-weight: 300;
+  line-height: 140.909%;
 }
 
 /* 작가 이름 */
 .main__content__author {
   font-size: 12px;
-  padding: 12px 0 66px 0;
+  padding: 11px 0 66px 0;
+  line-height: 133.333%;
 }
 
+/* 작가 앞에 by */
 .main__content__author span {
-  padding-right: 4px;
+  margin-right: 4px;
   font-family: Georgia;
   font-style: italic;
+  font-weight: 400;
+  line-height: 150%;
 }
 
 /* 책정보 */
 .book-info {
-  width: 135px;
+  width: fit-content;
   position: relative;
 }
 
@@ -58,21 +79,33 @@ img {
   height: 190px;
 }
 
-/* 북커버 제목*/
+/* 북커버 제목 영역*/
 .book-info__title {
   width: 77px;
   height: 104px;
-  background-color: #fff;
-  font-size: 8px;
-  color: #333;
-
+  background-color: var(--white);
+  color: var(--black_70);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -54%);
-
   text-align: start;
-  padding: 7px;
+  padding: 7.75px 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 북커버 제목 텍스트 */
+.book-info__title__txt {
+  font-size: 8px;
+  line-height: 137.5%;
+  color: var(--black_70);
+}
+
+/* 북커버 작가 텍스트 */
+.book-info__author {
+  font-size: 7px;
 }
 
 /* 응원 뱃지 */
@@ -86,6 +119,7 @@ img {
 .main__content__cheering-num {
   padding: 30px 0;
   font-size: 13px;
+  line-height: 150%;
 }
 
 /* 그라디언트 */
@@ -95,4 +129,208 @@ img {
     rgba(0, 0, 0, 0) 0%,
     rgba(0, 0, 0, 0.26) 100%
   );
+}
+
+/* 요즘 뜨는 브런치 (아티클) */
+.article-brunch {
+  padding: 50px 25px 30px 25px;
+}
+/* 제목 */
+.article-brunch__title {
+  padding-bottom: 30px;
+  color: var(--black_100);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* 제목 - 영어 부분 */
+.article-brunch__title__en {
+  font-family: Georgia;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 116.667%;
+}
+
+/* 제목 - 한글 부분 */
+.article-brunch__title__ko {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 115.789%;
+}
+
+/* 전체 브런치 컨테이너 */
+.article-brunch__container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 책정보 - 커버 사이즈 변경 */
+.book-info__cover--size {
+  width: 80px;
+  height: 112px;
+}
+
+/* 하나의 브런치 */
+.brunch {
+  display: flex;
+  gap: 15px;
+  padding-bottom: 20px;
+  border-bottom: 0.5px solid #eee;
+}
+
+.brunch:last-child {
+  padding-bottom: unset;
+  border-bottom: unset;
+}
+
+/* 요즘 뜨는 브런치 - 번호 */
+.brunch__num {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* 브런치 설명(제목, 작가, 단락) */
+.brunch__description {
+  flex-grow: 1;
+}
+
+/* 브런치 제목 */
+.brunch__description__title {
+  font-size: 17px;
+  line-height: 135.294%;
+  color: var(--black_100);
+  margin-bottom: 4px;
+}
+
+/* 브런치 작가 */
+.brunch__description__author {
+  font-size: 13px;
+  line-height: 153.846%;
+  color: #959595;
+  margin: 4px 0 20px 0;
+}
+
+/* 브런치 작가명 앞에 by */
+.brunch__description__author span {
+  font-size: 13px;
+  line-height: 146.154%;
+  font-family: Georgia;
+  margin-right: 4px;
+  font-style: italic;
+  color: #bbb;
+}
+
+/* 브런치 단락 */
+.brunch__description__paragraph {
+  font-size: 13px;
+  line-height: 146.154%;
+  color: #666;
+
+  /* 두 줄 넘어가면 말줄임표 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* 브런치 이미지 */
+.brunch__cover__img {
+  max-width: 80px;
+  object-fit: cover;
+}
+
+/* 브런치북 원작 베스트셀러 */
+.original {
+  background-color: rgb(54, 100, 72);
+  padding: 40px 22.5px;
+  color: var(--white);
+}
+
+.original__title {
+  width: fit-content;
+  margin: 0 auto;
+  color: var(--white);
+  font-size: 12px;
+  padding: 2px;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+
+  margin-bottom: 54px;
+}
+
+.original__content {
+  display: flex;
+  justify-content: space-around;
+}
+
+.original__content__book-info {
+  padding-top: 14.75px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.original__content__book-info__title {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 141.176%;
+}
+
+.original__content__book-info__author {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 133.333%;
+  color: rgba(255, 255, 255, 0.8); /* 변수 처리 필요 */
+}
+
+.original__card {
+  position: relative;
+  z-index: 1;
+
+  background-color: var(--white);
+  color: var(--black_90);
+  width: 315px;
+  padding: 22.75px 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.original__card__title {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 133.333%;
+
+  display: flex;
+  align-items: center;
+  gap: 3.66px;
+}
+
+.original__card__title::after {
+  content: '';
+  display: inline-block;
+  background-color: var(--black_100);
+  width: 25px;
+  height: 1px;
+}
+
+.original__card__sentence {
+  font-size: 17px;
+  line-height: 141.176%;
+  display: flex;
+  gap: 7px;
+}
+
+.original__card__sentence::before {
+  content: '';
+  width: 15px;
+  background-image: url(images/doubleQuotation.svg);
+  background-repeat: no-repeat;
+  flex-shrink: 0;
 }

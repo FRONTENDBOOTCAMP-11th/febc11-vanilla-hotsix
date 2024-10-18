@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="../../components/header/header.css" />
     <link rel="stylesheet" href="../../../style.css" />
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <div class="size l-wrapper">
-      <header class="header">navbar</header>
+      <header class="header-container"></header>
       <!-- 메인 섹션 -->
       <section class="main">
         <div class="main__content">
@@ -23,7 +24,10 @@
                 src="images/bookCover.jpg"
                 alt="북커버 이미지"
               />
-              <div class="book-info__title">멈추어 버린 시간</div>
+              <div class="book-info__title">
+                <p class="book-info__title__txt">멈추어 버린 시간</p>
+                <p class="book-info__author">김수정</p>
+              </div>
               <img
                 class="book-info__cheering-badge"
                 src="images/cheeringBadge.svg"
@@ -38,8 +42,84 @@
           </div>
         </div>
       </section>
-      <article class="article-brunch">요즘 뜨는 브런치</article>
+      <article class="article-brunch">
+        <div class="article-brunch__title">
+          <p class="article-brunch__title__en">Today's Pick</p>
+          <p class="article-brunch__title__ko">요즘 뜨는 브런치</p>
+        </div>
+
+        <div class="article-brunch__container">
+          <div class="brunch">
+            <p class="brunch__num">1</p>
+            <div class="brunch__description">
+              <p class="brunch__description__title">
+                무사히 마흔살이 될 수 있을까
+              </p>
+              <p class="brunch__description__author"><span>by</span>강윤이</p>
+              <p class="brunch__description__paragraph">
+                병원에서 암 진단을 받고 나와 햇볕이 작열하며 끓어오르는 거리를
+                병원에서 암 진단을 받고 나와 햇볕이 작열하며 끓어오르는 거리를
+              </p>
+            </div>
+            <div class="brunch__cover">
+              <img
+                class="brunch__cover__img"
+                src="images/bookCover.jpg"
+                alt="북커버 이미지"
+              />
+            </div>
+          </div>
+
+          <div class="brunch">
+            <p class="brunch__num">1</p>
+            <div class="brunch__description">
+              <p class="brunch__description__title">
+                무사히 마흔살이 될 수 있을까
+              </p>
+              <p class="brunch__description__author"><span>by</span>강윤이</p>
+              <p class="brunch__description__paragraph">
+                병원에서 암 진단을 받고 나와 햇볕이 작열하며 끓어오르는 거리를
+                병원에서 암 진단을 받고 나와 햇볕이 작열하며 끓어오르는 거리를
+              </p>
+            </div>
+            <div class="brunch__cover">
+              <img
+                class="brunch__cover__img"
+                src="images/bookCover.jpg"
+                alt="북커버 이미지"
+              />
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 브런치북 원작 베스트셀러 -->
+      <article class="original">
+        <h3 class="original__title">브런치북 원작 베스트셀러</h3>
+        <div class="original__content">
+          <div class="original__content__book-info">
+            <h2 class="original__content__book-info__title">여자야구입문기</h2>
+            <p class="original__content__book-info__author">김입문</p>
+          </div>
+          <img
+            class="original__content__book-cover"
+            src="images/originalBestseller.svg"
+            alt="브런치북 원작 베스트셀러 표지"
+          />
+        </div>
+        <div class="original__card">
+          <h6 class="original__card__title">작가가 사랑한 문장</h6>
+          <p class="original__card__sentence">
+            최선을 다해서 응원해주는 이가 내 뒤에 있다. 그들을 뒤에 두고 있으면,
+            나는 앞을 볼 수 밖에 없다.
+          </p>
+        </div>
+      </article>
+
       <article class="article-author">TOP 구독 작가</article>
     </div>
+
+    <nav class="navbar-container"></nav>
+    <script src="../../components/header/header.js"></script>
   </body>
 </html>
