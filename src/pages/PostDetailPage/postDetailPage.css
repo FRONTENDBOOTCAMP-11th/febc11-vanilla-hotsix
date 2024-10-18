@@ -10,8 +10,10 @@
 }
 
 .header {
+  margin-top: 50px;
   padding: 80px 0 16px;
   border-bottom: 1px solid #eee;
+  background-color: skyblue; /* 임의 색깔 지정 */
 }
 
 .header__title {
@@ -250,6 +252,7 @@
 .author-info__header {
   display: flex;
   align-items: center;
+  margin-bottom: 14px;
 }
 
 .author__nickname {
@@ -282,6 +285,7 @@
   color: #959595;
   font-size: 12px;
   line-height: 166%;
+  margin-bottom: 20px;
 }
 
 .author-info__footer {
