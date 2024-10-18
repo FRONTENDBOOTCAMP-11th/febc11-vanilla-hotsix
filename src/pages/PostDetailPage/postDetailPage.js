@@ -24,7 +24,7 @@ const DUMMY_POST = {
     job: '회사원',
     introduction:
       '12년 차 국내 항공사 승무원의 겨울 산티아고 순례길 이야기 연재 중. 커피 한 잔을 벗 삼아 편하게 읽을 수 있는 글쓰기에 꽤나 진심인 편입니다. 후후.',
-    subscriber: 108,
+    subscribers: 108,
   },
   content:
     '  그래 지난 화를 요약해 보면 생장에 도착한 나는 도착 당일 바로 첫여정을 시작하기로 마음먹었고 추천받은 목적지인 Val carlos까지 구글맵으로 걸어서 2시간 30분 거리를 확인했다. 그러나 걸어도 걸어도 줄지 않는 시간과 거리에 괴로워했었지.  오후 5시 36분. 세상에 인터넷에서 사진으로만 보다가 직접 내 눈으로 처음 목격한 정식적인(?) 까미노 표식! 아주 반갑기 그지없었다. 왠지 목적지가 가까워진 것만 같은 느낌적인 느낌! 하지만 구글맵의 내 위치는 전혀 그렇지 못했다.',
@@ -170,9 +170,23 @@ function printComments() {
   });
 }
 
+// 작가란 화면을 출력하는 함수
+function printAuthor() {
+  let authorNickname = document.querySelector('.nickname');
+  let authorJob = document.querySelector('.job');
+  let authorInfo = document.querySelector('.author-info__contents');
+  let authorSubs = document.querySelector('#subscriber');
+
+  authorNickname.innerHTML = DUMMY_POST.user.name;
+  authorJob.innerHTML = DUMMY_POST.user.job;
+  authorInfo.innerHTML = DUMMY_POST.user.introduction;
+  authorSubs.innerHTML = DUMMY_POST.user.subscribers;
+}
+
 // 게시글이 추가될 때마다 element를 생성해야 하는 게 아니니까, createElement로 하지 않고, innerHTML로 구현
 window.onload = function () {
   printHeader();
   printTags();
   printComments();
+  printAuthor();
 };
