@@ -116,6 +116,9 @@ function printTags() {
 
 // 댓글은 추가될 때마다 태그를 생성해야 하기에 createElement로 작성
 function printComments() {
+  let commentCount = document.querySelector('.count-num');
+  commentCount.innerHTML = DUMMY_POST.replies.length;
+
   DUMMY_POST.replies.forEach(comment => {
     const year = comment.createdAt.getFullYear();
     const month = monthNames[comment.createdAt.getMonth() - 1];
@@ -182,10 +185,18 @@ function printAuthor() {
   authorSubs.innerHTML = DUMMY_POST.user.subscribers;
 }
 
+function printFooter() {
+  let likeCount = document.querySelector('.like-count');
+  let commentCount = document.querySelector('.comment-count');
+  likeCount.innerHTML = DUMMY_POST.likes;
+  commentCount.innerHTML = DUMMY_POST.replies.length;
+}
+
 // 게시글이 추가될 때마다 element를 생성해야 하는 게 아니니까, createElement로 하지 않고, innerHTML로 구현
 window.onload = function () {
   printHeader();
   printTags();
   printComments();
   printAuthor();
+  printFooter();
 };
