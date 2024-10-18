@@ -3,6 +3,14 @@ img {
   vertical-align: top;
 }
 
+/* 일괄적용 속성 */
+.by-style {
+  font-family: Georgia;
+  font-style: italic;
+  margin-right: 3.63px;
+  font-weight: 400;
+}
+
 /* 스타일 */
 .size {
   max-width: 480px;
@@ -61,10 +69,6 @@ img {
 
 /* 작가 앞에 by */
 .main__content__author span {
-  margin-right: 4px;
-  font-family: Georgia;
-  font-style: italic;
-  font-weight: 400;
   line-height: 150%;
 }
 
@@ -219,9 +223,6 @@ img {
 .brunch__description__author span {
   font-size: 13px;
   line-height: 146.154%;
-  font-family: Georgia;
-  margin-right: 4px;
-  font-style: italic;
   color: #bbb;
 }
 
@@ -290,7 +291,7 @@ img {
 }
 
 /* 레이아웃-플렉스박스 */
-.l-flexbox {
+.l-flexbox-col {
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -404,10 +405,6 @@ img {
   margin-left: auto;
 }
 
-.top-author__info:nth-child(3) {
-  padding-top: unset;
-}
-
 .top-author__info__profile-img {
   border-radius: 50%;
   margin: 0 auto;
@@ -467,4 +464,77 @@ img {
   left: 50%;
   top: 50%;
   transform: translate(-50%, 0);
+}
+
+/* 제 11회 브런치북 출판 프로젝트 */
+.publish-project {
+  background-color: var(--black_90);
+  padding: 50px 25px 40px 25px;
+}
+
+/* 플렉스박스 레이아웃  */
+.l-flexbox {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  position: relative;
+}
+
+.publish-project__subtitle {
+  margin-bottom: 14px;
+}
+
+.publish-project__title {
+  margin-bottom: 25px;
+}
+
+.publish-project__award-brunch {
+  text-align: center;
+}
+
+.publish-project__award-brunch__cover {
+  max-width: 98px;
+  margin-bottom: 14.75px;
+  border-radius: 1px 2px 2px 1px;
+}
+
+.publish-project__award-brunch__title {
+  color: var(--grey-50);
+  margin-bottom: 7px;
+}
+
+.publish-project__award-brunch__author {
+  color: var(--grey_70);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 153.846%;
+}
+
+.publish-project__award-brunch__author span {
+  color: var(--gray_95);
+}
+
+.l-flexbox::after {
+  content: '';
+  display: inline-block;
+  height: 1px;
+  width: 310px;
+  background-color: var(--black_70);
+
+  position: absolute;
+  bottom: -26px;
+}
+
+/* 버튼 스타일 변경(modify) */
+.button--style {
+  background-color: unset;
+  color: var(--grey_70);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 160%;
+  padding: unset;
+}
+
+.margin {
+  margin-top: 56px;
 }

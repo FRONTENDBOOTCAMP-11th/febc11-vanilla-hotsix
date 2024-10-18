@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="../../components/header/header.css" />
+    <link rel="stylesheet" href="../../components/navbar/navbar.css" />
+    <script src="../../components/header/header.js" type="module"></script>
+    <script src="../../components/navbar/navbar.js" type="module"></script>
     <link rel="stylesheet" href="../../../style.css" />
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
     <div class="size l-wrapper">
-      <header class="header-container"></header>
+      <header-component></header-component>
       <!-- 메인 섹션 -->
       <section class="main">
         <div class="main__content">
           <h2 class="main__content__title">멈추어 버린 시간</h2>
-          <p class="main__content__author"><span>by</span>김수정</p>
+          <p class="main__content__author">
+            <span class="by-style">by</span>김수정
+          </p>
           <div class="gradient">
             <!-- 책 정보 -->
             <div class="book-info l-wrapper">
@@ -56,7 +61,9 @@
               <p class="brunch__description__title">
                 무사히 마흔살이 될 수 있을까
               </p>
-              <p class="brunch__description__author"><span>by</span>강윤이</p>
+              <p class="brunch__description__author">
+                <span class="by-style">by</span>강윤이
+              </p>
               <p class="brunch__description__paragraph">
                 병원에서 암 진단을 받고 나와 햇볕이 작열하며 끓어오르는 거리를
                 병원에서 암 진단을 받고 나와 햇볕이 작열하며 끓어오르는 거리를
@@ -77,7 +84,9 @@
               <p class="brunch__description__title">
                 무사히 마흔살이 될 수 있을까
               </p>
-              <p class="brunch__description__author"><span>by</span>강윤이</p>
+              <p class="brunch__description__author">
+                <span class="by-style">by</span>강윤이
+              </p>
               <p class="brunch__description__paragraph">
                 병원에서 암 진단을 받고 나와 햇볕이 작열하며 끓어오르는 거리를
                 병원에서 암 진단을 받고 나와 햇볕이 작열하며 끓어오르는 거리를
@@ -108,7 +117,7 @@
             alt="브런치북 원작 베스트셀러 표지"
           />
         </div>
-        <div class="l-flexbox">
+        <div class="l-flexbox-col">
           <div class="card">
             <h6 class="card__title">작가가 사랑한 문장</h6>
             <p class="card__sentence">
@@ -186,9 +195,65 @@
           </div>
         </div>
       </article>
-    </div>
 
-    <nav class="navbar-container"></nav>
-    <script src="../../components/header/header.js"></script>
+      <!-- 브런치북 출판 프로젝트 -->
+      <article class="publish-project">
+        <img
+          class="publish-project__subtitle"
+          src="images/publishProjectTitle1.svg"
+          alt="새로운 작가의 탄생"
+        />
+        <img
+          class="publish-project__title"
+          src="images/publishProjectTitle2.svg"
+          alt="제 11회 브런치북 출판 프로젝트"
+        />
+        <div class="l-flexbox">
+          <div class="publish-project__award-brunch">
+            <img
+              class="publish-project__award-brunch__cover"
+              src="images/bookCover.jpg"
+              alt="브런치북 표지"
+            />
+            <h3 class="publish-project__award-brunch__title">태어나는 말들</h3>
+            <p class="publish-project__award-brunch__author">
+              <span class="by-style">by</span>조소연
+            </p>
+          </div>
+
+          <div class="publish-project__award-brunch">
+            <img
+              class="publish-project__award-brunch__cover"
+              src="images/bookCover.jpg"
+              alt="브런치북 표지"
+            />
+            <h3 class="publish-project__award-brunch__title">태어나는 말들</h3>
+            <p class="publish-project__award-brunch__author">
+              <span class="by-style">by</span>조소연
+            </p>
+          </div>
+
+          <div class="publish-project__award-brunch">
+            <img
+              class="publish-project__award-brunch__cover"
+              src="images/bookCover.jpg"
+              alt="브런치북 표지"
+            />
+            <h3 class="publish-project__award-brunch__title">태어나는 말들</h3>
+            <p class="publish-project__award-brunch__author">
+              <span class="by-style">by</span>조소연
+            </p>
+          </div>
+        </div>
+        <button class="button button--style margin">
+          브런치 작가 지원 프로젝트
+        </button>
+      </article>
+
+      <!-- 푸터 -->
+      <footer>footer</footer>
+
+      <!-- <navbar-component></navbar-component> -->
+    </div>
   </body>
 </html>
