@@ -117,7 +117,6 @@ function printTags() {
 // 댓글은 추가될 때마다 태그를 생성해야 하기에 createElement로 작성
 function printComments() {
   DUMMY_POST.replies.forEach(comment => {
-    console.log(comment);
     const year = comment.createdAt.getFullYear();
     const month = monthNames[comment.createdAt.getMonth() - 1];
     const day = comment.createdAt.getDate();
