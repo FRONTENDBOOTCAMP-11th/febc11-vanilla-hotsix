@@ -112,3 +112,9 @@
   font-weight: 300;
   line-height: 1.6;
 }
+.flex{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: auto;
+}
