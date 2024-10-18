@@ -288,7 +288,15 @@ img {
   color: rgba(255, 255, 255, 0.8); /* 변수 처리 필요 */
 }
 
-.original__card {
+/* 레이아웃-플렉스박스 */
+.l-flexbox {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* 카드(Block) */
+.card {
   position: relative;
   z-index: 1;
 
@@ -302,7 +310,7 @@ img {
   gap: 26px;
 }
 
-.original__card__title {
+.card__title {
   font-size: 12px;
   font-weight: 700;
   line-height: 133.333%;
@@ -312,7 +320,7 @@ img {
   gap: 3.66px;
 }
 
-.original__card__title::after {
+.card__title::after {
   content: '';
   display: inline-block;
   background-color: var(--black_100);
@@ -320,17 +328,41 @@ img {
   height: 1px;
 }
 
-.original__card__sentence {
+.card__sentence {
   font-size: 17px;
   line-height: 141.176%;
   display: flex;
   gap: 7px;
 }
 
-.original__card__sentence::before {
+.card__sentence::before {
   content: '';
   width: 15px;
   background-image: url(images/doubleQuotation.svg);
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+/* 버튼(Block): 원작 브런치북 보기 */
+.button {
+  margin: 0 auto;
+  font-size: 13px;
+  font-weight: 300;
+  padding: 12px 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.button::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-image: url(images/rightDirection.svg);
   background-repeat: no-repeat;
   flex-shrink: 0;
 }
