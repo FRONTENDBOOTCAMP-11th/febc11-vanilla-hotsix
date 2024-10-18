@@ -100,7 +100,7 @@ img {
   color: var(--black_90);
   font-size: 20px;
   line-height: 90%;
-  padding: 5px;
+  padding: 5px 0;
 }
 
 #editableDiv:empty::before {
