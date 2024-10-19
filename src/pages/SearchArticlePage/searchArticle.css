@@ -1,24 +1,38 @@
 .l_container {
   max-width: 480px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 40px 0 80px;
 }
 
 header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   margin-bottom: 20px;
+  position: relative;
+  background-color: var(--white);
 }
 
 header h1 {
-  font-size: 36px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.close-btn {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  right: 5%;
+  background-image: url(/src/assets/images/button-close-grey.svg);
+  background-size: cover;
+  border-radius: 50%;
 }
 
 nav .tabs {
   display: flex;
   /* justify-content: space-around; */
-  border-bottom: 1px solid var(--grey_40);
-  margin-bottom: 20px;
+  background-color: var(--white);
 }
 
 nav .tabs li {
@@ -27,20 +41,26 @@ nav .tabs li {
   padding: 10px;
   cursor: pointer;
   font-size: 18px;
+  border-bottom: 1px solid var(--grey_40);
 }
 
 nav .tabs .active {
   color: var(--mint);
-  border-bottom: 2px solid currentColor;
+  border-bottom: 1px solid currentColor;
+}
+
+.contents {
+  padding: 20px;
+  background-color: var(--grey_10);
 }
 
 .search-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 14px;
-  margin-bottom: 20px;
-  color: #999;
+  font-size: 12px;
+  padding-bottom: 20px;
+  color: var(--grey_80);
 }
 
 .filters {
@@ -53,20 +73,31 @@ nav .tabs .active {
 }
 
 .filters .active {
-  color: var(--mint);
+  color: var(--black_100);
+  position: relative;
 }
 
-main .articles {
+.filters .active::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background-color: var(--mint);
+  border-radius: 50%;
+  position: absolute;
+  left: -30%;
+  top: 30%;
+}
+
+.articles {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
 }
 
 article {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 15px 0;
 }
 
 .article-title {
@@ -75,7 +106,7 @@ article {
 
 .article-contents {
   display: flex;
-  gap: 10px;
+  gap: 3%;
 }
 
 .article-letters {
@@ -100,20 +131,4 @@ article {
   height: 80px;
   background-color: #ccc;
   flex-shrink: 0;
-}
-
-.content h2 {
-  font-size: 18px;
-  margin-bottom: 5px;
-}
-
-.content p {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-footer {
-  font-size: 12px;
-  color: #999;
 }
