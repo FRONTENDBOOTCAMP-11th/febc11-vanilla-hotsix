@@ -1,8 +1,41 @@
 'use strict';
 
-import axios from "axios";
+import axios from 'axios';
+import getImg from '../../api/getImg'
 
+// 받아올 유저정보
+const userName = document.querySelector('.author-info__name');
+const userRole = document.querySelector('.author-info__role');
+const userImg = document.querySelector('.author-info__avatar');
+
+// 유저 정보 받아오기 통신
+const getUserInfo = async () => {
+  try {
+    const res = await axios.get('https://11.fesp.shop/users/2', {
+      headers: {
+        'client-id': '00-sample',
+      },
+    });
+
+    console.log(res.data);
+    
+    // 유저정보 넣기
+    userName.innerHTML = res.data.item.name;
+    userRole.innerHTML = res.data.item.extra.job;
+
+    // 이미지 src 가져오기 (비동기 처리 대기)
+    const ImgSrc = await getImg(res.data.item.image);
+    userImg.src = ImgSrc;
+
+  } catch (err) {
+    console.error(err);
+  }
+};
+getUserInfo();
+
+// 게시물 리스트 공간
 const postList = document.querySelector('.post-list--container');
+// 게시글 더미 데이터
 const DUMMY_POST = {
   list: [
     {
@@ -39,6 +72,8 @@ const DUMMY_POST = {
     },
   ],
 };
+
+// 월 글자로 표시하기
 const monthNames = [
   'Jan',
   'Feb',
@@ -53,6 +88,8 @@ const monthNames = [
   'Nov',
   'Dec',
 ];
+
+// 게시글 렌더링 하기
 postList.innerHTML = DUMMY_POST.list
   .map(post => {
     const year = post.date.getFullYear(); // 연도 추출
