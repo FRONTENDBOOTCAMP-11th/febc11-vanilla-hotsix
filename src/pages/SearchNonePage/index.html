@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>검색 결과 페이지</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/src/components/navbar/navbar.css" />
+    <link rel="stylesheet" href="searchNone.css" />
+  </head>
+  <body>
+    <div class="l_container">
+      <header>
+        <h1>꿀,ㅡ</h1>
+        <button class="close-btn"></button>
+      </header>
+
+      <nav>
+        <ul class="tabs">
+          <li>글</li>
+          <li class="active">작가</li>
+        </ul>
+      </nav>
+
+      <div class="contents">
+        <div class="notify-noresult">
+          <img src="/src/assets/images/logo-b.svg" />
+          <p>검색 결과가 없습니다.</p>
+        </div>
+      </div>
+
+      <navbar-component></navbar-component>
+    </div>
+    <script src="/src/components/navbar/navbar.js" type="module"></script>
+  </body>
+</html>
