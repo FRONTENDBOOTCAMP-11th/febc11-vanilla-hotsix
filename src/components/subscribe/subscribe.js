@@ -1,5 +1,5 @@
 'use strict';
-export class Header extends HTMLElement {
+export class Subscribe extends HTMLElement {
   constructor() {
     super();
     // 현재 구독 상태 - 일단 더미 데이터
@@ -56,4 +56,4 @@ export class Header extends HTMLElement {
 }
 
 // 커스텀 요소 정의
-customElements.define('header-component', Header);
+customElements.define('subscribe-component', Subscribe);
