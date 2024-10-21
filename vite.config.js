@@ -12,4 +12,8 @@ export default defineConfig({
       author: 'src/pages/AuthorPage/index.html', // 작가 홈 페이지
     },
   },
+  server: {
+    host: true, // 또는 '0.0.0.0'으로 설정
+    port: 5173, // 포트 설정 (필요한 경우)
+  },
 });
