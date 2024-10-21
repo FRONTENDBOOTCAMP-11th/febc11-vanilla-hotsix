@@ -1,5 +1,7 @@
 'use strict';
 
+import axios from "axios";
+
 const postList = document.querySelector('.post-list--container');
 const DUMMY_POST = {
   list: [
