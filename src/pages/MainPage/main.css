@@ -1,0 +1,634 @@
+/* 리셋 */
+img {
+  vertical-align: top;
+}
+
+/* 스타일 */
+.by-style {
+  font-family: Georgia;
+  font-style: italic;
+  margin-right: 3.63px;
+  font-weight: 400;
+}
+
+.size {
+  max-width: 480px;
+}
+
+/* 레이아웃 */
+.l-wrapper {
+  margin: 0 auto;
+}
+
+/* 메인 섹션 */
+.main {
+  background-color: var(--purple);
+  color: var(--white);
+  margin-top: 50px;
+}
+
+.main__content {
+  text-align: center;
+}
+
+/* 책 제목 */
+.main__content__title {
+  padding-top: 54.75px;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 140.909%;
+}
+
+/* 작가 이름 */
+.main__content__author {
+  font-size: 12px;
+  padding: 11px 0 66px 0;
+  line-height: 133.333%;
+}
+
+/* 작가 앞에 by */
+.main__content__author span {
+  line-height: 150%;
+}
+
+/* 책정보 */
+.book-info {
+  width: fit-content;
+  position: relative;
+}
+
+/* 북커버 */
+.book-info__cover {
+  width: 135px;
+  height: 190px;
+}
+
+/* 북커버 제목 영역*/
+.book-info__title {
+  width: 77px;
+  height: 104px;
+  background-color: var(--white);
+  color: var(--black_70);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -54%);
+  text-align: start;
+  padding: 7.75px 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 북커버 제목 텍스트 */
+.book-info__title__txt {
+  font-size: 8px;
+  line-height: 137.5%;
+  color: var(--black_70);
+}
+
+/* 북커버 작가 텍스트 */
+.book-info__author {
+  font-size: 7px;
+}
+
+/* 응원 뱃지 */
+.book-info__cheering-badge {
+  position: absolute;
+  top: -5%;
+  right: -11.5%;
+}
+
+/* 응원 수 */
+.main__content__cheering-num {
+  padding: 30px 0 54.75px 0;
+  font-size: 13px;
+  line-height: 150%;
+}
+
+/* 그라디언트 */
+.gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.26) 100%
+  );
+}
+
+/* 요즘 뜨는 브런치 */
+.rank-brunch {
+  padding: 50px 25px 30px 25px;
+}
+
+/* 제목 */
+.rank-brunch__title {
+  padding-bottom: 30px;
+  color: var(--black_100);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* 제목 - 영어 부분 */
+.rank-brunch__title__en {
+  font-family: Georgia;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 116.667%;
+}
+
+/* 제목 - 한글 부분 */
+.rank-brunch__title__ko {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 115.789%;
+}
+
+/* 전체 브런치 컨테이너 */
+.rank-brunch__container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 하나의 브런치 */
+.brunch {
+  display: flex;
+  gap: 15px;
+  padding-bottom: 20px;
+  border-bottom: 0.5px solid var(--grey_20);
+}
+
+.brunch:last-child {
+  padding-bottom: unset;
+  border-bottom: unset;
+}
+
+/* 요즘 뜨는 브런치 - 번호 */
+.brunch__num {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* 브런치 설명(제목, 작가, 단락) */
+.brunch__description {
+  flex-grow: 1;
+}
+
+/* 브런치 제목 */
+.brunch__description__title {
+  font-size: 17px;
+  line-height: 135.294%;
+  color: var(--black_100);
+  margin-bottom: 4px;
+}
+
+/* 브런치 작가 */
+.brunch__description__author {
+  font-size: 13px;
+  line-height: 153.846%;
+  color: var(--grey_70);
+  margin: 4px 0 20px 0;
+}
+
+/* 브런치 작가명 앞에 by */
+.brunch__description__author span {
+  font-size: 13px;
+  line-height: 146.154%;
+  color: var(--grey_50);
+}
+
+/* 브런치 단락 */
+.brunch__description__paragraph {
+  font-size: 13px;
+  line-height: 146.154%;
+  color: var(--gray_95);
+
+  /* 두 줄 넘어가면 말줄임표 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.brunch__cover {
+  flex-shrink: 0;
+  width: 80;
+  aspect-ratio: 80 / 112;
+  background-color: var(--grey_40);
+}
+
+/* 브런치 이미지 */
+.brunch__cover__img {
+  max-width: 80px;
+  object-fit: cover;
+}
+
+/* 브런치북 원작 베스트셀러 */
+.original {
+  background-color: rgb(54, 100, 72);
+  padding: 40px 22.5px;
+  color: var(--white);
+}
+
+.original__title {
+  width: fit-content;
+  margin: 0 auto;
+  color: var(--white);
+  font-size: 12px;
+  padding: 2px;
+  border-top: 1px solid var(--white);
+  border-bottom: 1px solid var(--white);
+  margin-bottom: 54px;
+}
+
+.original__content {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: -10px;
+}
+
+.original__content__book-info {
+  padding-top: 14.75px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.original__content__book-info__title {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 141.176%;
+}
+
+.original__content__book-info__author {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 133.333%;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.original__content__book-cover {
+  width: 98px;
+}
+
+/* 레이아웃-플렉스박스 */
+.l-flexbox-col {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* 카드(Block) */
+.card {
+  margin: 0 auto;
+  padding: 22.75px 20px;
+
+  position: relative;
+  z-index: 1;
+
+  background-color: var(--white);
+  color: var(--black_90);
+
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.card__title {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 133.333%;
+
+  display: flex;
+  align-items: center;
+  gap: 3.66px;
+}
+
+.card__title::after {
+  content: '';
+  display: inline-block;
+  background-color: var(--black_100);
+  width: 25px;
+  height: 1px;
+}
+
+.card__sentence {
+  font-size: 17px;
+  line-height: 141.176%;
+  display: flex;
+  gap: 7px;
+}
+
+.card__sentence::before {
+  content: '';
+  width: 15px;
+  background-image: url(../../assets/images/icon-double-quotation.svg);
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+/* 버튼(Block): 원작 브런치북 보기 */
+.button {
+  margin: 0 auto;
+  font-size: 13px;
+  font-weight: 300;
+  padding: 12px 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.button::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background-image: url(../../assets/images/icon-right-direction.svg);
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+/* TOP 구독 작가 */
+.top-author {
+  padding: 50px 25px;
+}
+
+.l-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  gap: 54px 45px;
+
+  position: relative;
+}
+
+.top-author__title {
+  color: var(--black_90);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 115.789%;
+  margin-bottom: 30px;
+}
+
+.top-author__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+  width: 121px;
+}
+
+.top-author__info:nth-child(odd) {
+  margin-left: auto;
+}
+
+.top-author__info__cover {
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin: 0 auto;
+  width: 80px;
+  height: 80px;
+  aspect-ratio: 1 / 1;
+  background-color: var(--grey_40);
+}
+
+.top-author__info__cover__img {
+  border-radius: 50%;
+  margin: 0 auto;
+  max-width: 80px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.top-author__info__profile__name {
+  text-align: center;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 115.789%;
+  gap: unset;
+}
+
+.top-author__info__profile__job {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 150%;
+  color: var(--grey_70);
+}
+
+.top-author__info__introduce {
+  text-align: center;
+  color: var(--gray_95);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 146.154%;
+
+  /* 두 줄 넘어가면 말줄임표 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.l-grid::before {
+  content: '';
+  display: inline-block;
+  height: 428px;
+  width: 1px;
+  background-color: var(--grey_30);
+
+  position: absolute;
+  left: 50%;
+}
+
+.l-grid::after {
+  content: '';
+  display: inline-block;
+  height: 1px;
+  width: 310px;
+  background-color: var(--grey_30);
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 0);
+}
+
+/* 제 11회 브런치북 출판 프로젝트 */
+.publish-project {
+  background-color: var(--black_90);
+  padding: 50px 25px 40px 25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 플렉스박스 레이아웃  */
+.l-flexbox {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  position: relative;
+}
+
+.publish-project__subtitle {
+  max-width: 139.88px;
+}
+
+.publish-project__title {
+  max-width: 250.06px;
+  margin-bottom: 25px;
+}
+
+.publish-project__award-brunch {
+  text-align: center;
+}
+
+.publish-project__award-brunch__cover {
+  max-width: 98px;
+  margin-bottom: 14.75px;
+  border-radius: 1px 2px 2px 1px;
+}
+
+.publish-project__award-brunch__title {
+  color: var(--grey_50);
+  margin-bottom: 7px;
+  font-size: 14px;
+}
+
+.publish-project__award-brunch__author {
+  color: var(--grey_70);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 153.846%;
+}
+
+.publish-project__award-brunch__author span {
+  color: var(--gray_95);
+}
+
+.l-flexbox::after {
+  content: '';
+  display: inline-block;
+  height: 1px;
+  width: 310px;
+  background-color: var(--black_70);
+
+  position: absolute;
+  bottom: -26px;
+}
+
+/* 버튼 스타일 변경(modify) */
+.button--style {
+  background-color: unset;
+  color: var(--grey_70);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 160%;
+  padding: unset;
+}
+
+.margin {
+  margin-top: 56px;
+}
+
+.l-flexbox-col--style {
+  width: 310px;
+  gap: 14px;
+}
+
+/* 푸터 */
+.footer {
+  background-color: var(--black_70);
+  padding: 31.5px 37.5px;
+  margin-bottom: 44px;
+}
+
+.sns {
+  display: flex;
+  justify-content: center;
+  gap: 27px;
+
+  margin-top: 38px;
+}
+
+.sns__list a {
+  display: inline-block;
+  width: 23px;
+  height: 23px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.sns__list__kakao {
+  background-image: url(../../assets/images/icon-social-kakao.svg);
+}
+
+.sns__list__facebook {
+  background-image: url(../../assets/images/icon-social-facebook.svg);
+}
+
+.sns__list__instagram {
+  background-image: url(../../assets/images/icon-social-instagram.svg);
+}
+
+.hide-text {
+  text-indent: -9999px;
+}
+
+.tos {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0 20px;
+
+  margin-top: 80.75px;
+  margin-bottom: 55.25px;
+}
+
+.tos li {
+  font-size: 12px;
+  color: var(--grey_70);
+  line-height: 166.667%;
+  font-weight: 400;
+}
+
+.logo {
+  margin: 0 auto;
+  width: 87px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-position: 0px 0.5px; /* 밑에 하얀 선이 보여서 임시 처리 */
+  background-image: url(../../assets/images/icon-logo-white.svg);
+}
+
+.tos .style-color {
+  color: var(--grey_15);
+}
+
+/* 탑 버튼 */
+.btn-top {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--white);
+  background-image: url(../../assets/images/icon-scroll-to-top.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  margin-bottom: 0px;
+
+  position: sticky;
+  bottom: 112px;
+  left: 82vw;
+}
