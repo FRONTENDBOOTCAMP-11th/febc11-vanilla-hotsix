@@ -13,48 +13,45 @@
   margin-top: 50px;
   padding: 80px 0 16px;
   border-bottom: 1px solid #eee;
-  background-color: skyblue; /* 임의 색깔 지정 */
 }
 
 .header__title {
   font-size: 28px;
   color: #333;
-  font-weight: 400; /* pretendard로 폰트 교체 후 재조정 필요 */
+  font-weight: 300;
   line-height: 120%;
 }
 
 .header__subtitle {
   font-size: 16px;
   color: #666;
-  font-weight: 400; /* pretendard로 폰트 교체 후 재조정 필요 */
+  font-weight: 300;
   line-height: 130%;
 }
 
 .header__info {
-  /* line-height: 162%; */
+  line-height: 162.5%;
   margin-top: 31px;
   display: flex;
   align-items: center;
 }
 
 .info__by {
-  min-width: 13px;
+  width: 13px;
   height: 13px;
-  background-color: #666;
   margin-right: 3px;
 }
 
 .info__author {
   font-size: 12px;
   color: #666;
+  font-weight: 400;
   margin-right: 7.5px;
 }
 
 .info__dot {
   width: 2px;
   height: 2px;
-  background-color: #666;
-  border-radius: 50%;
 }
 
 .info__time {
@@ -73,13 +70,13 @@
 .main__article p {
   font-size: 17.3px;
   color: #1b1b1b;
-  /* font-weight: 300; */
+  font-weight: 300;
   line-height: 160%;
 }
 
-.main__article div {
-  height: 240px;
-  background-color: #959595;
+.main__article img {
+  aspect-ratio: 1.33 / 1;
+  margin-top: 28px;
 }
 
 .article__img-description {
@@ -139,7 +136,8 @@
 .profile-img {
   width: 32px;
   height: 32px;
-  background-color: rebeccapurple;
+  border-radius: 50%;
+  background-color: var(--grey_50);
 }
 
 .comment__contents {
@@ -167,7 +165,6 @@
 }
 
 .kebab-menu {
-  background-color: gray;
   width: 2px;
   height: 16px;
   margin-left: auto;
@@ -180,6 +177,7 @@
   font-size: 16px;
   line-height: 150%;
   margin-bottom: 14px;
+  font-weight: 400;
 }
 
 .comment__footer button {
@@ -213,7 +211,8 @@
 .input-area__profile .img {
   width: 18px;
   height: 18px;
-  background-color: rebeccapurple;
+  border-radius: 50%;
+  background-color: var(--grey_50);
 }
 
 #commentInput {
@@ -244,7 +243,7 @@
   border-radius: 30px;
 }
 
-.main__author-info {
+.footer__author-info {
   padding: 56px 0 40px;
   border-top: 10px solid #f8f8f8;
 }
@@ -264,6 +263,7 @@
   font-size: 22px;
   font-weight: 300;
   line-height: 110%;
+  margin-bottom: 4px;
 }
 
 .job {
@@ -276,7 +276,7 @@
 .author__photo {
   width: 50px;
   height: 50px;
-  background-color: rebeccapurple;
+  background-color: var(--grey_50);
   flex-shrink: 0;
   border-radius: 50%;
 }
@@ -323,17 +323,21 @@
 }
 
 .footer__icons {
+  border-top: 1px solid #eeeeee;
+  color: #333;
+  padding: 14.5px 0;
+}
+
+.footer__icons-container {
   display: flex;
   align-items: center;
-  color: #333;
   line-height: 150%;
 }
 
-.icon-like {
+.footer__icons .icon {
   width: 21px;
   height: 21px;
   margin-right: 3px;
-  background-color: rebeccapurple;
 }
 
 .like-count {
@@ -344,13 +348,12 @@
 .icon-share {
   width: 21px;
   height: 21px;
-  background-color: rebeccapurple;
+  background-color: var(--grey_50);
 }
 
 .icon-comment {
   width: 21px;
   height: 21px;
-  background-color: rebeccapurple;
   margin-left: auto;
   margin-right: 3px;
 }
