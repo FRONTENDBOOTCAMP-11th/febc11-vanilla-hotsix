@@ -46,7 +46,7 @@ export class Navbar extends HTMLElement {
     } else if (currentURL.includes('SearchPage')) {
       search.src = '/src/assets/images/nav_search_now.svg';
       search.alt = '검색 페이지로 갈 수 있는 버튼';
-    } else if (currentURL.includes('PostWirtePage')) {
+    } else if (currentURL.includes('PostWritePage')) {
       write.src = '/src/assets/images/nav_write_now.svg';
       write.alt = '글쓰기 페이지로 갈 수 있는 버튼';
     } else if (currentURL.includes('MyPage')) {
