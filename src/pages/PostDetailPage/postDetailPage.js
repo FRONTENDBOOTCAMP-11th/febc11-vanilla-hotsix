@@ -1,18 +1,5 @@
 'use strict';
 
-const subscribeBtn = document.querySelector('.author-info__subscribe-button');
-
-// 구독 버튼을 누르면 버튼 텍스트와 배경색이 바뀌는 함수
-subscribeBtn.addEventListener('click', () => {
-  subscribeBtn.classList.toggle('subscribed');
-
-  if (subscribeBtn.classList.contains('subscribed')) {
-    subscribeBtn.textContent = 'v 구독중';
-  } else {
-    subscribeBtn.textContent = '+ 구독';
-  }
-});
-
 const DUMMY_POST = {
   _id: 1,
   type: 'community',
@@ -26,9 +13,23 @@ const DUMMY_POST = {
       '12년 차 국내 항공사 승무원의 겨울 산티아고 순례길 이야기 연재 중. 커피 한 잔을 벗 삼아 편하게 읽을 수 있는 글쓰기에 꽤나 진심인 편입니다. 후후.',
     subscribers: 108,
   },
-  content:
-    '  그래 지난 화를 요약해 보면 생장에 도착한 나는 도착 당일 바로 첫여정을 시작하기로 마음먹었고 추천받은 목적지인 Val carlos까지 구글맵으로 걸어서 2시간 30분 거리를 확인했다. 그러나 걸어도 걸어도 줄지 않는 시간과 거리에 괴로워했었지.  오후 5시 36분. 세상에 인터넷에서 사진으로만 보다가 직접 내 눈으로 처음 목격한 정식적인(?) 까미노 표식! 아주 반갑기 그지없었다. 왠지 목적지가 가까워진 것만 같은 느낌적인 느낌! 하지만 구글맵의 내 위치는 전혀 그렇지 못했다.',
-  createdAt: new Date(24, 7, 23),
+  content: `<p>
+                그래 지난 화를 요약해 보면 생장에 도착한 나는 도착 당일 바로 첫
+              여정을 시작하기로 마음먹었고 추천받은 목적지인 Val carlos까지
+              구글맵으로 걸어서 2시간 30분 거리를 확인했다. 그러나 걸어도 걸어도
+              줄지 않는 시간과 거리에 괴로워했었지.
+            </p>
+            <img src="https://via.placeholder.com/320x240" alt="" />
+            <span class="article__img-description"
+              >여기가 바로 국경이다! 좌-프랑스, 우-스페인</span
+            >
+            <p>
+               오후 5시 36분. 세상에 인터넷에서 사진으로만 보다가 직접 내 눈으로
+              처음 목격한 정식적인(?) 까미노 표식! 아주 반갑기 그지없었다. 왠지
+              목적지가 가까워진 것만 같은 느낌적인 느낌! 하지만 구글맵의 내
+              위치는 전혀 그렇지 못했다.
+            </p>`,
+  createdAt: new Date(2024, 7, 23),
   tag: [
     '산티아고순례길',
     '트레킹',
@@ -89,7 +90,7 @@ const titleDivNode = document.querySelector('.header__title');
 const subTitleSpanNode = document.querySelector('.header__subtitle');
 const authorSpanNode = document.querySelector('.info__author');
 const timeSpanNode = document.querySelector('.info__time');
-// const contentsNode = document.querySelector('.main__article p');
+const articleNode = document.querySelector('.main__article');
 const tagsSectionNode = document.querySelector('.main__tags');
 const commentsNode = document.querySelector('.comments');
 
@@ -105,6 +106,12 @@ function printHeader() {
   timeSpanNode.innerHTML = `${month} ${day}. ${year}`;
 }
 
+// 게시글 본문 출력하는 함수
+function printArticle() {
+  articleNode.innerHTML = DUMMY_POST.content;
+}
+
+// 태그를 출력하는 함수
 function printTags() {
   DUMMY_POST.tag.forEach(tag => {
     let span = document.createElement('span');
@@ -126,8 +133,11 @@ function printComments() {
 
     let span = document.createElement('span');
     span.innerText = comment.user.name;
+    let kebabMenu = document.createElement('img');
+    kebabMenu.src = '../../assets/images/button-kebab-menu.svg';
     let menuBtn = document.createElement('button');
     menuBtn.setAttribute('class', 'kebab-menu');
+    menuBtn.appendChild(kebabMenu);
     let nameDiv = document.createElement('div');
     nameDiv.setAttribute('class', 'name');
     nameDiv.appendChild(span);
@@ -195,6 +205,7 @@ function printFooter() {
 // 게시글이 추가될 때마다 element를 생성해야 하는 게 아니니까, createElement로 하지 않고, innerHTML로 구현
 window.onload = function () {
   printHeader();
+  printArticle();
   printTags();
   printComments();
   printAuthor();
