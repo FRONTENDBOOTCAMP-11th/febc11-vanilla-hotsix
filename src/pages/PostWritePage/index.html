@@ -10,6 +10,15 @@
   </head>
   <body>
     <div class="wrapper">
+      <div class="modalWindow hidden">
+        <div class="modal-contents">
+          <div class="modal" id="modal-question">발행하시겠습니까?</div>
+          <div class="modal" id="modal-post">발행</div>
+          <div class="modal" id="modal-save">저장</div>
+          <div class="modal" id="modal-inspect">맞춤법 검사</div>
+          <div class="modal" id="modal-cancel">취소</div>
+        </div>
+      </div>
       <header class="header">
         <div class="l_wrapper">
           <div class="header-container">
@@ -85,7 +94,7 @@
 
       <navbar-component></navbar-component>
     </div>
-    <script src="postWrite.js"></script>
+    <script src="postWrite.js" type="module"></script>
     <script src="../../components/navbar/navbar.js" type="module"></script>
   </body>
 </html>
