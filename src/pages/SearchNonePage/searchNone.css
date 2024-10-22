@@ -1,0 +1,93 @@
+/* 스크롤바 숨기기 (인터넷익스플로러, 엣지, 파이어폭스) */
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 스크롤바 숨기기 (크롬, 사파리, 오페라) */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+.l_container {
+  max-width: 480px;
+  height: 100vh;
+  margin: 0 auto;
+
+  background-color: var(--grey_10);
+  overflow: scroll;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px 0;
+  position: relative;
+  background-color: var(--white);
+}
+
+header h1 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.close-btn {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  right: 5%;
+  background-image: url(/src/assets/images/button-close-grey.svg);
+  background-size: cover;
+  border-radius: 50%;
+}
+
+nav .tabs {
+  display: flex;
+  /* justify-content: space-around; */
+  background-color: var(--white);
+}
+
+nav .tabs li {
+  flex-grow: 1;
+  flex-basis: 0;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  border-bottom: 1.5px solid var(--grey_40);
+}
+
+nav .tabs .active {
+  color: var(--mint);
+  border-bottom: 1.5px solid currentColor;
+}
+
+.contents {
+  /* padding: 20px; */
+  background-color: var(--grey_10);
+  height: calc(100vh - 104px - 80px);
+  padding-bottom: 80px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.notify-noresult {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  color: var(--grey_65);
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.notify-noresult img {
+  width: 47px;
+  height: 67px;
+}
