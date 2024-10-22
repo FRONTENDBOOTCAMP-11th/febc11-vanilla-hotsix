@@ -1,9 +1,12 @@
 import axios from 'axios';
 
+// 환경 변수 가져오기
+const apiUrl = import.meta.env.VITE_API_URL;
+
 // response로 받은 img url을 매개변수로 입력
 const getImg = async img => {
   try {
-    const res = await axios.get(`https://11.fesp.shop${img}`, {
+    const res = await axios.get(apiUrl + `${img}`, {
       responseType: 'arraybuffer', // 바이너리 데이터로 받기 위한 설정
     });
 
