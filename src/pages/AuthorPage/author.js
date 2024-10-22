@@ -6,6 +6,7 @@ import getImg from '../../api/getImg';
 // 환경 변수 가져오기
 const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
+console.log(clientId)
 
 // 받아올 유저정보
 const userName = document.querySelector('.author-info__name');
@@ -15,7 +16,7 @@ const userImg = document.querySelector('.author-info__avatar');
 // 유저 정보 받아오기 통신
 const getUserInfo = async () => {
   try {
-    const res = await axios.get(apiUrl + '/users/2', {
+    const res = await axios.get(apiUrl + '/users/1', {
       headers: {
         'client-id': clientId,
       },
@@ -25,7 +26,7 @@ const getUserInfo = async () => {
 
     // 유저정보 넣기
     userName.innerHTML = res.data.item.name;
-    userRole.innerHTML = res.data.item.extra.job;
+    userRole.innerHTML = res.data.item.type;
 
     // 이미지 src 가져오기 (비동기 처리 대기)
     const ImgSrc = await getImg(res.data.item.image);
@@ -57,7 +58,7 @@ const monthNames = [
 
 const getUserPost = async () => {
   try {
-    const res = await axios.get(apiUrl + `/posts/users/15?type=info`, {
+    const res = await axios.get(apiUrl + `/posts/users/1?type=info`, {
       headers: {
         'client-id': clientId,
       },
