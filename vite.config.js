@@ -1,15 +1,19 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
 
 export default defineConfig({
-  build: {
-    rollupOptions: {
-      input: {
-        index: resolve(__dirname, 'index.html'), // 기본 index.html
-        // login: resolve(__dirname, 'src/pages/auth/login.html'), // 추가 HTML 파일
-        // list: resolve(__dirname, 'src/pages/board/list.html'), // 추가 HTML 파일
-        // 필요한 다른 HTML 파일을 여기에 추가
-      },
+  rollupOptions: {
+    input: {
+      main: 'src/pages/MainPage/index.html', // 메인 페이지
+      search: 'src/pages/SearchPage/index.html', // 검색 페이지
+      postWrite: 'src/pages/PostWritePage/index.html', // 글쓰기 페이지
+      postDetail: 'src/pages/PostDetailPage/index.html', // 작가 홈 페이지
+      myPage: 'src/pages/MyPage/index.html', // 마이 페이지
+      login: 'src/pages/LoginPage/index.html', // 로그인 페이지
+      author: 'src/pages/AuthorPage/index.html', // 작가 홈 페이지
     },
+  },
+  server: {
+    host: true, // 또는 '0.0.0.0'으로 설정
+    port: 5173, // 포트 설정 (필요한 경우)
   },
 });

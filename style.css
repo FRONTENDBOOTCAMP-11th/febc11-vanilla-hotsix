@@ -1,96 +1,102 @@
+/* CSS RESET */
+*,
+*::before,
+*::after {
+  margin: unset;
+  margin-block: unset;
+  margin-inline: unset;
+  padding: unset;
+  border: unset;
+  box-sizing: border-box;
+  font: inherit;
+}
+
+/* TYPOGRAPHY */
+@font-face {
+  font-family: 'pretendard';
+  font-style: normal;
+  font-weight: 200;
+  src: url('/src/assets/fonts/Pretendard-Light.otf') format('truetype');
+}
+
+* {
+  font-family: 'pretendard';
+  font-weight: unset;
+  line-height: 1;
+}
+
+/* CUSTOM PROPERTIES */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --black_100: #000;
+  --black_90: #111;
+  --black_80: #231f20;
+  --black_70: #333;
+  --gray_95: #666;
+  --grey_85: #828282;
+  --grey_80: #8e8e8e;
+  --grey_70: #959595;
+  --grey_65: #959595;
+  --grey_60: #aaa;
+  --grey_50: #bbb;
+  --grey_40: #d7d7d7;
+  --grey_30: #ddd;
+  --grey_20: #eee;
+  --grey_15: #f8f8f8;
+  --grey_10: #f9f9f9;
+  --white: #fff;
+  --mint: #00c8be;
+  --purple: #8d4e8e;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* HTML5 elements display reset */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
 }
 
+/* Body defaults */
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  -webkit-font-smoothing: antialiased; /* Smooth fonts on macOS */
+  -moz-osx-font-smoothing: grayscale; /* Smooth fonts on Firefox */
+  text-rendering: optimizeLegibility; /* Better font rendering */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* List styles reset */
+ol,
+ul {
+  list-style: none;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Blockquote and quote reset */
+blockquote,
+q {
+  quotes: none;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: '';
 }
 
-.card {
-  padding: 2em;
+/* Table reset */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
-.read-the-docs {
-  color: #888;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Anchor reset */
+a {
+  text-decoration: none;
+  color: inherit;
 }
