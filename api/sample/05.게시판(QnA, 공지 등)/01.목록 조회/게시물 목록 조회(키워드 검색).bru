@@ -5,14 +5,11 @@ meta {
 }
 
 get {
-  url: {{url}}/posts?type=community&keyword=혼자
+  url: {{url}}/posts?type=info
   body: none
   auth: none
 }
 
 params:query {
-  type: community
-  keyword: 혼자
-  ~keyword: 여행
-  ~type: qna
+  type: info
 }
