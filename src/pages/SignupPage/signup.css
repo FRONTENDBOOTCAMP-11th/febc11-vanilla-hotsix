@@ -87,7 +87,7 @@ input[type='password'] {
   font-size: 12px;
 }
 
-.feedback.hidden {
+.hidden {
   display: none;
 }
 

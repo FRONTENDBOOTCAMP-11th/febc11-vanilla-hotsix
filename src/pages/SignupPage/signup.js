@@ -54,14 +54,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     isEmailValid = re.test(String(email).toLowerCase());
 
-    if (!isEmailValid) {
-      emailFeedback.classList.remove('hidden');
-      emailFeedback.textContent = '유효하지 않은 이메일 주소입니다.';
-      emailFeedback.style.color = '#fc3b75';
-    } else {
+    if (email.trim() === '') {
+      emailFeedback.classList.add('hidden'); // 입력값이 없으면 피드백 숨기기
       emailFeedback.textContent = '';
-      isEmailChecked = false; // 중복 확인은 아직 필요함!
+      isEmailValid = false;
+      isEmailChecked = false;
+    } else {
+      if (!isEmailValid) {
+        emailFeedback.classList.remove('hidden');
+        emailFeedback.textContent = '유효하지 않은 이메일 주소입니다.';
+        emailFeedback.style.color = '#fc3b75';
+      } else {
+        emailFeedback.textContent = '';
+        isEmailChecked = false; // 중복 확인은 아직 필요함!
+      }
     }
+    checkFormValidity();
   });
 
   // 이메일 중복 확인
@@ -104,15 +112,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const passwordCriteria = /(?=.*\d)(?=.*[A-Z]).{8,}/;
     isPasswordValid = passwordCriteria.test(password);
 
-    if (isPasswordValid) {
-      passwordFeedback.classList.remove('hidden');
-      passwordFeedback.textContent = '사용할 수 있는 비밀번호입니다.';
-      passwordFeedback.style.color = 'var(--mint)';
+    if (password.trim() === '') {
+      passwordFeedback.classList.add('hidden'); // 입력값이 없으면 피드백 숨기기
+      passwordFeedback.textContent = '';
+      isPasswordValid = false;
     } else {
-      passwordFeedback.classList.remove('hidden');
-      passwordFeedback.textContent =
-        '대소문자, 숫자 조합 8자 이상이어야 합니다.';
-      passwordFeedback.style.color = '#fc3b75';
+      if (isPasswordValid) {
+        passwordFeedback.classList.remove('hidden');
+        passwordFeedback.textContent = '사용할 수 있는 비밀번호입니다.';
+        passwordFeedback.style.color = 'var(--mint)';
+      } else {
+        passwordFeedback.classList.remove('hidden');
+        passwordFeedback.textContent =
+          '대소문자, 숫자 조합 8자 이상이어야 합니다.';
+        passwordFeedback.style.color = '#fc3b75';
+      }
     }
     checkFormValidity();
   });
@@ -121,14 +135,20 @@ document.addEventListener('DOMContentLoaded', function () {
   confirmPasswordInput.addEventListener('input', function () {
     isPasswordConfirmed = confirmPasswordInput.value === passwordInput.value;
 
-    if (isPasswordConfirmed) {
-      passwordFeedback.classList.remove('hidden');
-      passwordFeedback.textContent = '비밀번호가 일치합니다.';
-      passwordFeedback.style.color = 'var(--mint)';
+    if (confirmPasswordInput.value.trim() === '') {
+      passwordFeedback.classList.add('hidden'); // 입력값이 없으면 피드백 숨기기
+      passwordFeedback.textContent = '';
+      isPasswordConfirmed = false;
     } else {
-      passwordFeedback.classList.remove('hidden');
-      passwordFeedback.textContent = '비밀번호가 일치하지 않습니다.';
-      passwordFeedback.style.color = '#fc3b75';
+      if (isPasswordConfirmed) {
+        passwordFeedback.classList.remove('hidden');
+        passwordFeedback.textContent = '비밀번호가 일치합니다.';
+        passwordFeedback.style.color = 'var(--mint)';
+      } else {
+        passwordFeedback.classList.remove('hidden');
+        passwordFeedback.textContent = '비밀번호가 일치하지 않습니다.';
+        passwordFeedback.style.color = '#fc3b75';
+      }
     }
     checkFormValidity();
   });
