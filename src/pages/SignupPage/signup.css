@@ -35,7 +35,7 @@ body {
 }
 
 .password-input,
-.password-check-input {
+.password-confirm-input {
   display: flex;
   align-items: center;
   margin-bottom: 10px;

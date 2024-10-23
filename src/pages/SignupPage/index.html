@@ -14,12 +14,15 @@
       <form>
         <div class="nickname-input">
           <input type="text" id="nickname" placeholder="별명" required />
-          <button type="button" class="check-button">중복확인</button>
+          <!-- <button type="button" class="check-button">중복확인</button> -->
         </div>
 
         <div class="email-input">
           <input type="email" id="email" placeholder="이메일" required />
-          <button type="button" class="check-button">중복확인</button>
+          <button type="button" class="check-button" id="check-email">
+            중복확인
+          </button>
+          <small id="email-feedback"></small>
         </div>
 
         <div class="password-input">
@@ -29,21 +32,29 @@
             placeholder="비밀번호"
             required
           />
-          <button type="button" class="eye-icon"></button>
+          <button type="button" class="eye-icon" id="toggle-password"></button>
+          <small id="password-feedback"></small>
         </div>
 
-        <div class="password-check-input">
+        <div class="password-confirm-input">
           <input
             type="password"
             id="confirm-password"
             placeholder="비밀번호 확인"
             required
           />
-          <button type="button" class="eye-icon"></button>
+          <button
+            type="button"
+            class="eye-icon"
+            id="toggle-confirm-password"
+          ></button>
+          <small id="confirm-password-feedback"></small>
         </div>
 
         <button type="submit" class="signup-button">회원가입</button>
       </form>
     </div>
+
+    <script src="signup.js" type="module"></script>
   </body>
 </html>
