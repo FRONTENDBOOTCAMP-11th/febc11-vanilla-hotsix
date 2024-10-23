@@ -21,8 +21,13 @@
       </div>
 
       <form class="login">
-        <input type="email" placeholder="이메일" required />
-        <input type="password" placeholder="비밀번호" required />
+        <input type="email" placeholder="이메일" required autocomplete="off" />
+        <input
+          type="password"
+          placeholder="비밀번호"
+          required
+          autocomplete="off"
+        />
         <label class="remember_login">
           <input type="checkbox" />
           <span class="checkbox-icon"></span>
@@ -32,5 +37,7 @@
         <button type="button" class="signup-btn">회원가입</button>
       </form>
     </div>
+
+    <script src="login.js" type="module"></script>
   </body>
 </html>
