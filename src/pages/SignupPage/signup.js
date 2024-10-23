@@ -12,7 +12,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const checkEmailButton = document.getElementById('check-email');
   const signupButton = document.querySelector('.signup-button');
 
-  // 상태 추적 변수 초기화
+  // 환경변수
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const clientID = import.meta.env.VITE_CLIENT_ID;
+
+  // 인풋 입력 상태 추적 변수 초기화
   let isNicknameValid = false;
   let isEmailValid = false;
   let isEmailChecked = false;
@@ -60,22 +64,33 @@ document.addEventListener('DOMContentLoaded', function () {
   // 이메일 중복 확인
   checkEmailButton.addEventListener('click', function () {
     const email = emailInput.value;
-    const apiUrl = import.meta.env.VITE_API_URL; // 환경변수 사용
 
     // API 호출
-    fetch(`${apiUrl}/users/email?email=${email}`)
+    fetch(`${apiUrl}/users/email?email=${email}`, {
+      method: 'GET',
+      headers: {
+        'client-id': clientID,
+        'Content-type': 'application/json',
+      },
+    })
       .then(response => response.json())
       .then(data => {
-        if (data.exists) {
-          emailFeedback.textContent = '이미 존재하는 이메일입니다.';
-          emailFeedback.style.color = 'red';
-          isEmailChecked = false;
-        } else {
+        console.log(data);
+
+        if (data.ok) {
           emailFeedback.textContent = '사용할 수 있는 이메일입니다.';
           emailFeedback.style.color = 'green';
           isEmailChecked = true;
+        } else {
+          emailFeedback.textContent = '이미 존재하는 이메일입니다.';
+          emailFeedback.style.color = 'red';
+          isEmailChecked = false;
         }
         checkFormValidity();
+      })
+      .catch(error => {
+        console.log('에러 발생: ', error);
+        alert('이메일 중복 확인 중 오류가 발생했습니다');
       });
   });
 
@@ -108,6 +123,40 @@ document.addEventListener('DOMContentLoaded', function () {
       confirmPasswordFeedback.style.color = 'red';
     }
     checkFormValidity();
+  });
+
+  // 폼 제출 처리
+  signupButton.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const userData = {
+      name: nicknameInput.value,
+      email: emailInput.value,
+      password: passwordInput.value,
+    };
+
+    // 회원가입 API 요청
+    fetch(`${apiUrl}/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'client-id': clientID,
+      },
+      body: JSON.stringify(userData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.ok) {
+          alert('회원가입이 성공적으로 완료되었습니다!');
+          this.window.location.href = '/src/pages/mainPage/index.html'; // 메인 페이지로 리다이렉트
+        } else {
+          alert('회원가입에 실패했습니다: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('에러 발생:', error);
+        alert('회원가입 중 오류가 발생했습니다.');
+      });
   });
 
   // 버튼 초기화
