@@ -61,7 +61,7 @@
                 <span class="job"></span>
               </div>
               <!-- 나중에 이미지로 변경 -->
-              <div class="author__photo"></div>
+              <img class="author__photo" />
             </header>
             <p class="author-info__contents"></p>
             <footer class="author-info__footer">
@@ -73,7 +73,13 @@
         <div class="footer__icons">
           <div class="l_wrapper">
             <div class="footer__icons-container">
-              <img src="../../assets/images/icon-like.svg" class="icon" />
+              <button id="bookmarkBtn">
+                <img
+                  src="../../assets/images/icon-like.svg"
+                  class="icon"
+                  id="icon-like"
+                />
+              </button>
               <span class="like-count"></span>
               <img src="../../assets/images/icon-share.svg" class="icon" />
               <img
@@ -86,7 +92,7 @@
         </div>
       </footer>
     </div>
-    <script src="postDetailPage.js"></script>
+    <script src="postDetailPage.js" type="module"></script>
     <script src="../../components/header/header.js" type="module"></script>
     <script
       src="../../components/subscribe/subscribe.js"
