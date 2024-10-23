@@ -28,3 +28,7 @@ yarn-error.log*
 # 테스트 결과 및 임시 파일
 coverage/
 *.log
+
+# DB
+api/sample/
+api/sample/environments/openmarket-sample.bru
