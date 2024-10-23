@@ -147,6 +147,8 @@ document.addEventListener('DOMContentLoaded', function () {
       eyeIconPassword.style.backgroundImage =
         'url(/src/assets/images/IconEye.png)';
     }
+
+    passwordInput.focus(); // 아이콘 클릭 후 포커스를 다시 인풋 필드로 이동
   });
 
   eyeIconConfirmPassword.addEventListener('click', function () {
@@ -162,7 +164,10 @@ document.addEventListener('DOMContentLoaded', function () {
       eyeIconConfirmPassword.style.backgroundImage =
         'url(/src/assets/images/IconEye.png)';
     }
+
+    confirmPasswordInput.focus(); // 아이콘 클릭 후 포커스를 다시 인풋 필드로 이동
   });
+
   // 회원가입 폼 요청 제출 처리
   form.addEventListener('submit', function (e) {
     e.preventDefault();
