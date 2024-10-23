@@ -25,6 +25,7 @@ const getUserInfo = async () => {
         'Content-Type': 'application/json',
       },
     });
+    console.log(res);
 
     // 유저정보 넣기
     userName.innerHTML = res.data.item.name;
