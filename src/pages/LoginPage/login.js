@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
           localStorage.setItem(`accessToken`, data.item.token.accessToken);
           localStorage.setItem(`refreshToken`, data.item.token.refreshToken);
           localStorage.setItem(`email`, email);
-          localStorage.setItem(`password`, password);
         } else {
           sessionStorage.setItem(`accessToken`, data.item.token.accessToken);
           sessionStorage.setItem(`refreshToken`, data.item.token.refreshToken);
@@ -91,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // 이전 페이지로 리다이렉트 (저장된 URL로 이동, 기본값은 메인 페이지 url)
         const redirectUrl =
           sessionStorage.getItem('prevPage') ||
-          'http://192.168.45.139:5173/src/pages/MainPage/index.html';
+          '/src/pages/MainPage/index.html';
         window.location.href = redirectUrl;
 
         // URL 삭제 (한 번 리다이렉트 후, 다음에는 적용되지 않도록)
@@ -112,17 +111,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // '회원가입' 버튼을 누르면 회원가입 페이지로 이동
   signupButton.addEventListener('click', function () {
-    window.location.href =
-      'http://192.168.45.139:5173/src/pages/signupPage/index.html';
+    window.location.href = '/src/pages/signupPage/index.html';
   });
 
   // 로그인 정보 저장 여부에 따라 인풋 필드 설정
   if (localStorage.getItem('email') && localStorage.getItem('password')) {
     emailInput.value = localStorage.getItem('email');
-    passwordInput.value = localStorage.getItem('password');
   } else {
     emailInput.value = '';
-    passwordInput.value = '';
   }
 
   // form 유효성 검사 --> 로그인 버튼 비활성화 상태로 초기화
