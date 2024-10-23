@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Elements
+  const form = document.querySelector('form');
   const nicknameInput = document.getElementById('nickname');
   const emailInput = document.getElementById('email');
   const emailFeedback = document.getElementById('email-feedback');
@@ -125,14 +126,16 @@ document.addEventListener('DOMContentLoaded', function () {
     checkFormValidity();
   });
 
-  // 폼 제출 처리
-  signupButton.addEventListener('submit', function (e) {
+  // 회원가입 폼 요청 제출 처리
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
 
     const userData = {
-      name: nicknameInput.value,
       email: emailInput.value,
       password: passwordInput.value,
+      name: nicknameInput.value,
+      type: 'user',
+      image: '',
     };
 
     // 회원가입 API 요청
@@ -148,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(data => {
         if (data.ok) {
           alert('회원가입이 성공적으로 완료되었습니다!');
-          this.window.location.href = '/src/pages/mainPage/index.html'; // 메인 페이지로 리다이렉트
+          window.location.href = '/src/pages/mainPage/index.html'; // 메인 페이지로 리다이렉트
         } else {
           alert('회원가입에 실패했습니다: ' + data.message);
         }
