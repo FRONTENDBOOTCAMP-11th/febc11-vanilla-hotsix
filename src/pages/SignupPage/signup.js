@@ -3,14 +3,15 @@ document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('form');
   const nicknameInput = document.getElementById('nickname');
   const emailInput = document.getElementById('email');
+  const checkEmailButton = document.getElementById('check-email');
   const emailFeedback = document.getElementById('email-feedback');
   const passwordInput = document.getElementById('password');
   const passwordFeedback = document.getElementById('password-feedback');
+  const eyeIconPassword = document.getElementById('toggle-password');
   const confirmPasswordInput = document.getElementById('confirm-password');
-  const confirmPasswordFeedback = document.getElementById(
-    'confirm-password-feedback',
+  const eyeIconConfirmPassword = document.getElementById(
+    'toggle-confirm-password',
   );
-  const checkEmailButton = document.getElementById('check-email');
   const signupButton = document.querySelector('.signup-button');
 
   // 환경변수
@@ -132,6 +133,36 @@ document.addEventListener('DOMContentLoaded', function () {
     checkFormValidity();
   });
 
+  // 비밀번호 보이기/숨기기
+  eyeIconPassword.addEventListener('click', function () {
+    const passwordInput = document.getElementById('password');
+    const currentType = passwordInput.getAttribute('type');
+
+    if (currentType === 'password') {
+      passwordInput.setAttribute('type', 'text');
+      eyeIconPassword.style.backgroundImage =
+        'url(/src/assets/images/IconEyeClosed.svg)';
+    } else {
+      passwordInput.setAttribute('type', 'password');
+      eyeIconPassword.style.backgroundImage =
+        'url(/src/assets/images/IconEye.png)';
+    }
+  });
+
+  eyeIconConfirmPassword.addEventListener('click', function () {
+    const confirmPasswordInput = document.getElementById('confirm-password');
+    const currentType = confirmPasswordInput.getAttribute('type');
+
+    if (currentType === 'password') {
+      confirmPasswordInput.setAttribute('type', 'text');
+      eyeIconConfirmPassword.style.backgroundImage =
+        'url(/src/assets/images/IconEyeClosed.svg)';
+    } else {
+      confirmPasswordInput.setAttribute('type', 'password');
+      eyeIconConfirmPassword.style.backgroundImage =
+        'url(/src/assets/images/IconEye.png)';
+    }
+  });
   // 회원가입 폼 요청 제출 처리
   form.addEventListener('submit', function (e) {
     e.preventDefault();
