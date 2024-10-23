@@ -7,12 +7,12 @@
   position: fixed;
   top: 0;
   z-index: 2;
-  background-color: #fff;
+  background-color: var(--white);
   max-width: 480px;
-  border-bottom: 1px solid #E0E0E0;
+  border-bottom: 1px solid var(--grey_35);
 }
 .change_container {
-  background-color: #f8f8f8;
+  background-color: var(--grey_15);
   border-bottom: none;
 }
 .brunchstory {
@@ -43,14 +43,14 @@
 }
 .profile {
   border-radius: 50%;
-  background-color: #ccc;
+  background-color: var(--grey_65);
 }
 .start{
   width: 62px;
   height: 24px;
   border-radius: 15px;
-  background-color: #231F20;
-  color: #FFF;
+  background-color: var(--black_80);
+  color: var(--white);
   font-size: 10px;
   font-weight: 400;
   line-height: 1.5;

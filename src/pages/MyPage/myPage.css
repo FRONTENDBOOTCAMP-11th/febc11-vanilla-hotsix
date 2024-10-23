@@ -16,7 +16,7 @@
   margin-top: 34px;
 }
 .mybox-category {
-  color: #111;
+  color: var(--black_90);
   font-size: 19px;
   font-weight: 600;
   display: flex;
@@ -51,12 +51,12 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: #CCC;
+  background-color: var(--grey_65);
   color: transparent;
 }
 .author-profile__name{
   font-size: 13px;
-  color: #959595;
+  color: var(--grey_70);
   font-weight: 300;
   max-width: 70px;
   overflow: hidden;
@@ -70,12 +70,12 @@
 .post-img{
   width: 123px;
   height: 172px;
-  background-color: #CCC;
+  background-color: var(--grey_65);
   color: transparent;
 }
 .post-img-info{
   position: absolute;
-  background-color: #FFF;
+  background-color: var(--white);
   z-index: 2;
   width: 70px;
   height: 92px;
@@ -88,7 +88,7 @@
   padding: 10px 9px;
 }
 .post-img-title{
-  color: #333;
+  color: var(--black_70);
   font-size: 10.75px;
   font-weight: 300;
   overflow: hidden;
@@ -98,7 +98,7 @@
   text-overflow: ellipsis;
 }
 .post-img-author{
-  color: #959595;
+  color: var(--grey_70);
   font-weight: 300;
   font-size: 7.6px;
   overflow: hidden;
@@ -108,7 +108,7 @@
   text-overflow: ellipsis;
 }
 .post-title{
-  color: #111;
+  color: var(--black_90);
   font-size: 12px;
   font-weight: 400;
   max-width: 100px;
@@ -118,7 +118,7 @@
 }
 .post-author{
   font-size: 13px;
-  color: #BBB;
+  color: var(--grey_55);
   font-weight: 300;
   max-width: 100px;
   overflow: hidden;
