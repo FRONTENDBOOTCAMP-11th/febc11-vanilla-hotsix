@@ -7,19 +7,19 @@ export class Navbar extends HTMLElement {
     this.innerHTML = `
       <nav class="navbar-container">
         <a class="navbar-controller">
-          <img id="nav-home" src="../../assets/images/nav_home.svg"/>
+          <img id="nav-home" src="/src/assets/images/nav_home.svg"/>
           홈
         </a>
         <a class="navbar-controller">
-          <img id="nav-search" src="../../assets/images/nav_search.svg"/>
+          <img id="nav-search" src="/src/assets/images/nav_search.svg"/>
           발견
         </a>
         <a class="navbar-controller">
-          <img id="nav-write" src="../../assets/images/nav_write.svg"/>
+          <img id="nav-write" src="/src/assets/images/nav_write.svg"/>
           글쓰기
         </a>
         <a class="navbar-controller">
-          <img id="nav-mybox" src="../../assets/images/nav_mybox.svg"/>
+          <img id="nav-mybox" src="/src/assets/images/nav_mybox.svg"/>
           내 서랍
         </a>
       </nav>
