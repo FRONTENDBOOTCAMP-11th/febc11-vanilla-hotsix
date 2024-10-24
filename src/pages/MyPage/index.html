@@ -1,43 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/style.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 아이콘 설정 -->
+    <link rel="icon" type="image/svg+xml" href="/public/Image.svg" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="./myPage.css" />
+
+    <!-- Components CSS -->
     <link rel="stylesheet" href="../../components/header/header.css" />
     <link rel="stylesheet" href="../../components/navbar/navbar.css" />
     <link rel="stylesheet" href="../../components/subscribe/subscribe.css" />
+
+    <!-- Components -->
     <script src="../../components/header/header.js" type="module"></script>
     <script src="../../components/navbar/navbar.js" type="module"></script>
     <script
       src="../../components//subscribe/subscribe.js"
       type="module"
     ></script>
-  <title>내 서랍</title>
-</head>
-<body>
-  <div class="l_wrapper">
-    <header-component></header-component>
+    <title>내 서랍</title>
+  </head>
+  <body>
+    <div class="l_wrapper">
+      <header-component></header-component>
 
-    <div class="container">
-      <div class="mybox-container">
-        <h2 class="mybox-category">관심 작가</h2>
-        <div class="mybox-contents-slider author"></div>
+      <div class="container">
+        <div class="mybox-container">
+          <h2 class="mybox-category">관심 작가</h2>
+          <div class="mybox-contents-slider author"></div>
+        </div>
+        <div class="mybox-container">
+          <h2 class="mybox-category">최근 본</h2>
+          <div class="mybox-contents-slider post"></div>
+        </div>
+        <div class="mybox-container">
+          <h2 class="mybox-category">관심 글</h2>
+          <div class="mybox-contents-slider post2"></div>
+        </div>
       </div>
-      <div class="mybox-container">
-        <h2 class="mybox-category">최근 본</h2>
-        <div class="mybox-contents-slider post"></div>
-      </div>
-      <div class="mybox-container">
-        <h2 class="mybox-category">관심 글</h2>
-        <div class="mybox-contents-slider post2"></div>
-      </div>
+
+      <navbar-component></navbar-component>
     </div>
 
-    <navbar-component></navbar-component>
-  </div>
-
-  <script src="./myPage.js"></script>
-</body>
+    <script type="module" src="./myPage.js"></script>
+  </body>
 </html>

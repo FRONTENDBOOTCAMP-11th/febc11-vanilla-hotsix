@@ -4,11 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>작가 홈</title>
+    <!-- 아이콘 설정 -->
+    <link rel="icon" type="image/svg+xml" href="/public/Image.svg" />
+
+    <!-- CSS -->
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="./author.css" />
+
+    <!-- Components CSS -->
     <link rel="stylesheet" href="../../components/header/header.css" />
     <link rel="stylesheet" href="../../components/navbar/navbar.css" />
     <link rel="stylesheet" href="../../components/subscribe/subscribe.css" />
+
+    <!-- Components -->
     <script src="../../components/header/header.js" type="module"></script>
     <script src="../../components/navbar/navbar.js" type="module"></script>
     <script
@@ -32,11 +40,11 @@
             <div class="flex">
               <div class="author-info__stat">
                 <span class="author-info__label">구독자</span>
-                <span class="author-info__value bookmarkedBy">30</span>
+                <span class="author-info__value bookmarkedBy"></span>
               </div>
               <div class="author-info__stat">
                 <span class="author-info__label">관심작가</span>
-                <span class="author-info__value bookmarked">16</span>
+                <span class="author-info__value bookmarked"></span>
               </div>
             </div>
             <subscribe-component></subscribe-component>
