@@ -16,7 +16,7 @@
   font-family: 'pretendard';
   font-style: normal;
   font-weight: 200;
-  src: url('/src/assets/fonts/Pretendard-Light.otf') format('truetype');
+  src: url('/assets/fonts/Pretendard-Light.otf') format('truetype');
 }
 
 * {
