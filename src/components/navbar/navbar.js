@@ -1,4 +1,5 @@
 'use strict';
+import homeIcon from '/src/assets/images/nav_home.svg';
 
 export class Navbar extends HTMLElement {
   constructor() {
@@ -7,7 +8,7 @@ export class Navbar extends HTMLElement {
     this.innerHTML = `
       <nav class="navbar-container">
         <a class="navbar-controller">
-          <img id="nav-home" src="/src/assets/images/nav_home.svg"/>
+          <img id="nav-home" src='${homeIcon}'/>
           홈
         </a>
         <a class="navbar-controller">
