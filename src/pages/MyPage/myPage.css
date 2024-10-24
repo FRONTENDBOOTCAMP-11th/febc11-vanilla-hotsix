@@ -110,6 +110,7 @@
 .post-img-title {
   color: var(--black_70);
   font-size: 10.75px;
+  line-height: 1.3;
   font-weight: 300;
   overflow: hidden;
   display: -webkit-box;
