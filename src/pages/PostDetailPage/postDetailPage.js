@@ -4,6 +4,8 @@ import getImg from '../../api/getImg';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
+// 토큰 획득
+const token = sessionStorage.getItem('accessToken');
 
 const monthNames = [
   'Jan',
@@ -33,13 +35,12 @@ const getPost = async () => {
     console.log(error);
   }
 };
-getPost();
+let curruntPost = await getPost();
 
 // 게시글을 쓴 작가 정보를 가져오는 함수
 const getAuthorInfo = async () => {
   try {
-    const POST = await getPost();
-    const authorId = POST.user._id;
+    const authorId = curruntPost.user._id;
     const response = await axios.get(`${apiUrl}/users/${authorId}`, {
       headers: {
         'client-id': clientId,
@@ -50,7 +51,7 @@ const getAuthorInfo = async () => {
     console.log(error);
   }
 };
-getAuthorInfo();
+const author = await getAuthorInfo();
 
 // 로그인한 유저 정보를 가져오는 함수
 const getLoginUser = async () => {
@@ -75,7 +76,7 @@ const getLoginUser = async () => {
     console.log(error);
   }
 };
-getLoginUser();
+const loginUser = await getLoginUser();
 
 const titleDivNode = document.querySelector('.header__title');
 const subTitleSpanNode = document.querySelector('.header__subtitle');
@@ -87,45 +88,43 @@ const commentsNode = document.querySelector('.comments');
 
 // header 부분 출력하는 함수
 async function printHeader() {
-  const POST = await getPost();
-  const [date, time] = POST.createdAt.split(' ');
+  const [date, time] = curruntPost.createdAt.split(' ');
   const [year, month, day] = date.split('.');
   const dateObj = new Date(year, month, day);
 
-  titleDivNode.innerHTML = POST.title;
-  subTitleSpanNode.innerHTML = POST.extra.subTitle;
-  authorSpanNode.innerHTML = POST.user.name;
+  titleDivNode.innerHTML = curruntPost.title;
+  subTitleSpanNode.innerHTML = curruntPost.extra.subTitle;
+  authorSpanNode.innerHTML = curruntPost.user.name;
   timeSpanNode.innerHTML = `${monthNames[dateObj.getMonth() - 1]} ${day}. ${year}`;
 }
+printHeader();
 
 // 게시글 본문 출력하는 함수
 async function printArticle() {
-  const POST = await getPost();
   // 포맷을 유지하면서 어떻게 출력할지 고민 필요!
-  articleNode.innerHTML = POST.content;
+  articleNode.innerHTML = curruntPost.content;
 }
 
 // 태그를 출력하는 함수
 async function printTags() {
-  const POST = await getPost();
-  POST.tag?.forEach(tag => {
+  curruntPost.tag?.forEach(tag => {
     let span = document.createElement('span');
     span.className = 'tag';
     span.innerHTML = tag;
     tagsSectionNode.appendChild(span);
   });
 }
+printTags();
 
 // 댓글은 추가될 때마다 태그를 생성해야 하기에 createElement로 작성
 async function printComments() {
-  const POST = await getPost();
-  const replies = POST.replies;
+  const replies = curruntPost.replies;
 
   let commentCount = document.querySelector('.count-num');
-  commentCount.innerHTML = POST.replies.length;
+  commentCount.innerHTML = curruntPost.replies.length;
 
   for (let comment of replies) {
-    const [date, time] = POST.createdAt.split(' ');
+    const [date, time] = curruntPost.createdAt.split(' ');
     const [year, month, day] = date.split('.');
     const dateObj = new Date(year, month, day);
     // 유저가 프사를 안 해 놨을 때 지정해놓을 기본 이미지 필요
@@ -185,10 +184,10 @@ async function printComments() {
     commentsNode.appendChild(commentNode);
   }
 }
+printComments();
 
 // 댓글 추가란 렌더링하는 함수
 async function printAddReply() {
-  const loginUser = await getLoginUser();
   const imgSrc = loginUser.image
     ? loginUser.image
     : `/files/${clientId}/user-muzi.webp`;
@@ -215,11 +214,9 @@ async function printAddReply() {
     </div>
   `;
 }
+printAddReply();
 
-// 토근 획득
-const token = sessionStorage.getItem('accessToken');
-
-// 해당글을 북마크 했는지 가져오는 함수
+// 북마크 목록 가져오기
 async function getBookmarks() {
   try {
     const response = await axios.get(`${apiUrl}/bookmarks/post/`, {
@@ -228,27 +225,31 @@ async function getBookmarks() {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.data.item);
     return response.data.item;
   } catch (error) {
     console.log(error);
   }
 }
+let myBookmarkList = await getBookmarks();
+console.log(myBookmarkList);
 
 // 북마크 추가하는 이벤트 리스너
 let bookmarkBtn = document.querySelector('#bookmarkBtn');
-bookmarkBtn.addEventListener('click', async () => {
-  // 현재 포스트의 아이디와 내 북마크 리스트 아이템의 아이디를 비교
-  try {
-    const curruntPost = await getPost();
-    const myBookmarList = await getBookmarks();
+const likeIcon = document.querySelector('#icon-like');
 
-    // 내 북마크 리스트에 현재 포스트가 북마크되어 있지 않다면 : 북마크 추가
-    if (myBookmarList.every(item => item.post._id !== curruntPost._id)) {
+bookmarkBtn.addEventListener('click', async () => {
+  const myBookmarkId = myBookmarkList.find(
+    item => item.post._id === curruntPost._id,
+  );
+  const likeCountSpan = document.querySelector('.like-count');
+  try {
+    // 내 북마크 목록에 현재 게시물의 id와 같은 id를 가진애가 없다면 : 북마크 추가
+    if (!myBookmarkId) {
+      // 하트 아이콘 획득
       const response = await axios.post(
         `${apiUrl}/bookmarks/post`,
         {
-          target_id: `${curruntPost._id}`,
+          target_id: curruntPost._id,
           memo: '',
         },
         {
@@ -258,13 +259,15 @@ bookmarkBtn.addEventListener('click', async () => {
           },
         },
       );
-      console.log(response);
-      console.log(myBookmarList);
-      console.log('북마크 추가');
+      likeIcon.src = '../../assets/images/icon-like.svg';
+      myBookmarkList = await getBookmarks();
+      curruntPost = await getPost();
+      likeCountSpan.innerHTML = curruntPost.bookmarks;
+      console.log(myBookmarkList);
     } else {
       // 북마크 되어 있다면 : 북마크 제거
       const response = await axios.delete(
-        `${apiUrl}/bookmarks/${curruntPost._id}`,
+        `${apiUrl}/bookmarks/${myBookmarkId._id}`,
         {
           headers: {
             'client-id': clientId,
@@ -272,32 +275,30 @@ bookmarkBtn.addEventListener('click', async () => {
           },
         },
       );
-      console.log('북마크 제거');
+      likeIcon.src = '../../assets/images/icon-like_empty.svg';
+      myBookmarkList = await getBookmarks();
+      curruntPost = await getPost();
+      likeCountSpan.innerHTML = curruntPost.bookmarks;
+      console.log(myBookmarkList);
     }
-    console.log(myBookmarList, curruntPost._id);
   } catch (error) {
     console.log(error);
   }
 });
 
-// 북마크 상태에 따라 좋아요 버튼 src 변경하는 함수
+// 북마크 상태에 따라 좋아요 버튼 스타일 변경
 async function printBookmark() {
-  const bookmarkList = await getBookmarks();
-  const curruntPost = await getPost();
-  const likeIcon = document.querySelector('#icon-like');
-
-  if (bookmarkList.some(item => item.post._id == curruntPost._id)) {
+  if (myBookmarkList.some(item => item.post._id == curruntPost._id)) {
     likeIcon.src = '../../assets/images/icon-like.svg';
   } else {
     likeIcon.src = '../../assets/images/icon-like_empty.svg';
   }
 }
+printBookmark();
 
 // 작가란 화면을 출력하는 함수
 async function printAuthor() {
-  const POST = await getPost();
-  const AUTHOR = await getAuthorInfo();
-  const imgSrc = await getImg(AUTHOR.image);
+  const imgSrc = await getImg(author.image);
 
   let authorNickname = document.querySelector('.nickname');
   let authorJob = document.querySelector('.job');
@@ -305,31 +306,18 @@ async function printAuthor() {
   let authorSubs = document.querySelector('#subscriber');
   let authorImg = document.querySelector('.author__photo');
 
-  authorNickname.innerHTML = POST.user.name;
-  authorJob.innerHTML = AUTHOR.extra.job;
-  authorInfo.innerHTML = AUTHOR.extra.biography;
-  authorSubs.innerHTML = AUTHOR.bookmarkedBy.users;
+  authorNickname.innerHTML = curruntPost.user.name;
+  authorJob.innerHTML = author.extra.job;
+  authorInfo.innerHTML = author.extra.biography;
+  authorSubs.innerHTML = author.bookmarkedBy.users;
   authorImg.src = imgSrc;
 }
+printAuthor();
 
 async function printFooter() {
-  const POST = await getPost();
-  const AUTHOR = await getAuthorInfo();
-
   let likeCount = document.querySelector('.like-count');
   let commentCount = document.querySelector('.comment-count');
-  likeCount.innerHTML = POST.bookmarks;
-  commentCount.innerHTML = POST.replies.length;
+  likeCount.innerHTML = curruntPost.bookmarks;
+  commentCount.innerHTML = curruntPost.replies.length;
 }
-
-// 게시글이 추가될 때마다 element를 생성해야 하는 게 아니니까, createElement로 하지 않고, innerHTML로 구현
-window.onload = function () {
-  printHeader();
-  // printArticle();
-  printTags();
-  printComments();
-  printAddReply();
-  printAuthor();
-  printBookmark();
-  printFooter();
-};
+printFooter();
