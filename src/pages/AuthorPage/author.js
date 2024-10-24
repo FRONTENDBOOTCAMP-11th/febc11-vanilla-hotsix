@@ -9,6 +9,12 @@ import getImg from '../../api/getImg';
 const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
+// 유저 id 가져오기
+// URL에서 postId 추출하기
+const params = new URLSearchParams(window.location.search);
+const userId = params.get('userId');
+console.log(userId)
+
 // 받아올 유저정보
 const userName = document.querySelector('.author-info__name');
 const userRole = document.querySelector('.author-info__role');
@@ -19,7 +25,7 @@ const bookmarked = document.querySelector('.bookmarked'); // 관심작가
 // 유저 정보 받아오기 통신
 const getUserInfo = async () => {
   try {
-    const res = await axios.get(apiUrl + `/users/2`, {
+    const res = await axios.get(`${apiUrl}/users/${userId}`, {
       headers: {
         'client-id': clientId,
         'Content-Type': 'application/json',
@@ -64,7 +70,7 @@ const monthNames = [
 // 해당 유저의 게시물 목록 가져오기
 const getUserPost = async () => {
   try {
-    const res = await axios.get(apiUrl + `/posts/users/2?type=info`, {
+    const res = await axios.get(apiUrl + `/posts/users/${userId}?type=info`, {
       headers: {
         'client-id': clientId,
         'Content-Type': 'application/json',
