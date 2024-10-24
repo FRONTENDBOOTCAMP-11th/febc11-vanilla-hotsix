@@ -35,7 +35,7 @@ body {
 }
 
 .password-input,
-.password-check-input {
+.password-confirm-input {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -73,6 +73,22 @@ input[type='password'] {
   border-radius: 20px;
   padding: 5px 9px;
   cursor: pointer;
+}
+
+#email-feedback {
+  position: absolute;
+  transform: translateY(32px);
+  font-size: 12px;
+}
+
+#password-feedback {
+  position: absolute;
+  transform: translateY(34px);
+  font-size: 12px;
+}
+
+.hidden {
+  display: none;
 }
 
 .eye-icon {
