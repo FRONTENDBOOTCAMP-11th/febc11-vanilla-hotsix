@@ -1,3 +1,9 @@
+/* CSS Resets */
+img {
+  max-width: 100%;
+  object-fit: contain;
+}
+
 /* Layouts */
 .l_wrapper {
   padding: 0 20px;

@@ -25,6 +25,7 @@ const monthNames = [
 // 게시글 정보를 가져오는 함수
 const getPost = async () => {
   try {
+    // 엔드 포인트 동적으로 수정 필요
     const response = await axios.get(`${apiUrl}/posts/1`, {
       headers: {
         'client-id': clientId,
@@ -78,6 +79,7 @@ const getLoginUser = async () => {
 };
 const loginUser = await getLoginUser();
 
+const pageTitleNode = document.querySelector('title');
 const titleDivNode = document.querySelector('.header__title');
 const subTitleSpanNode = document.querySelector('.header__subtitle');
 const authorSpanNode = document.querySelector('.info__author');
@@ -86,6 +88,8 @@ const articleNode = document.querySelector('.main__article');
 const tagsSectionNode = document.querySelector('.main__tags');
 const commentsNode = document.querySelector('.comments');
 
+// 페이지 탭 제목 동적 출력
+pageTitleNode.innerText = curruntPost.title;
 // header 부분 출력하는 함수
 async function printHeader() {
   const [date, time] = curruntPost.createdAt.split(' ');
@@ -101,9 +105,41 @@ printHeader();
 
 // 게시글 본문 출력하는 함수
 async function printArticle() {
-  // 포맷을 유지하면서 어떻게 출력할지 고민 필요!
+  // 1차적으로 가져온 content를 HTML로 변환하여 삽입
   articleNode.innerHTML = curruntPost.content;
+
+  // content 안에 img 태그 찾기
+  const images = articleNode.querySelectorAll('img');
+  const imgWrappers = articleNode.querySelectorAll('.wrap_img_float');
+  console.log(imgWrappers);
+  console.log(images);
+
+  // 사용자가 이미지를 넣었다면 실행
+  if (images || imgWrappers) {
+    // image 감싸고 있는 div의 고정 너비값 없애기
+    for (const item of imgWrappers) {
+      item.removeAttribute('style');
+    }
+
+    // 각 img 태그의 src 속성에서 경로부분만 추출하고, API로 요청
+    for (const img of images) {
+      const src = img.getAttribute('src');
+
+      if (src) {
+        try {
+          // API 요청 : getImg 함수에 추출한 경로를 넘겨줌
+          const newSrc = await getImg(src);
+
+          // 이미지 태그의 src 속성을 완전히 새로운 Blob URL로 대체
+          img.src = newSrc;
+        } catch (error) {
+          console.error('이미지 요청 중 오류 발생', error);
+        }
+      }
+    }
+  }
 }
+await printArticle();
 
 // 태그를 출력하는 함수
 async function printTags() {
@@ -231,7 +267,6 @@ async function getBookmarks() {
   }
 }
 let myBookmarkList = await getBookmarks();
-console.log(myBookmarkList);
 
 // 북마크 추가하는 이벤트 리스너
 let bookmarkBtn = document.querySelector('#bookmarkBtn');
@@ -263,7 +298,6 @@ bookmarkBtn.addEventListener('click', async () => {
       myBookmarkList = await getBookmarks();
       curruntPost = await getPost();
       likeCountSpan.innerHTML = curruntPost.bookmarks;
-      console.log(myBookmarkList);
     } else {
       // 북마크 되어 있다면 : 북마크 제거
       const response = await axios.delete(
@@ -279,7 +313,6 @@ bookmarkBtn.addEventListener('click', async () => {
       myBookmarkList = await getBookmarks();
       curruntPost = await getPost();
       likeCountSpan.innerHTML = curruntPost.bookmarks;
-      console.log(myBookmarkList);
     }
   } catch (error) {
     console.log(error);
