@@ -10,7 +10,6 @@ const token = sessionStorage.getItem('accessToken');
 // URL에서 postId 추출하기
 const params = new URLSearchParams(window.location.search);
 const postId = params.get('postId');
-console.log(postId);
 
 const monthNames = [
   'Jan',
@@ -36,6 +35,24 @@ const getPost = async () => {
         'client-id': clientId,
       },
     });
+    console.log(response.data.item);
+
+    // 최근 본 게시글 저장하기
+    // 기존 게시글 배열을 불러오기 (없으면 빈 배열 생성)
+    let posts = JSON.parse(localStorage.getItem('posts')) || [];
+
+    // 중복 여부 확인: 동일한 ID가 있는지 확인
+    const isDuplicate = posts.some(post => post._id === response.data.item._id);
+
+    // 이미 존재하는 글이 아니라면,
+    if (!isDuplicate) {
+      // 스프레드 문법으로 새로운 게시글을 추가하여 배열 업데이트
+      posts = [...posts, response.data.item];
+  
+      // 업데이트된 배열을 다시 localStorage에 저장
+      localStorage.setItem('posts', JSON.stringify(posts));
+    }
+
     return response.data.item;
   } catch (error) {
     console.log(error);
