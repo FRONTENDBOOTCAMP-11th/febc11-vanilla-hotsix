@@ -17,7 +17,7 @@
 }
 .brunchstory {
   color: transparent;
-  background-image: url('../../assets/images/LOGO.png');
+  background-image: url('/assets/images/LOGO.png');
   background-size: cover;
   background-position: center;
   width: 120px;
@@ -36,10 +36,10 @@
   background-color: transparent;
 }
 .notification {
-  background-image: url('../../assets/images/notification.svg');
+  background-image: url('/assets/images/notification.svg');
 }
 .search {
-  background-image: url('../../assets/images/search.svg');
+  background-image: url('/assets/images/search.svg');
 }
 .profile {
   border-radius: 50%;
