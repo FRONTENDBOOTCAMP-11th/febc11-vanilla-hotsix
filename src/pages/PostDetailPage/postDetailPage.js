@@ -7,6 +7,11 @@ const clientId = import.meta.env.VITE_CLIENT_ID;
 // 토큰 획득
 const token = sessionStorage.getItem('accessToken');
 
+// URL에서 postId 추출하기
+const params = new URLSearchParams(window.location.search);
+const postId = params.get('postId');
+console.log(postId);
+
 const monthNames = [
   'Jan',
   'Feb',
@@ -26,7 +31,7 @@ const monthNames = [
 const getPost = async () => {
   try {
     // 엔드 포인트 동적으로 수정 필요
-    const response = await axios.get(`${apiUrl}/posts/1`, {
+    const response = await axios.get(`${apiUrl}/posts/${postId}`, {
       headers: {
         'client-id': clientId,
       },
