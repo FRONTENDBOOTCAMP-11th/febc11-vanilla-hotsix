@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>search page</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/src/components/navbar/navbar.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="l_container">
+      <section class="search-section">
+        <form id="search-form">
+          <input class="search-input" type="text" placeholder="검색어 입력" />
+          <button type="submit" style="display: none">Submit</button>
+        </form>
+      </section>
+
+      <section class="recommend-section">
+        <p class="recommend-description">추천 작가 키워드</p>
+        <h2 class="recommend-title">
+          일상의 따뜻한 위로, <span>그림</span> 작가를 만나요
+        </h2>
+        <ul class="tags">
+          <li class="tag">한의사</li>
+          <li class="tag">출간작가</li>
+          <li class="tag">에세이스트</li>
+        </ul>
+      </section>
+
+      <section class="result-section" style="display: none">
+        <nav></nav>
+        <div class="contents">
+          <section class="search-info"></section>
+          <section class="articles"></section>
+        </div>
+      </section>
+
+      <!-- <section class="recent-section">
+        <p class="recent-description">최근검색어</p>
+        <ul class="history-list">
+          <li class="history-item">
+            사진꿀
+            <button class="delete-btn"></button>
+          </li>
+          <li class="history-item">
+            꿀
+            <button class="delete-btn"></button>
+          </li>
+        </ul>
+      </section> -->
+
+      <navbar-component></navbar-component>
+    </div>
+
+    <script src="/src/components/navbar/navbar.js" type="module"></script>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
