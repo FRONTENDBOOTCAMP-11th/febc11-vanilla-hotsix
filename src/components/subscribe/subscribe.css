@@ -9,15 +9,15 @@
   margin-left: auto;
 }
 .sub_now {
-  color: #fff;
-  background-color: #00c6be;
+  color: var(--white);
+  background-color: var(--mint_2);
   border-radius: 20px;
 }
 .sub_not {
-  border: 1px solid #00c6be;
-  background: #fff;
+  border: 1px solid var(--mint_2);
+  background: var(--white);
   border-radius: 40px;
-  color: #00c6be;
+  color: var(--mint_2);
   font-weight: 400;
   font-size: 14px;
 }

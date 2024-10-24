@@ -1,3 +1,9 @@
+/* CSS Resets */
+img {
+  max-width: 100%;
+  object-fit: contain;
+}
+
 /* Layouts */
 .l_wrapper {
   padding: 0 20px;
@@ -70,6 +76,7 @@
 .main__article p {
   font-size: 17.3px;
   color: #1b1b1b;
+  margin: 10px 0;
   font-weight: 300;
   line-height: 160%;
 }
@@ -77,6 +84,13 @@
 .main__article img {
   aspect-ratio: 1.33 / 1;
   margin-top: 28px;
+}
+
+.blockquote_type1 {
+  padding-left: 15px;
+  border-left: 3px solid #ccc;
+  margin: 10px 0;
+  font-style: italic;
 }
 
 .article__img-description {
@@ -338,6 +352,10 @@
   width: 21px;
   height: 21px;
   margin-right: 3px;
+}
+
+#bookmarkBtn {
+  background-color: white;
 }
 
 .like-count {
