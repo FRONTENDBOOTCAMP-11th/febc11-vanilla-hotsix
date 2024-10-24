@@ -319,7 +319,7 @@ bookmarkBtn.addEventListener('click', async () => {
           },
         },
       );
-      likeIcon.src = '../../assets/images/icon-like.svg';
+      likeIcon.src = '/assets/images/icon-like.svg';
       myBookmarkList = await getBookmarks();
       curruntPost = await getPost();
       likeCountSpan.innerHTML = curruntPost.bookmarks;
@@ -334,7 +334,7 @@ bookmarkBtn.addEventListener('click', async () => {
           },
         },
       );
-      likeIcon.src = '../../assets/images/icon-like_empty.svg';
+      likeIcon.src = '/assets/images/icon-like_empty.svg';
       myBookmarkList = await getBookmarks();
       curruntPost = await getPost();
       likeCountSpan.innerHTML = curruntPost.bookmarks;
