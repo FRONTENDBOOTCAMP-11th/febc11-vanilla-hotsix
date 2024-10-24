@@ -347,9 +347,9 @@ bookmarkBtn.addEventListener('click', async () => {
 // 북마크 상태에 따라 좋아요 버튼 스타일 변경
 async function printBookmark() {
   if (myBookmarkList.some(item => item.post._id == curruntPost._id)) {
-    likeIcon.src = '../../assets/images/icon-like.svg';
+    likeIcon.src = '/assets/images/icon-like.svg';
   } else {
-    likeIcon.src = '../../assets/images/icon-like_empty.svg';
+    likeIcon.src = '/assets/images/icon-like_empty.svg';
   }
 }
 printBookmark();
