@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // 로그인 정보 저장 여부에 따라 인풋 필드 설정
-  if (localStorage.getItem('email') && localStorage.getItem('password')) {
+  if (localStorage.getItem('email')) {
     emailInput.value = localStorage.getItem('email');
   } else {
     emailInput.value = '';
