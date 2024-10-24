@@ -12,35 +12,6 @@ const author = document.querySelector('.author');
 const post = document.querySelector('.post');
 const post2 = document.querySelector('.post2');
 
-const DUMMY_AUTHOR = {
-  list: [
-    {
-      id: 1,
-      name: '장유진',
-      profile: '이미지 URL',
-    },
-    {
-      id: 2,
-      name: '장유진',
-      profile: '이미지 URL',
-    },
-    {
-      id: 3,
-      name: '장유진',
-      profile: '이미지 URL',
-    },
-    {
-      id: 4,
-      name: '장유진',
-      profile: '이미지 URL',
-    },
-    {
-      id: 5,
-      name: '장유진',
-      profile: '이미지 URL',
-    },
-  ],
-};
 const DUMMY_POST = {
   list: [
     {
@@ -85,6 +56,8 @@ const DUMMY_POST = {
 
 // accessToken 가져오기
 const token = localStorage.getItem('accessToken');
+
+// 관심 작가 렌더링
 const getBookedUser = async () => {
   try {
     const res = await axios.get(`${apiUrl}/bookmarks/user`, {
@@ -101,33 +74,32 @@ const getBookedUser = async () => {
     if (bookedUser) {
       author.innerHTML = await Promise.all(
         bookedUser.map(async p => {
-          const imgSrc = await getImg(p.user.image ? p.user.image : '/files/vanilla06/user-neo.webp'); // getImg 함수 호출
+          const imgSrc = await getImg(
+            p.user.image ? p.user.image : '/files/vanilla06/user-neo.webp',
+          ); // getImg 함수 호출
           return `
-            <div class="author-profile">
+            <div class="author-profile" data-id="${p.user._id}">
               <img class="author-profile__img" src="${imgSrc}" />
               <p class="author-profile__name">${p.user.name}</p>
             </div>
           `;
-        })
+        }),
       ).then(htmlStrings => htmlStrings.join(''));
+
+      // 유저 프로필 클릭 시 이벤트 추가
+      document.querySelectorAll('.author-profile').forEach(item => {
+        item.addEventListener('click', () => {
+          const postId = item.getAttribute('data-id');
+          // 게시글 ID를 URL로 전달하여 PostDetailPage로 이동
+          window.location.href = `/src/pages/AuthorPage/index.html?userId=${postId}`;
+        });
+      });
     }
   } catch (err) {
     console.error(err);
   }
 };
 getBookedUser();
-
-// 작가 정보 렌더링
-author.innerHTML = DUMMY_AUTHOR.list
-  .map(a => {
-    return `
-    <div class="author-profile">
-      <div class="author-profile__img">${a.profile}</div>
-      <p class="author-profile__name">${a.name}</p>
-    </div>
-  `;
-  })
-  .join(' ');
 
 // 최근 본 게시글 정보 렌더링
 post.innerHTML = DUMMY_POST.list
@@ -150,6 +122,7 @@ post.innerHTML = DUMMY_POST.list
   })
   .join(' ');
 
+// 관심 글 렌더링
 const getBookedPost = async () => {
   try {
     const res = await axios.get(`${apiUrl}/bookmarks/post`, {
@@ -167,8 +140,9 @@ const getBookedPost = async () => {
       post2.innerHTML = await Promise.all(
         bookedPost.map(async p => {
           const imgUrl = await getImg(p.post.image);
+          console.log(p.post._id);
           return `
-            <div class="author-profile">
+            <div class="post-container" data-id="${p.post._id}">
               <div class="post-img-container">
                 <img class="post-img" src="${imgUrl}"/>
                 <div class="post-img-info">
@@ -178,13 +152,21 @@ const getBookedPost = async () => {
               </div>
     
               <p class="post-title">${p.post.title}</p>
-              <p class="post-author">${p.post.user.name}</p>
+              <p class="post-author"><b>by</b> ${p.post.user.name}</p>
             </div>
           `;
-        })
+        }),
       ).then(htmlStrings => htmlStrings.join(''));
+
+      // 게시글 클릭 시 이벤트 추가
+      document.querySelectorAll('.post-container').forEach(item => {
+        item.addEventListener('click', () => {
+          const postId = item.getAttribute('data-id');
+          // 게시글 ID를 URL로 전달하여 PostDetailPage로 이동
+          window.location.href = `/src/pages/PostDetailPage/index.html?postId=${postId}`;
+        });
+      });
     }
-    
   } catch (err) {
     console.error(err);
   }

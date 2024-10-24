@@ -8,7 +8,7 @@ export class Subscribe extends HTMLElement {
     // 컴포넌트 구조 설정
     this.innerHTML = `
       <button class="author-info__subscribe-button sub_not">
-        <img class="subscribe-icon" src="/src/assets/images/ico-plus.svg" alt="구독 아이콘"/>
+        <img class="subscribe-icon" src="/assets/images/ico-plus.svg" alt="구독 아이콘"/>
         <span class="subscribe-text">구독</span>
       </button>
     `;
@@ -39,14 +39,14 @@ export class Subscribe extends HTMLElement {
 
     if (this.dummy_issub) {
       // 구독 중인 경우
-      buttonIcon.src = '/src/assets/images/ico-check.svg';
+      buttonIcon.src = '/assets/images/ico-check.svg';
       buttonIcon.alt = '구독중 아이콘';
       buttonText.textContent = '구독중';
       subscribeBtn.classList.add('sub_now');
       subscribeBtn.classList.remove('sub_not');
     } else {
       // 구독하지 않은 경우
-      buttonIcon.src = '/src/assets/images/ico-plus.svg';
+      buttonIcon.src = '/assets/images/ico-plus.svg';
       buttonIcon.alt = '구독 아이콘';
       buttonText.textContent = '구독';
       subscribeBtn.classList.add('sub_not');
