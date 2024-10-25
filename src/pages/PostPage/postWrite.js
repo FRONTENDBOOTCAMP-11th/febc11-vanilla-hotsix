@@ -48,6 +48,9 @@ let saveBtn = document.querySelector('#modal-save');
 // let inspectBtn = document.querySelector('#modal-inspect');
 let cancelBtn = document.querySelector('#modal-cancel');
 
+// (1) 이미지 미리보기, (2) 게시글 발행시 이미지 서버 업로드 (3) 게시글 저장시 이미지 서버 업로드에 쓰이므로 전역 변수로 선언.
+const formData = new FormData();
+
 // 발행 버튼 클릭시
 postBtn.addEventListener('click', async () => {
   if (titleInputNode.value.trim() === '') {
@@ -63,19 +66,33 @@ postBtn.addEventListener('click', async () => {
       subtitleInputNode.value,
     );
 
-    console.log(post);
-    // 생성된 게시글 객체 서버로 전송
-    const res = await axios.post(`${apiUrl}/posts`, post, {
-      headers: {
-        'Content-Type': 'application/json',
-        'client-id': clientId,
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    // 첨부한 이미지 파일 서버로 전송
+    try {
+      const response = await axios.post(`${apiUrl}/files`, formData, {
+        headers: {
+          'client-id': clientId,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
-    // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
-    const postId = res.data.item._id;
-    window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
+    // 생성된 게시글 객체 서버로 전송
+    try {
+      const res = await axios.post(`${apiUrl}/posts`, post, {
+        headers: {
+          'Content-Type': 'application/json',
+          'client-id': clientId,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
+      const postId = res.data.item._id;
+      window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
+    } catch (error) {
+      console.log(error);
+    }
+
     // 객체 생성 후 입력칸 초기화
     titleInputNode.value = '';
     subtitleInputNode.value = '';
@@ -96,18 +113,32 @@ saveBtn.addEventListener('click', async () => {
     );
     post.private = true; // post 객체에 private 속성 추가
 
-    console.log(post);
+    // 첨부한 이미지 파일 서버로 전송
+    try {
+      const response = await axios.post(`${apiUrl}/files`, formData, {
+        headers: {
+          'client-id': clientId,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
-    const res = await axios.post(`${apiUrl}/posts`, post, {
-      headers: {
-        'Content-Type': 'application/json',
-        'client-id': clientId,
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
-    const postId = res.data.item._id;
-    window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
+    // 생성된 게시글 객체 서버로 전송
+    try {
+      const res = await axios.post(`${apiUrl}/posts`, post, {
+        headers: {
+          'Content-Type': 'application/json',
+          'client-id': clientId,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
+      const postId = res.data.item._id;
+      window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
+    } catch (error) {
+      console.log(error);
+    }
 
     // 객체 생성 후 입력칸 초기화
     titleInputNode.value = '';
@@ -160,20 +191,8 @@ fileInputNode.addEventListener('change', async e => {
       reader.readAsDataURL(file);
       console.log(file);
 
-      // (2) 서버로 파일 전송 : 추후에 발행버튼 눌렀을 때로 변경할 것.
-      try {
-        const formData = new FormData();
-        formData.append('attach', file); // 파일 데이터 추가
-
-        const response = await axios.post(`${apiUrl}/files/`, formData, {
-          headers: {
-            'client-id': clientId,
-          },
-        });
-        console.log(response);
-      } catch (error) {
-        console.error('파일 업로드에 실패했습니다. 다시 시도해주세요.', error);
-      }
+      // (2) formData에 첨부한 파일 추가
+      formData.append('attach', file);
     }
   }
 });
