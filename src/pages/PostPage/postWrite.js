@@ -103,17 +103,6 @@ saveBtn.addEventListener('click', async () => {
     );
     post.private = true; // post 객체에 private 속성 추가
 
-    // 첨부한 이미지 파일 서버로 전송
-    try {
-      const response = await axios.post(`${apiUrl}/files`, formData, {
-        headers: {
-          'client-id': clientId,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-
     // 생성된 게시글 객체 서버로 전송
     try {
       const res = await axios.post(`${apiUrl}/posts`, post, {
