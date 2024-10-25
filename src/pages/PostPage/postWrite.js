@@ -48,9 +48,6 @@ let saveBtn = document.querySelector('#modal-save');
 // let inspectBtn = document.querySelector('#modal-inspect');
 let cancelBtn = document.querySelector('#modal-cancel');
 
-// (1) 이미지 미리보기, (2) 게시글 발행시 이미지 서버 업로드 (3) 게시글 저장시 이미지 서버 업로드에 쓰이므로 전역 변수로 선언.
-const formData = new FormData();
-
 // 발행 버튼 클릭시
 postBtn.addEventListener('click', async () => {
   if (titleInputNode.value.trim() === '') {
@@ -66,16 +63,7 @@ postBtn.addEventListener('click', async () => {
       subtitleInputNode.value,
     );
 
-    // 첨부한 이미지 파일 서버로 전송
-    try {
-      const response = await axios.post(`${apiUrl}/files`, formData, {
-        headers: {
-          'client-id': clientId,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(post);
 
     // 생성된 게시글 객체 서버로 전송
     try {
@@ -86,6 +74,8 @@ postBtn.addEventListener('click', async () => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      console.log(res, post);
       // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
       const postId = res.data.item._id;
       window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
@@ -176,23 +166,34 @@ uploadImgNode.addEventListener('click', () => {
 // 파일 업로드시 실행될 함수
 fileInputNode.addEventListener('change', async e => {
   const files = e.target.files;
+  // 이터러블 객체인 files를 배열로 변환
   const filesArray = Array.from(files);
+  const formData = new FormData();
 
   if (filesArray) {
     for (const file of filesArray) {
-      // (1) editableDiv 에 미리보기 추가
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        let img = document.createElement('img');
-        img.src = e.target.result;
-        img.style.marginBottom = '20px';
-        editableDiv.appendChild(img);
-      };
-      reader.readAsDataURL(file);
-      console.log(file);
-
-      // (2) formData에 첨부한 파일 추가
+      // 첨부한 이미지 파일을 formData에 삽입
       formData.append('attach', file);
+
+      // 이미지 첨부시 서버로 전송
+      try {
+        const response = await axios.post(`${apiUrl}/files`, formData, {
+          headers: {
+            'client-id': clientId,
+          },
+        });
+        console.log(response);
+        // 응답값에서 path를 이미지 src 속성으로 지정
+        const img = document.createElement('img');
+        img.src = `${apiUrl}${response.data.item[0].path}`;
+        img.style.margin = '10px 0';
+
+        // 이미지 미리보기를 위해 editableDiv에 삽입
+        editableDiv.appendChild(img);
+        console.log(editableDiv.innerHTML);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 });
