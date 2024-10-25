@@ -130,32 +130,13 @@ async function printArticle() {
   // 1차적으로 가져온 content를 HTML로 변환하여 삽입
   articleNode.innerHTML = curruntPost.content;
 
-  // content 안에 img 태그 찾기
-  const images = articleNode.querySelectorAll('img');
+  // content 안에 .wrap_img_float 클래스 찾기(이 div 때문에 이미지에 고정너비가 부여되어 오른쪽으로 overflow)
   const imgWrappers = articleNode.querySelectorAll('.wrap_img_float');
 
-  // 사용자가 이미지를 넣었다면 실행
-  if (images || imgWrappers) {
+  if (imgWrappers) {
     // image 감싸고 있는 div의 고정 너비값 없애기
     for (const item of imgWrappers) {
       item.removeAttribute('style');
-    }
-
-    // 각 img 태그의 src 속성에서 경로부분만 추출하고, API로 요청
-    for (const img of images) {
-      const src = img.getAttribute('src');
-
-      if (src) {
-        try {
-          // API 요청 : getImg 함수에 추출한 경로를 넘겨줌
-          const newSrc = await getImg(src);
-
-          // 이미지 태그의 src 속성을 완전히 새로운 Blob URL로 대체
-          img.src = newSrc;
-        } catch (error) {
-          console.error('이미지 요청 중 오류 발생', error);
-        }
-      }
     }
   }
 }
