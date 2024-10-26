@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>search page</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/src/components/navbar/navbar.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="l_container">
+      <section class="search-section">
+        <form>
+          <input class="search-input" type="text" placeholder="검색어 입력" />
+          <button type="submit" style="display: none">Submit</button>
+        </form>
+      </section>
+
+      <!-- <section class="nav-tab">
+        <ul class="tabs">
+          <li class="active">글</li>
+          <li>작가</li>
+        </ul>
+      </section> -->
+
+      <section class="recommend-section">
+        <p class="recommend-description">추천 작가 키워드</p>
+        <h2 class="recommend-title">
+          일상의 따뜻한 위로, <span>그림</span> 작가를 만나요
+        </h2>
+        <ul class="tags">
+          <li class="tag">한의사</li>
+          <li class="tag">출간작가</li>
+          <li class="tag">에세이스트</li>
+        </ul>
+      </section>
+
+      <section class="recent-section">
+        <p class="recent-description">최근검색어</p>
+        <ul class="history-list">
+          <li class="history-item">
+            사진꿀
+            <button class="delete-btn"></button>
+          </li>
+          <li class="history-item">
+            꿀
+            <button class="delete-btn"></button>
+          </li>
+        </ul>
+      </section>
+
+      <div class="contents">
+        <!-- <section class="search-info">
+          <span>글 검색 결과 800건</span>
+          <ul class="filters">
+            <li class="active">정확도</li>
+            <li>최신</li>
+          </ul>
+        </section> -->
+
+        <!-- <section class="articles">
+          <article>
+            <div class="article-title">
+              <h2>딸의 정부청사 출장에 부모님이 동행하는 이유</h2>
+            </div>
+
+            <div class="article-contents">
+              <div class="article-letters">
+                <p>
+                  분이 많네요, 감사드립니다! 직장인(신입)으로 올룡도에서
+                  근무하며 얻게 된 직장생활에 도움 되는...
+                </p>
+
+                <footer>
+                  <span class="article-date">Apr 19. 2024</span>
+                  <span class="article-writer">은설 aka 꿈꾸는 알</span>
+                </footer>
+              </div>
+
+              <div class="image-placeholder"></div>
+            </div>
+          </article>
+        </section> -->
+      </div>
+
+      <navbar-component></navbar-component>
+    </div>
+
+    <script src="/src/components/navbar/navbar.js" type="module"></script>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
