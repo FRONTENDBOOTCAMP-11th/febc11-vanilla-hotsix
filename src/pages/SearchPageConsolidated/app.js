@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('form');
   const searchInput = document.querySelector('.search-input');
-  const recentSection = document.querySelector('.recent-section .history-list');
+  const historyList = document.querySelector('.recent-section .history-list');
 
   // 로컬 스토리지에서 최근 검색어를 불러오고, 강 항목에 클릭 이벤트 리스너를 추가하는 함수 정의
   function loadRecentSearches() {
-    recentSection.innerHTML = '';
+    historyList.innerHTML = ''; // 초기화
     const searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
 
     // 최근 검색어 표시
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
 
-      recentSection.appendChild(item);
+      historyList.appendChild(item);
     });
   }
 
@@ -114,13 +114,20 @@ document.addEventListener('DOMContentLoaded', function () {
         },
       ];
 
+      // 검색 결과 필터링
+      const filteredResults = results.filter(
+        result =>
+          result.title.includes(searchText) ||
+          result.content.includes(searchText),
+      );
+
       // 검색 정보 표시
       searchInfoSection.innerHTML = ''; // 초기화
-      searchInfoSection.innerHTML = `<span>글 검색 결과 ${results.length}건</span>`;
+      searchInfoSection.innerHTML = `<span>글 검색 결과 ${filteredResults.length}건</span>`;
 
       // 검색 결과 표시
       articlesSection.innerHTML = ''; // 초기화
-      results.forEach(result => {
+      filteredResults.forEach(result => {
         const article = document.createElement('article');
         article.innerHTML = `
           <div class="article-title">
