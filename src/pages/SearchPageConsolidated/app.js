@@ -1,174 +1,265 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.querySelector('form');
-  const searchInput = document.querySelector('.search-input');
-  const historyList = document.querySelector('.recent-section .history-list');
+class SearchPage {
+  constructor() {
+    this.form = document.querySelector('form');
+    this.searchInput = document.querySelector('.search-input');
+    this.historyList = document.querySelector('.recent-section .history-list');
+    this.recommendSection = document.querySelector('.recommend-section');
+    this.recentSection = document.querySelector('.recent-section');
+    this.searchSection = document.querySelector('.search-section');
+    this.contents = document.querySelector('.contents');
 
-  // 로컬 스토리지에서 최근 검색어를 불러오고, 강 항목에 클릭 이벤트 리스너를 추가하는 함수 정의
-  function loadRecentSearches() {
-    historyList.innerHTML = ''; // 초기화
-    const searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+    // 샘플 데이터
+    this.articles = [
+      {
+        title: '딸의 정부청사 출장에 부모님이 동행하는 이유',
+        content:
+          '분이 많네요, 감사드립니다! 직장인(신입)으로 올룡도에서 근무하며 얻게 된 직장생활에 도움 되는...',
+        date: 'Apr 19. 2024',
+        writer: '은설 aka 꿈꾸는 알',
+      },
+    ];
+    this.authors = [
+      {
+        nickname: '꿀아빠',
+        description: '두아들 아빠 기록남기기 좋아하는 아빠 고민하는 아빠입니다',
+        tags: ['tag1', 'tag2', 'tag3'],
+      },
+      {
+        nickname: '별아빠',
+        description: '자녀들과 함께하는 순간을 기록하는 아빠입니다',
+        tags: ['tagA', 'tagB', 'tagC'],
+      },
+    ];
 
-    // 최근 검색어 표시
-    searches.forEach(search => {
-      const item = document.createElement('li');
-      item.className = 'history-item';
-      item.innerHTML = `${search} <button class='delete-btn'></button>`;
-
-      // history-item 클릭 시 동작
-      item.addEventListener('click', function (e) {
-        if (e.target.classList.contains('delete-btn')) {
-          // 삭제 버튼 클릭 시 삭제 기능 실행
-          deleteSearch(search);
-        } else {
-          // history-item의 나머지 부분 클릭 시 검색어 제출
-          searchInput.value = search;
-          form.dispatchEvent(new Event('submit')); // 새로운 submit 이벤트 생성 후 form 요소에 강제로 발생시킴
-        }
-      });
-
-      historyList.appendChild(item);
-    });
+    this.init();
   }
 
-  // 최근 검색어 삭제 함수 정의
-  function deleteSearch(searchText) {
+  init() {
+    this.form.addEventListener('submit', e => this.handleSearchSubmit(e));
+    this.loadRecentSearches();
+  }
+
+  handleSearchSubmit(e) {
+    e.preventDefault();
+    const searchText = this.searchInput.value.trim();
+    if (!searchText) return;
+
+    this.addSearchToLocalStorage(searchText);
+    this.updateViewForSearch();
+    this.displayArticleResults(searchText);
+    this.addCloseButton();
+  }
+
+  addSearchToLocalStorage(searchText) {
+    let searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+    if (!searches.includes(searchText)) {
+      searches.unshift(searchText);
+      if (searches.length > 5) searches.pop();
+      localStorage.setItem('recentSearches', JSON.stringify(searches));
+    }
+  }
+
+  updateViewForSearch() {
+    this.searchSection.style.borderBottom = 'none';
+    this.recommendSection.style.display = 'none';
+    this.recentSection.style.display = 'none';
+  }
+
+  displayArticleResults(searchText) {
+    const existingNavTab = document.querySelector('.nav-tab');
+    if (existingNavTab) existingNavTab.remove();
+
+    document
+      .querySelectorAll('.search-info, .articles, .authors')
+      .forEach(el => el.remove());
+
+    const filteredResults = this.getFilteredArticles(searchText);
+
+    const navTab = this.createNavTab();
+    const searchInfo = this.createSearchInfo(filteredResults.length, '글');
+    const articlesSection = this.createArticlesSection(filteredResults);
+
+    this.contents.append(searchInfo, articlesSection);
+    this.searchSection.after(navTab);
+
+    navTab.addEventListener('click', e => this.handleTabClick(e, searchText));
+  }
+
+  getFilteredArticles(searchText) {
+    return this.articles.filter(
+      article =>
+        article.title.includes(searchText) ||
+        article.content.includes(searchText),
+    );
+  }
+
+  createNavTab() {
+    const navTab = document.createElement('section');
+    navTab.className = 'nav-tab';
+    navTab.innerHTML = `
+      <ul class="tabs">
+        <li class="active">글</li>
+        <li>작가</li>
+      </ul>
+    `;
+    return navTab;
+  }
+
+  createSearchInfo(count, type) {
+    const searchInfo = document.createElement('section');
+    searchInfo.className = 'search-info';
+    searchInfo.innerHTML = `<span>${type} 검색 결과 ${count}건</span>`;
+    return searchInfo;
+  }
+
+  createArticlesSection(results) {
+    const articlesSection = document.createElement('section');
+    articlesSection.className = 'articles';
+    results.forEach(result => {
+      const article = document.createElement('article');
+      article.innerHTML = `
+        <div class="article-title">
+          <h2>${result.title}</h2>
+        </div>
+        <div class="article-contents">
+          <div class="article-letters">
+            <p>${result.content}</p>
+            <footer>
+              <span class="article-date">${result.date}</span>
+              <span class="article-writer">by ${result.writer}</span>
+            </footer>
+          </div>
+          <div class="image-placeholder"></div>
+        </div>
+      `;
+      articlesSection.appendChild(article);
+    });
+    return articlesSection;
+  }
+
+  addCloseButton() {
+    let closeButton = document.querySelector('.close-btn');
+    if (!closeButton) {
+      closeButton = document.createElement('button');
+      closeButton.className = 'close-btn';
+      this.searchSection.appendChild(closeButton);
+      closeButton.addEventListener('click', () => this.resetSearch());
+    }
+  }
+
+  resetSearch() {
+    this.searchInput.value = '';
+    this.searchSection.style.borderBottom = '1px solid var(--grey_50)';
+    this.recommendSection.style.display = 'flex';
+    this.recentSection.style.display = 'block';
+    document
+      .querySelectorAll(
+        '.nav-tab, .search-info, .articles, .authors, .close-btn',
+      )
+      .forEach(el => el.remove());
+    this.loadRecentSearches();
+  }
+
+  handleTabClick(e, searchText) {
+    const clickedTab = e.target;
+    const tabs = document.querySelectorAll('.tabs li');
+
+    tabs.forEach(tab => tab.classList.remove('active'));
+    clickedTab.classList.add('active');
+
+    const searchInfo = document.querySelector('.search-info');
+    const isAuthorTab = clickedTab.innerText === '작가';
+
+    if (isAuthorTab) {
+      this.toggleAuthorsSection(searchText, true);
+      const filteredAuthors = this.authors.filter(author =>
+        author.nickname.includes(searchText),
+      );
+      searchInfo.innerHTML = `<span>작가 검색 결과 ${filteredAuthors.length}건</span>`;
+    } else {
+      this.toggleAuthorsSection(searchText, false);
+      const filteredArticles = this.getFilteredArticles(searchText);
+      searchInfo.innerHTML = `<span>글 검색 결과 ${filteredArticles.length}건</span>`;
+    }
+  }
+
+  toggleAuthorsSection(searchText, showAuthors) {
+    const authorsSection = document.querySelector('.authors');
+    const articlesSection = document.querySelector('.articles');
+
+    if (showAuthors) {
+      articlesSection.style.display = 'none';
+      if (!authorsSection) this.createAuthorsSection(searchText);
+      else authorsSection.style.display = 'flex';
+    } else {
+      if (authorsSection) authorsSection.style.display = 'none';
+      articlesSection.style.display = 'flex';
+    }
+  }
+
+  createAuthorsSection(searchText) {
+    const authorsSection = document.createElement('section');
+    authorsSection.className = 'authors';
+
+    const filteredAuthors = this.authors.filter(author =>
+      author.nickname.includes(searchText),
+    );
+    filteredAuthors.forEach(author => {
+      const authorDiv = document.createElement('div');
+      authorDiv.className = 'author';
+      authorDiv.innerHTML = `
+        <div class="author-contents">
+          <div class="author-image"></div>
+          <div class="author-letters">
+            <div class="author-nickname">${this.highlightKeyword(author.nickname, searchText)}</div>
+            <div class="author-description">${author.description}</div>
+          </div>
+        </div>
+        <ul class="tags">${author.tags.map(tag => `<li class="tag">${tag}</li>`).join('')}</ul>
+      `;
+      authorsSection.appendChild(authorDiv);
+    });
+
+    this.contents.appendChild(authorsSection);
+  }
+
+  highlightKeyword(text, keyword) {
+    return text.replace(
+      new RegExp(`(${keyword})`, 'gi'),
+      '<span class="keyword">$1</span>',
+    );
+  }
+
+  createHistoryItem(search) {
+    const item = document.createElement('li');
+    item.className = 'history-item';
+    item.innerHTML = `<span>${search}</span> <button class="delete-btn"></button>`;
+    item.addEventListener('click', e => this.handleHistoryClick(e, search));
+    this.historyList.appendChild(item);
+  }
+
+  loadRecentSearches() {
+    this.historyList.innerHTML = '';
+    const searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+    searches.forEach(search => this.createHistoryItem(search));
+  }
+
+  handleHistoryClick(e, search) {
+    if (e.target.classList.contains('delete-btn')) {
+      this.deleteHistory(search);
+    } else {
+      this.searchInput.value = search;
+      this.form.dispatchEvent(new Event('submit'));
+    }
+  }
+
+  deleteHistory(searchText) {
     let searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
     searches = searches.filter(search => search !== searchText);
     localStorage.setItem('recentSearches', JSON.stringify(searches));
-    loadRecentSearches();
+    this.loadRecentSearches();
   }
+}
 
-  // 페이지 로드 시 최근 검색어 표시
-  loadRecentSearches();
-
-  // 검색어 제출 시 처리
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const searchText = searchInput.value.trim();
-
-    if (searchText !== '') {
-      // 검색어를 로컬 스토리지에 추가
-      let searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
-      if (!searches.includes(searchText)) {
-        searches.unshift(searchText); // 최신 검색어가 위로 오게 추가
-        if (searches.length > 5) searches.pop(); // 최근 검색어 5개 유지
-        localStorage.setItem('recentSearches', JSON.stringify(searches));
-      }
-
-      // search-section 하단 경계선 지우기
-      document.querySelector('.search-section').style.borderBottom = 'none';
-
-      // 추천키워드, 최근검색어 섹션 숨기기
-      document.querySelector('.recommend-section').style.display = 'none';
-      document.querySelector('.recent-section').style.display = 'none';
-
-      // 글/작가 섹션 생성 (이미 생성되어 있지 않은 경우에만)
-      let navSection = document.querySelector('.nav-tab');
-      if (!navSection) {
-        navSection = document.createElement('section');
-        navSection.className = 'nav-tab';
-        document.querySelector('.search-section').after(navSection);
-      }
-
-      // 글/작가 탭 표시
-      navSection.innerHTML = `
-        <ul class="tabs">
-          <li class="active">글</li>
-          <li>작가</li>
-        </ul>
-      `;
-
-      // 검색 정보(검색 건수 및 필터) 섹션 생성 (이미 생성되어 있지 않은 경우에만)
-      let searchInfoSection = document.querySelector('.search-info');
-      if (!searchInfoSection) {
-        searchInfoSection = document.createElement('section');
-        searchInfoSection.className = 'search-info';
-        document.querySelector('.contents').appendChild(searchInfoSection);
-      }
-
-      // 검색 결과 섹션 생성 (이미 생성되어 있지 않은 경우에만)
-      let articlesSection = document.querySelector('.articles');
-      if (!articlesSection) {
-        articlesSection = document.createElement('section');
-        articlesSection.className = 'articles';
-        document.querySelector('.contents').appendChild(articlesSection);
-      }
-
-      // 검색 결과 예시 데이터
-      const results = [
-        {
-          title: '딸의 정부청사 출장에 부모님이 동행하는 이유',
-          content:
-            '분이 많네요, 감사드립니다! 직장인(신입)으로 올룡도에서 근무하며 얻게 된 직장생활에 도움 되는...',
-          date: 'Apr 19. 2024',
-          writer: '은설 aka 꿈꾸는 알',
-        },
-
-        {
-          title: '딸의 정부청사 출장에 부모님이 동행하는 이유',
-          content:
-            '분이 많네요, 감사드립니다! 직장인(신입)으로 올룡도에서 근무하며 얻게 된 직장생활에 도움 되는...',
-          date: 'Apr 19. 2024',
-          writer: '은설 aka 꿈꾸는 알',
-        },
-      ];
-
-      // 검색 결과 필터링
-      const filteredResults = results.filter(
-        result =>
-          result.title.includes(searchText) ||
-          result.content.includes(searchText),
-      );
-
-      // 검색 정보 표시
-      searchInfoSection.innerHTML = ''; // 초기화
-      searchInfoSection.innerHTML = `<span>글 검색 결과 ${filteredResults.length}건</span>`;
-
-      // 검색 결과 표시
-      articlesSection.innerHTML = ''; // 초기화
-      filteredResults.forEach(result => {
-        const article = document.createElement('article');
-        article.innerHTML = `
-          <div class="article-title">
-            <h2>${result.title}</h2>
-          </div>
-          <div class="article-contents">
-            <div class="article-letters">
-              <p>${result.content}</p>
-              <footer>
-                <span class="article-date">${result.date}</span>
-                <span class="article-writer">${result.writer}</span>
-              </footer>
-            </div>
-            <div class="image-placeholder"></div>
-          </div>
-        `;
-        articlesSection.appendChild(article);
-      });
-
-      // 검색창에 close-btn 추가
-      let closeButton = document.querySelector('.close-btn');
-      if (!closeButton) {
-        closeButton = document.createElement('button');
-        closeButton.className = 'close-btn';
-        document.querySelector('.search-section').appendChild(closeButton);
-
-        // close-btn 클릭 이벤트
-        closeButton.addEventListener('click', function () {
-          // 검색어 초기화 및 초기 화면 복원
-          searchInput.value = '';
-          document.querySelector('.search-section').style.borderBottom =
-            '1px solid var(--grey_50)';
-          document.querySelector('.recommend-section').style.display = 'flex';
-          document.querySelector('.recent-section').style.display = 'block';
-          navSection.remove();
-          searchInfoSection.remove();
-          articlesSection.innerHTML = '';
-          closeButton.remove();
-          loadRecentSearches(); // 최근 검색어 불러오기
-        });
-      }
-    }
-  });
-});
+// 초기화
+document.addEventListener('DOMContentLoaded', () => new SearchPage());

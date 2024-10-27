@@ -129,6 +129,10 @@
   padding-right: 20px;
 }
 
+.history-item span {
+  cursor: pointer;
+}
+
 .delete-btn {
   width: 9px;
   height: 9px;
@@ -158,8 +162,8 @@
   justify-content: space-between;
   align-items: center;
   font-size: 12px;
-  padding-bottom: 20px;
   color: var(--grey_80);
+  padding-bottom: 20px;
 }
 
 .filters {
@@ -214,7 +218,7 @@ article {
   flex-direction: column;
 
   font-size: 12px;
-  color: var(--grey_60);
+  color: var(--grey_85);
 }
 
 .article-letters p {
@@ -231,4 +235,81 @@ article {
   height: 80px;
   background-color: var(--grey_40);
   flex-shrink: 0;
+}
+
+.authors {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
+}
+
+.author:first-child {
+  padding-top: 0;
+}
+
+.author {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 20px;
+  padding-right: 24px;
+  border-bottom: 1px solid var(--grey_20);
+}
+
+.author-contents {
+  display: flex;
+  gap: 4.5%;
+}
+
+.author-image {
+  width: 40px;
+  height: 40px;
+  background-color: var(--grey_60);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.author-letters {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-grow: 1;
+
+  font-size: 12px;
+  color: var(--grey_60);
+}
+
+.author-nickname {
+  font-size: 16px;
+  color: var(--black_100);
+  line-height: 25.5px;
+}
+
+.keyword {
+  color: var(--mint);
+}
+
+.author-description {
+  font-size: 12px;
+  color: var(--grey_80);
+  line-height: 20px;
+}
+
+.tags {
+  display: flex;
+  gap: 10px;
+  padding: 6.5px 0;
+
+  overflow: scroll;
+}
+
+.tag {
+  background-color: var(--white);
+  border: 1px solid var(--grey_20);
+  border-radius: 30px;
+  padding: 8px 12px;
+
+  color: var(--grey_90);
 }
