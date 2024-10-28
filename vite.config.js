@@ -8,10 +8,11 @@ export default defineConfig({
       input: {
         main: 'src/pages/MainPage/index.html',
         search: 'src/pages/SearchPage/index.html',
-        postWrite: 'src/pages/PostWritePage/index.html',
-        postDetail: 'src/pages/PostDetailPage/index.html',
+        postWrite: 'src/pages/PostPage/writePage.html',
+        postDetail: 'src/pages/PostPage/detailPage.html',
         myPage: 'src/pages/MyPage/index.html',
         login: 'src/pages/LoginPage/index.html',
+        signUp: `src/pages/SignupPage/index.html`,
         author: 'src/pages/AuthorPage/index.html',
       },
     },

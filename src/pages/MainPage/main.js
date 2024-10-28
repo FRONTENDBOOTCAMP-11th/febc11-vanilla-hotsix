@@ -33,7 +33,7 @@ const renderBrunch = async arr => {
     const brunchCoverImg = e.image ? apiUrl + e.image : '';
     // 화면 렌더링
     brunchContainerNode.innerHTML += `
-          <a class="brunch" href="/src/pages/PostDetailPage/index.html?postId=${e._id}">  
+          <a class="brunch" href="/src/pages/PostPage/detailPage.html?postId=${e._id}">  
             <p class="brunch__num">${num}</p>
             <div class="brunch__description">
               <p class="brunch__description__title">

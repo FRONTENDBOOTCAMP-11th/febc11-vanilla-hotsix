@@ -1,5 +1,4 @@
 'use strict';
-import homeIcon from '/assets/images/nav_home.svg';
 
 export class Navbar extends HTMLElement {
   constructor() {
@@ -47,7 +46,7 @@ export class Navbar extends HTMLElement {
     } else if (currentURL.includes('SearchPage')) {
       search.src = '/assets/images/nav_search_now.svg';
       search.alt = '검색 페이지로 갈 수 있는 버튼';
-    } else if (currentURL.includes('PostWritePage')) {
+    } else if (currentURL.includes('writePage')) {
       write.src = '/assets/images/nav_write_now.svg';
       write.alt = '글쓰기 페이지로 갈 수 있는 버튼';
     } else if (currentURL.includes('MyPage')) {
@@ -70,7 +69,7 @@ export class Navbar extends HTMLElement {
       window.location.href = '/src/pages/SearchPage/index.html';
     });
     write.addEventListener('click', () => {
-      window.location.href = '/src/pages/PostWritePage/index.html';
+      window.location.href = '/src/pages/PostPage/writePage.html';
     });
     mybox.addEventListener('click', () => {
       window.location.href = '/src/pages/MyPage/index.html';
