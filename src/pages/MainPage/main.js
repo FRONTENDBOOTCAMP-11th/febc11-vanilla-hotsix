@@ -140,14 +140,14 @@ const getSubscribeAuthor = async () => {
     // 서버에서 넘어온 회원 데이터
     let authorArr = response.data.item;
 
-    // 조회수 순으로 정렬
+    // 구독자가 많은 순으로 정렬
     authorArr.sort((a, b) => {
-      return b.postViews - a.postViews;
+      return b.bookmarkedBy.users - a.bookmarkedBy.users;
     });
 
     // 상위 4명만 자르기
     authorArr = authorArr.slice(0, 4);
-    console.log(authorArr);
+
     // TOP 구독 작가 화면 렌더링 함수 호출
     renderSubscribeAuthor(authorArr);
   } catch (error) {
