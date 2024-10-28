@@ -39,20 +39,60 @@ checkBtn.addEventListener('mousedown', () => {
   checkBtnImg.setAttribute('src', '/assets/images/icon-check_green.svg');
 });
 
-// 체크버튼 mouseUp시 (1) 색상 변경 (2) 모달창 오픈
-checkBtn.addEventListener('mouseup', () => {
-  checkBtnImg.setAttribute('src', '/assets/images/icon-check_black.svg');
-  modal.className = 'modalWindow visible';
-});
+// modal 노드 획득
+let pageTitle = document.querySelector('#pageTitle');
+let modal = document.querySelector('.modalWindow');
+let postBtn = document.querySelector('#modal-post');
+let saveBtn = document.querySelector('#modal-save');
+let modalQuestion = document.querySelector('#modal-question');
 
-// 기본 탭 순서에서 제외
-checkBtn.setAttribute('tabindex', '-1');
-
-// 체크버튼을 마지막으로 선택되게 하기 위해 tabindex 조정
 // 포커스 가능한 모든 요소 선택
 const focusableElements = Array.from(
   document.querySelectorAll('button, input, a, [tabindex="0"]'),
 );
+
+// 모달 창 열기 함수
+function openModal() {
+  // 모달창 보여주기
+  modal.className = 'modalWindow visible';
+  // 포커스를 모달창 내부의 첫번째 요소로 설정
+  modalQuestion.focus();
+
+  modal.addEventListener('keydown', e => {
+    if (e.key === 'Tab' && !e.shiftKey) {
+      const modalFocusableElement = Array.from(
+        modal.querySelectorAll('button'),
+      );
+      // 현재 포커스되어 있는 요소 반환
+      const activeElement = document.activeElement;
+      // activeElement가 현재 페이지의 focusableElements 요소중 마지막 요소이면 true를 반환
+      const isLastFocusable =
+        activeElement ===
+        modalFocusableElement[modalFocusableElement.length - 1];
+
+      if (isLastFocusable) {
+        e.preventDefault();
+        modalQuestion.focus();
+      }
+    }
+  });
+}
+
+// 모달 창 닫기 함수
+function closeModal() {
+  modal.className = 'modalWindow hidden';
+}
+
+// 체크버튼 mouseUp시 (1) 색상 변경 (2) 모달창 오픈
+checkBtn.addEventListener('click', () => {
+  checkBtnImg.setAttribute('src', '/assets/images/icon-check_black.svg');
+  openModal();
+});
+
+// 완료 버튼을 기본 탭 순서에서 제외
+checkBtn.setAttribute('tabindex', '-1');
+
+// 완료 버튼을 마지막으로 선택되게 하기 위해 tabindex 조정
 document.addEventListener('keydown', e => {
   if (e.key === 'Tab' && !e.shiftKey) {
     // 현재 포커스되어 있는 요소 반환
@@ -71,10 +111,6 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// modal 노드 획득
-let modal = document.querySelector('.modalWindow');
-let postBtn = document.querySelector('#modal-post');
-let saveBtn = document.querySelector('#modal-save');
 // let inspectBtn = document.querySelector('#modal-inspect');
 let cancelBtn = document.querySelector('#modal-cancel');
 
@@ -82,10 +118,10 @@ let cancelBtn = document.querySelector('#modal-cancel');
 postBtn.addEventListener('click', async () => {
   if (titleInputNode.value.trim() === '') {
     alert('제목을 입력하세요');
-    modal.className = 'modalWindow hidden';
+    closeModal();
   } else if (editableDiv.innerHTML.trim() === '') {
     alert('내용을 입력하세요');
-    modal.className = 'modalWindow hidden';
+    closeModal();
   } else {
     let post = new Post(
       titleInputNode.value,
@@ -106,20 +142,18 @@ postBtn.addEventListener('click', async () => {
       });
 
       console.log(res, post);
+
+      // 객체 생성 후 입력칸 초기화
+      titleInputNode.value = '';
+      subtitleInputNode.value = '';
+      editableDiv.innerHTML = '';
+
       // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
       const postId = res.data.item._id;
       window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
     } catch (error) {
       console.log(error);
     }
-
-    // 객체 생성 후 입력칸 초기화
-    titleInputNode.value = '';
-    subtitleInputNode.value = '';
-    editableDiv.innerHTML = '';
-
-    // 모달 창 숨기기
-    modal.className = 'modalWindow hidden';
   }
 });
 
@@ -142,30 +176,25 @@ saveBtn.addEventListener('click', async () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      // 객체 생성 후 입력칸 초기화
+      titleInputNode.value = '';
+      subtitleInputNode.value = '';
+      editableDiv.innerHTML = '';
+
       // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
       const postId = res.data.item._id;
       window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
     } catch (error) {
       console.log(error);
     }
-
-    // 객체 생성 후 입력칸 초기화
-    titleInputNode.value = '';
-    subtitleInputNode.value = '';
-    editableDiv.innerHTML = '';
-
-    // 모달 창 닫기
-    modal.className = 'modalWindow hidden';
   } else {
     alert('제목을 입력하세요.');
-    modal.className = 'modalWindow hidden';
+    closeModal();
   }
 });
 
 // 취소 버튼을 누르면 닫힘
-cancelBtn.addEventListener('click', () => {
-  modal.className = 'modalWindow hidden';
-});
+cancelBtn.addEventListener('click', closeModal);
 
 // 외부 클릭시 닫힘
 window.onclick = function (event) {

@@ -14,11 +14,13 @@
     <div class="wrapper">
       <div class="modalWindow hidden">
         <div class="modal-contents">
-          <div class="modal" id="modal-question">발행하시겠습니까?</div>
-          <div class="modal" id="modal-post">발행</div>
-          <div class="modal" id="modal-save">저장</div>
-          <div class="modal" id="modal-inspect">맞춤법 검사</div>
-          <div class="modal" id="modal-cancel">취소</div>
+          <div class="modal" tabindex="0" id="modal-question">
+            발행하시겠습니까?
+          </div>
+          <button class="modal" id="modal-post">발행</button>
+          <button class="modal" id="modal-save">저장</button>
+          <button class="modal" id="modal-inspect">맞춤법 검사</button>
+          <button class="modal" id="modal-cancel">취소</button>
         </div>
       </div>
       <header class="header">
@@ -27,7 +29,7 @@
             <button id="closeBtn">
               <img src="/assets/images/icon-close.svg" alt="닫기 버튼" />
             </button>
-            <h1 tabindex="0">글쓰기</h1>
+            <h1 id="pageTitle" tabindex="0">글쓰기</h1>
             <button id="checkBtn">
               <img
                 id="checkBtnImg"
