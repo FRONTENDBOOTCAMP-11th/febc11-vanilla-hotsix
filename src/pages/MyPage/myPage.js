@@ -1,7 +1,6 @@
 'use strict';
 
 import axios from 'axios';
-import getImg from '../../api/getImg';
 
 // 환경 변수 가져오기
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -13,7 +12,12 @@ const post = document.querySelector('.post');
 const post2 = document.querySelector('.post2');
 
 // accessToken 가져오기
-const token = localStorage.getItem('accessToken');
+let token = '';
+if (sessionStorage.getItem('accessToken')) {
+  token = sessionStorage.getItem('accessToken');
+} else {
+  token = localStorage.getItem('accessToken');
+}
 
 // 관심 작가 렌더링
 const getBookedUser = async () => {
@@ -27,14 +31,14 @@ const getBookedUser = async () => {
     });
 
     const bookedUser = res.data.item;
-    //console.log(bookedUser);
+    console.log(bookedUser);
 
     // 관심작가가 있을 경우
     if (bookedUser) {
       author.innerHTML = await Promise.all(
         bookedUser.map(async p => {
           // 프로필 사진 변환하기
-          const imgSrc = await getImg(p.user.image);
+          const imgSrc = `${apiUrl}${p.user.image}`;
 
           // 렌더링
           return `
@@ -72,13 +76,13 @@ const getRecentPost = async () => {
   post.innerHTML = await Promise.all(
     recentPost.map(async p => {
       // 이미지 변환하기
-      const imgUrl = await getImg(p.image);
+      const imgSrc = `${apiUrl}${p.image}`;
 
       // 렌더링하기
       return `
         <div class="post-recent-container" data-id="${p._id}">
           <div class="post-img-container">
-            <img class="post-img" src="${imgUrl}"/>
+            <img class="post-img" src="${imgSrc}"/>
             <div class="post-img-info">
               <p class="post-img-title">${p.title}</p>
               <p class="post-img-author">${p.user.name}</p>
@@ -120,11 +124,12 @@ const getBookedPost = async () => {
     if (bookedPost) {
       post2.innerHTML = await Promise.all(
         bookedPost.map(async p => {
-          const imgUrl = await getImg(p.post.image);
+          // 이미지 변환하기
+          const imgSrc = `${apiUrl}${p.post.image}`;
           return `
             <div class="post-container" data-id="${p.post._id}">
               <div class="post-img-container">
-                <img class="post-img" src="${imgUrl}"/>
+                <img class="post-img" src="${imgSrc}"/>
                 <div class="post-img-info">
                   <p class="post-img-title">${p.post.title}</p>
                   <p class="post-img-author">${p.post.user.name}</p> 

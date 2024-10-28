@@ -2,18 +2,14 @@
 
 import axios from 'axios';
 
-// 이미지 렌더링 API
-import getImg from '../../api/getImg';
-
 // 환경 변수 가져오기
 const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
 // 유저 id 가져오기
-// URL에서 postId 추출하기
+// URL에서 userId 추출하기
 const params = new URLSearchParams(window.location.search);
 const userId = params.get('userId');
-console.log(userId)
 
 // 받아올 유저정보
 const userName = document.querySelector('.author-info__name');
@@ -40,8 +36,7 @@ const getUserInfo = async () => {
     bookmarked.innerHTML = res.data.item.bookmark.users;
 
     // 이미지 src 가져오기 (비동기 처리 대기)
-    const ImgSrc = await getImg(res.data.item.image);
-    userImg.src = ImgSrc;
+    userImg.src = `${apiUrl}${res.data.item.image}`;
   } catch (err) {
     console.error(err);
   }
@@ -80,7 +75,7 @@ const getUserPost = async () => {
     // 게시글 렌더링 하기
     // 게시글이 없으면 undefined (옵셔널 체이닝)
     const posts = res.data?.item;
-    //console.log(posts);
+    console.log(posts);
 
     if (posts) {
       postList.innerHTML = posts
@@ -92,16 +87,16 @@ const getUserPost = async () => {
           const formattedDate = `${monthNames[dateObj.getMonth()]} ${day}. ${year}`;
 
           return `
-          <li class="post">
-            <p class="post-category">${post.type}</p>
-            <h3 class="post-title">${post.title}</h3>
-            <span class="post-content">${post.content}</span>
-            <div class="post-status-container">
-              <p class="post-status">댓글${post.repliesCount}</p>
-              <p class="post-status">${formattedDate}</p>
-            </div>
-          </li>
-        `;
+            <li class="post" data-id="${post._id}">
+              <p class="post-category">${post.type}</p>
+              <h3 class="post-title">${post.title}</h3>
+              <span class="post-content">${post.content}</span>
+              <div class="post-status-container">
+                <p class="post-status">댓글${post.repliesCount}</p>
+                <p class="post-status">${formattedDate}</p>
+              </div>
+            </li>
+          `;
         })
         .join('');
 
@@ -112,10 +107,21 @@ const getUserPost = async () => {
         const textOnly = contentElement.textContent.trim();
 
         // post.extra.subTitle 가져오기
-        const subTitle = posts[index].extra.subTitle;
+        if (posts[index].extra && posts[index].extra.subTitle) {
+          contentElement.textContent = `${posts[index].extra.subTitle} | ${textOnly}`;
+        } else {
+          contentElement.textContent = textOnly;
+        }
+      });
 
-        // 텍스트만 추출한 후 다시 post-content에 삽입
-        contentElement.textContent = `${subTitle} | ${textOnly}`;
+      // 게시글 클릭 이벤트
+      postList.addEventListener('click', event => {
+        const target = event.target.closest('.post');
+        if (target) {
+          const postId = target.getAttribute('data-id');
+          // 게시글 ID를 URL로 전달하여 PostDetailPage로 이동
+          window.location.href = `/src/pages/PostDetailPage/index.html?postId=${postId}`;
+        }
       });
     } else {
       console.error('게시글을 불러오는 데 실패했습니다.');
