@@ -4,12 +4,11 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 // 토큰 획득
 const token = sessionStorage.getItem('accessToken');
-// 현재 url 획득
 
 let titleInputNode = document.querySelector('#titleInput');
 let subtitleInputNode = document.querySelector('#subtitleInput');
 let editableDiv = document.querySelector('#editableDiv');
-let editableDivContent = editableDiv.innerHTML;
+let closeBtn = document.querySelector('#closeBtn');
 let checkBtn = document.querySelector('#checkBtn');
 
 // 매개변수 (type : 'post'로 고정, title, subtitle, content: string)
@@ -29,6 +28,10 @@ class Post {
     };
   }
 }
+// 닫기 버튼 클릭시 이전 페이지로 돌아가기
+closeBtn.addEventListener('click', () => {
+  history.back();
+});
 
 // 체크버튼 mouseDown시 체크버튼 색상 변경
 checkBtn.addEventListener('mousedown', () => {
@@ -184,5 +187,20 @@ fileInputNode.addEventListener('change', async e => {
         console.log(error);
       }
     }
+  }
+});
+
+const textAlignBtn = document.querySelector('#text-align-btn');
+// 텍스트 정렬 버튼
+textAlignBtn.addEventListener('click', () => {
+  if (!editableDiv.hasAttribute('class')) {
+    editableDiv.classList.add('text-center');
+    textAlignBtn.src = '/assets/images/icon-text-alignment_center.svg';
+  } else if (editableDiv.classList.contains('text-center')) {
+    editableDiv.className = 'text-right';
+    textAlignBtn.src = '/assets/images/icon-text-alignment_right.svg';
+  } else {
+    editableDiv.removeAttribute('class');
+    textAlignBtn.src = '/assets/images/icon-text-alignment_left.svg';
   }
 });
