@@ -11,6 +11,17 @@ class HeaderComponent extends HTMLElement {
     this.addEventListeners(); // 이벤트 리스너 추가
   }
 
+  // 로그인 여부 확인 함수
+  isLogin() {
+    const local = localStorage.getItem('accessToken');
+    const session = sessionStorage.getItem('accessToken');
+    if (local || session) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // 헤더 렌더링 함수
   renderHeader() {
     const isMainPage = this.currentURL.includes('MainPage');
@@ -19,11 +30,11 @@ class HeaderComponent extends HTMLElement {
     // MainPage에서는 '시작하기' 버튼 추가, 그 외에는 알림/프로필 버튼
     this.innerHTML = `
       <div class="header-container ${isAuthorPage ? 'change_container' : ''}">
-        <h1 class="brunchstory">Brunch Story</h1>
+        <a href="/src/pages/MainPage/index.html" class="brunchstory">Brunch Story</a>
         <div class="header-controllers">
           <button class="header-controller search"></button>
           ${
-            isMainPage
+            isMainPage && !this.isLogin()
               ? '<button class="header-controller start">시작하기</button>'
               : `
             <button class="header-controller notification"></button>
@@ -36,15 +47,10 @@ class HeaderComponent extends HTMLElement {
 
   // 이벤트 리스너 추가 함수
   addEventListeners() {
-    const brunchstory = this.querySelector('.brunchstory');
     const notification = this.querySelector('.notification');
     const search = this.querySelector('.search');
     const profile = this.querySelector('.profile');
-
-    // 로고 클릭 시 메인 페이지로 이동
-    brunchstory?.addEventListener('click', () => {
-      window.location.href = '/src/pages/MainPage/index.html';
-    });
+    const start = this.querySelector('.start');
 
     // 알림 클릭 시 경고창 및 콘솔 메시지 출력
     notification?.addEventListener('click', () => {
@@ -60,6 +66,11 @@ class HeaderComponent extends HTMLElement {
     // 프로필 클릭 시 내 서랍 페이지로 이동
     profile?.addEventListener('click', () => {
       window.location.href = '/src/pages/MyPage/index.html';
+    });
+
+    // 시작하기 클릭 시 로그인 페이지로 이동
+    start?.addEventListener('click', () => {
+      window.location.href = '/src/pages/LoginPage/index.html';
     });
   }
 }
