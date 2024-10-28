@@ -25,6 +25,46 @@ class SearchPage {
         date: 'Nov 16. 2023',
         writer: 'Windsbird',
       },
+
+      {
+        title: `덴마크의 '꿀 하트' 쿠키, Honninghjerter`,
+        content:
+          '오늘날까지 같은 주소에서 영업 중이다. 덴마크의 여왕 잉그리드도 이 꿀케이크 제과점을 자주 찾는다...',
+        date: 'Nov 16. 2023',
+        writer: 'Windsbird',
+      },
+
+      {
+        title: `덴마크의 '꿀 하트' 쿠키, Honninghjerter`,
+        content:
+          '오늘날까지 같은 주소에서 영업 중이다. 덴마크의 여왕 잉그리드도 이 꿀케이크 제과점을 자주 찾는다...',
+        date: 'Nov 16. 2023',
+        writer: 'Windsbird',
+      },
+
+      {
+        title: `덴마크의 '꿀 하트' 쿠키, Honninghjerter`,
+        content:
+          '오늘날까지 같은 주소에서 영업 중이다. 덴마크의 여왕 잉그리드도 이 꿀케이크 제과점을 자주 찾는다...',
+        date: 'Nov 16. 2023',
+        writer: 'Windsbird',
+      },
+
+      {
+        title: `덴마크의 '꿀 하트' 쿠키, Honninghjerter`,
+        content:
+          '오늘날까지 같은 주소에서 영업 중이다. 덴마크의 여왕 잉그리드도 이 꿀케이크 제과점을 자주 찾는다...',
+        date: 'Nov 16. 2023',
+        writer: 'Windsbird',
+      },
+
+      {
+        title: `덴마크의 '꿀 하트' 쿠키, Honninghjerter`,
+        content:
+          '오늘날까지 같은 주소에서 영업 중이다. 덴마크의 여왕 잉그리드도 이 꿀케이크 제과점을 자주 찾는다...',
+        date: 'Nov 16. 2023',
+        writer: 'Windsbird',
+      },
     ];
     this.authors = [
       {
@@ -134,17 +174,35 @@ class SearchPage {
   }
 
   displayArticleResults() {
-    const articlesSection = this.createArticlesSection(this.filteredArticles);
     this.contents.innerHTML = ''; // 콘텐츠 초기화
-    this.contents.append(articlesSection);
-    this.updateSearchInfo(this.filteredArticles.length, '글');
+    if (this.filteredArticles.length === 0) {
+      this.displayNoResults();
+    } else {
+      const articlesSection = this.createArticlesSection(this.filteredArticles);
+      this.contents.append(articlesSection);
+      this.updateSearchInfo(this.filteredArticles.length, '글');
+    }
   }
 
   displayAuthorResults() {
-    const authorsSection = this.createAuthorsSection(this.filteredAuthors);
     this.contents.innerHTML = ''; // 콘텐츠 초기화
-    this.contents.append(authorsSection);
-    this.updateSearchInfo(this.filteredAuthors.length, '작가');
+    if (this.filteredAuthors.length === 0) {
+      this.displayNoResults();
+    } else {
+      const authorsSection = this.createAuthorsSection(this.filteredAuthors);
+      this.contents.append(authorsSection);
+      this.updateSearchInfo(this.filteredAuthors.length, '작가');
+    }
+  }
+
+  displayNoResults() {
+    const noResultDiv = document.createElement('div');
+    noResultDiv.className = 'notify-noresult';
+    noResultDiv.innerHTML = `
+        <img src="/public/assets/images/logo-b.svg" alt="No Results" />
+        <p>검색 결과가 없습니다.</p>
+    `;
+    this.contents.append(noResultDiv);
   }
 
   updateSearchInfo(count, type) {
@@ -234,11 +292,13 @@ class SearchPage {
     this.searchSection.style.borderBottom = '1px solid var(--grey_50)';
     this.recommendSection.style.display = 'flex';
     this.recentSection.style.display = 'block';
+
     document
       .querySelectorAll(
-        '.nav-tab, .search-info, .articles, .authors, .close-btn',
+        '.nav-tab, .search-info, .articles, .authors, .close-btn, .notify-noresult',
       )
       .forEach(el => el.remove());
+    this.activeTab = 'articles';
     this.loadRecentSearches();
   }
 
