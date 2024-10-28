@@ -1,14 +1,32 @@
 'use strict';
 
+// 환경 변수 가져오기
+const apiUrl = import.meta.env.VITE_API_URL;
 class HeaderComponent extends HTMLElement {
   constructor() {
     super();
     this.currentURL = window.location.href; // 현재 URL 저장
+    this.image = '/files/vanilla06/white_dog.jpg';
     this.renderHeader(); // 헤더 렌더링
   }
 
   connectedCallback() {
-    this.addEventListeners(); // 이벤트 리스너 추가
+    // localStorage에서 이미지를 가져온 후 렌더링
+    const storedImage = localStorage.getItem('image');
+    if (storedImage) {
+      this.image = storedImage;
+      this.updateImage();
+    }
+
+    this.addEventListeners();
+  }
+
+  // 이미지를 업데이트하는 함수
+  updateImage() {
+    const profileImg = this.querySelector('.profile');
+    if (profileImg) {
+      profileImg.src = `${apiUrl}${this.image}`;
+    }
   }
 
   // 로그인 여부 확인 함수
@@ -38,7 +56,7 @@ class HeaderComponent extends HTMLElement {
               ? '<button class="header-controller start">시작하기</button>'
               : `
             <button class="header-controller notification"></button>
-            <button class="header-controller profile"></button>`
+            <img class="header-controller profile" src=${apiUrl}${this.image} alt="프로필 사진"/>`
           }
         </div>
       </div>
