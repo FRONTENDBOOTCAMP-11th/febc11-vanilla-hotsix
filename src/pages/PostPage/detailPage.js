@@ -1,6 +1,5 @@
 'use strict';
 import axios from 'axios';
-import getImg from '../../api/getImg';
 import isLogin from '../../api/isLogin';
 
 // 페이지 진입 시 즉시 로그인 상태 확인
@@ -174,10 +173,13 @@ async function printComments() {
         const [year, month, day] = date.split('.');
         const dateObj = new Date(year, month, day);
         // 유저가 프사를 안 해 놨을 때 지정해놓을 기본 이미지 필요
-        const userImage = comment.user.image
-          ? comment.user.image
-          : `/files/${clientId}/user-muzi.webp`;
-        const imgSrc = await getImg(userImage);
+        let userImage = '';
+        if (comment.user.image) {
+          userImage = `${apiUrl}${comment.user.image}`;
+        } else {
+          userImage = `${apiUrl}/files/${clientId}/user-muzi.webp`;
+        }
+        const imgSrc = userImage;
 
         let span = document.createElement('span');
         span.innerText = comment.user.name;
@@ -360,8 +362,6 @@ printBookmark();
 
 // 작가란 화면을 출력하는 함수
 async function printAuthor() {
-  const imgSrc = await getImg(author.image);
-
   let authorNickname = document.querySelector('.nickname');
   let authorJob = document.querySelector('.job');
   let authorInfo = document.querySelector('.author-info__contents');
@@ -372,7 +372,7 @@ async function printAuthor() {
   authorJob.innerHTML = author.extra.job;
   authorInfo.innerHTML = author.extra.biography;
   authorSubs.innerHTML = author.bookmarkedBy.users;
-  authorImg.src = imgSrc;
+  authorImg.src = `${apiUrl}${author.image}`;
 }
 printAuthor();
 
