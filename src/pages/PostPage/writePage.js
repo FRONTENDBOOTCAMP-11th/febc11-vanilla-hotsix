@@ -1,4 +1,18 @@
 import axios from 'axios';
+import isLogin from '../../api/isLogin';
+
+// 페이지 진입 시 즉시 로그인 상태 확인
+(async () => {
+  const loginStatus = await isLogin();
+
+  if (loginStatus) {
+    console.log('로그인 상태입니다.');
+  } else {
+    console.log('로그인이 필요합니다.');
+    // 로그인 필요 시 로그인 페이지 이동
+    window.location.href = '/src/pages/LoginPage/index.html';
+  }
+})();
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
@@ -18,7 +32,7 @@ class Post {
     title,
     content,
     subtitle = '',
-    image = `${apiUrl}/files/${clientId}/park.jpg`,
+    image = `/files/${clientId}/park.jpg`,
   ) {
     this.type = 'post';
     this.title = title;
@@ -126,19 +140,28 @@ postBtn.addEventListener('click', async () => {
     alert('내용을 입력하세요');
     closeModal();
   } else {
+    // editableDiv.innerHTML의 img 태그들 찾기
+    const Images = editableDiv.querySelectorAll('img');
+    // 첫 번째 이미지는 경로를 추출하여 대표이미지로 설정
+    const fisrtImagePath = Images[0].src.match(/\/files\/.+$/);
+
+    // 모든 이미지 경로 추출하여 /files/부터의 경로로 변경
+    for (const img of Images) {
+      const imagePath = img.src;
+      console.log(imagePath);
+      const newImagePath = imagePath?.match(/\/files\/.+$/);
+      console.log(newImagePath[0]);
+      img.src = newImagePath[0];
+    }
+
     let post = new Post(
       titleInputNode.value,
       editableDiv.innerHTML,
       subtitleInputNode.value,
     );
 
-    // post.content 내용을 DOM으로 변환
-    const doc = parser.parseFromString(post.content, 'text/html');
-    // 생성된 post.content의 첫번째 img 태그 찾기
-    const firstImg = doc.querySelector('img');
-
-    if (firstImg) {
-      post.image = firstImg.src;
+    if (fisrtImagePath) {
+      post.image = fisrtImagePath;
     }
 
     // 생성된 게시글 객체 서버로 전송
@@ -151,7 +174,7 @@ postBtn.addEventListener('click', async () => {
         },
       });
 
-      console.log(res, post);
+      closeModal();
 
       // 객체 생성 후 입력칸 초기화
       titleInputNode.value = '';
@@ -177,13 +200,22 @@ saveBtn.addEventListener('click', async () => {
     );
     post.private = true; // post 객체에 private 속성 추가
 
-    // post.content 내용을 DOM으로 변환
-    const doc = parser.parseFromString(post.content, 'text/html');
-    // 생성된 post.content의 첫번째 img 태그 찾기
-    const firstImg = doc.querySelector('img');
+    // editableDiv.innerHTML의 img 태그들 찾기
+    const Images = editableDiv.querySelectorAll('img');
+    // 첫 번째 이미지는 경로를 추출하여 대표이미지로 설정
+    const fisrtImagePath = Images[0].src.match(/\/files\/.+$/);
 
-    if (firstImg) {
-      post.image = firstImg.src;
+    // 모든 이미지 경로 추출하여 /files/부터의 경로로 변경
+    for (const img of Images) {
+      const imagePath = img.src;
+      console.log(imagePath);
+      const newImagePath = imagePath?.match(/\/files\/.+$/);
+      console.log(newImagePath[0]);
+      img.src = newImagePath[0];
+    }
+
+    if (fisrtImagePath) {
+      post.image = fisrtImagePath;
     }
 
     // 생성된 게시글 객체 서버로 전송
@@ -250,6 +282,7 @@ fileInputNode.addEventListener('change', async e => {
           },
         });
         console.log(response);
+
         // 응답값에서 path를 이미지 src 속성으로 지정
         const img = document.createElement('img');
         img.src = `${apiUrl}${response.data.item[0].path}`;
@@ -257,6 +290,7 @@ fileInputNode.addEventListener('change', async e => {
 
         // 이미지 미리보기를 위해 editableDiv에 삽입
         editableDiv.appendChild(img);
+        console.log(img);
       } catch (error) {
         console.log(error);
       }

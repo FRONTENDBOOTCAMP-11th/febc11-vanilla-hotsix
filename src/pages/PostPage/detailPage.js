@@ -1,6 +1,20 @@
 'use strict';
 import axios from 'axios';
 import getImg from '../../api/getImg';
+import isLogin from '../../api/isLogin';
+
+// 페이지 진입 시 즉시 로그인 상태 확인
+(async () => {
+  const loginStatus = await isLogin();
+
+  if (loginStatus) {
+    console.log('로그인 상태입니다.');
+  } else {
+    console.log('로그인이 필요합니다.');
+    // 로그인 필요 시 로그인 페이지 이동
+    window.location.href = '/src/pages/LoginPage/index.html';
+  }
+})();
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
@@ -138,6 +152,13 @@ async function printArticle() {
     for (const item of imgWrappers) {
       item.removeAttribute('style');
     }
+  }
+  // 이미지 태그 모두 찾아서 경로 수정
+  const images = articleNode.querySelectorAll('img');
+  for (const img of images) {
+    const src = img.getAttribute('src');
+    const newSrc = `${apiUrl}${src}`;
+    img.src = newSrc;
   }
 }
 await printArticle();
