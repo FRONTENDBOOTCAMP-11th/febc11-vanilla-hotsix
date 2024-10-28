@@ -32,9 +32,7 @@ img {
 .hidden {
   opacity: 0;
   visibility: hidden;
-  transition:
-    opacity 0.5s ease,
-    visibility 0s 0.5s;
+  transition: opacity 0.5s ease;
 }
 
 .visible {
@@ -48,6 +46,8 @@ img {
   padding: 15px 0;
   font-size: 18px;
   color: var(--mint);
+  width: 100%;
+  background-color: unset;
 }
 
 .modal:not(:last-child) {
@@ -74,7 +74,7 @@ img {
   height: 50px;
 }
 
-.header-container span {
+.header-container h1 {
   color: var(--black_90);
   font-size: 19px;
   font-weight: 600;
@@ -158,6 +158,14 @@ img {
   color: #959595;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
 .controls {
   background-color: #f8f8f8;
   padding: 22px 0;
@@ -173,10 +181,14 @@ img {
   height: 40px;
 }
 
-.controls img:nth-child(3) {
+.controls button {
+  background-color: unset;
+}
+
+.controls button:nth-child(3) {
   margin-left: 24px;
 }
 
-.controls img:last-child {
+.controls button:last-child {
   margin-left: auto;
 }
