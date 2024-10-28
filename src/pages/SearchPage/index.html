@@ -11,7 +11,7 @@
   <body>
     <div class="l_container">
       <section class="search-section">
-        <form action="/src/pages/SearchArticlePage/index.html" method="GET">
+        <form>
           <input class="search-input" type="text" placeholder="검색어 입력" />
           <button type="submit" style="display: none">Submit</button>
         </form>
@@ -31,21 +31,15 @@
 
       <section class="recent-section">
         <p class="recent-description">최근검색어</p>
-        <ul class="history-list">
-          <li class="history-item">
-            사진꿀
-            <button class="delete-btn"></button>
-          </li>
-          <li class="history-item">
-            꿀
-            <button class="delete-btn"></button>
-          </li>
-        </ul>
+        <ul class="history-list"></ul>
       </section>
+
+      <div class="contents"></div>
 
       <navbar-component></navbar-component>
     </div>
 
     <script src="/src/components/navbar/navbar.js" type="module"></script>
+    <script src="app.js" type="module"></script>
   </body>
 </html>
