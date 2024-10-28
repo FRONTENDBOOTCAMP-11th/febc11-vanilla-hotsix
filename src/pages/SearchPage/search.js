@@ -20,7 +20,7 @@ class SearchPage {
     this.loadRecentSearches();
   }
 
-  handleSearchSubmit(e) {
+  async handleSearchSubmit(e) {
     e.preventDefault();
     const searchText = this.searchInput.value.trim();
     if (!searchText) return;
@@ -29,30 +29,24 @@ class SearchPage {
     this.updateViewForSearch();
     this.addCloseButton();
 
-    this.fetchArticles(searchText)
-      .then(() => {
-        this.filteredArticles = this.getFilteredArticles(searchText);
+    try {
+      await Promise.all([
+        this.fetchArticles(searchText),
+        this.fetchAuthors(searchText),
+      ]);
 
-        // 현재 활성화된 탭에 따라 결과를 표시
-        if (this.activeTab === 'articles') {
-          this.displayArticleResults();
-        } else {
-          this.displayAuthorResults();
-        }
-        this.createNavTab();
-      })
-      .catch(error => console.error('Error fetching articles: ', error));
+      this.filteredArticles = this.getFilteredArticles(searchText);
+      this.filteredAuthors = this.getFilteredAuthors(searchText);
 
-    this.fetchAuthors(searchText)
-      .then(() => {
-        this.filteredAuthors = this.getFilteredAuthors(searchText);
-
-        if (this.activeTab === 'authors') {
-          this.displayAuthorResults();
-        }
-        this.createNavTab();
-      })
-      .catch(error => console.error('Error fetching authors: ', error));
+      if (this.activeTab === 'articles') {
+        this.displayArticleResults();
+      } else {
+        this.displayAuthorResults();
+      }
+      this.createNavTab();
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
   }
 
   handleTabClick(e) {
@@ -107,12 +101,30 @@ class SearchPage {
     }
   }
 
-  async fetchAuthors(searchText = '') {
+  // async fetchAuthors(searchText = '') {
+  //   try {
+  //     const url = new URL('https://11.fesp.shop/users');
+  //     if (searchText) {
+  //       url.searchParams.append('name', searchText);
+  //     }
+  //     const response = await fetch(url, {
+  //       headers: {
+  //         'client-id': 'vanilla06',
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     console.log('API Response: ', data);
+  //     this.authors = data.item || [];
+  //     console.log('Fetched authors: ', this.authors);
+  //   } catch (error) {
+  //     console.error('작가 목록을 불러오는 데 실패했습니다: ', error);
+  //   }
+  // }
+
+  // 작가 이름의 일부만 검색어로 제출해도 검색되게 하기 위해, 일단 모든 작가 목록을 로드함. 이후에 필터링 메서드로 걸러질 것 (api에서 부분일치 기능을 제공하지 않아서)
+  async fetchAuthors() {
     try {
       const url = new URL('https://11.fesp.shop/users');
-      if (searchText) {
-        url.searchParams.append('name', searchText);
-      }
       const response = await fetch(url, {
         headers: {
           'client-id': 'vanilla06',
@@ -121,11 +133,12 @@ class SearchPage {
       const data = await response.json();
       console.log('API Response: ', data);
       this.authors = data.item || [];
-      console.log('Fetched authors: ', this.authors);
     } catch (error) {
       console.error('작가 목록을 불러오는 데 실패했습니다: ', error);
     }
   }
+
+  // 필터링 부분은 getFilteredAuthors를 사용하여 검색어에 맞게 작가 목록을 필터링합니다.
 
   getFilteredArticles(searchText) {
     return this.articles.filter(
@@ -176,6 +189,10 @@ class SearchPage {
     if (this.filteredAuthors.length === 0) {
       this.displayNoResults();
     } else {
+      console.log(
+        'Filtered authors: ',
+        JSON.stringify(this.filteredAuthors, null, 2),
+      );
       const authorsSection = this.createAuthorsSection(this.filteredAuthors);
       this.contents.append(authorsSection);
       this.updateSearchInfo(this.filteredAuthors.length, '작가');
