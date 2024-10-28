@@ -215,17 +215,14 @@ img {
   -webkit-box-orient: vertical;
 }
 
+/* 브런치북 커버 영역 */
 .brunch__cover {
   flex-shrink: 0;
-  width: 80;
+  width: 80px;
+  height: 112px;
+  position: relative;
   aspect-ratio: 80 / 112;
   background-color: var(--grey_40);
-}
-
-/* 브런치 이미지 */
-.brunch__cover__img {
-  max-width: 80px;
-  object-fit: cover;
 }
 
 /* 브런치북 원작 베스트셀러 */
@@ -274,6 +271,46 @@ img {
 
 .original__content__book-cover {
   width: 98px;
+}
+
+.book-info__cover--size {
+  max-width: 80px;
+  aspect-ratio: 80 / 112;
+  object-fit: cover;
+}
+
+/* 책정보 - 제목 영역 사이즈 변경 */
+.book-info__title--size {
+  width: 46px;
+  height: 60px;
+  padding: 6.75px 6px;
+}
+
+/* 책정보 - 제목 텍스트 */
+.book-info__title__txt--lineheight {
+  color: var(--black_70);
+  font-size: 7px;
+  font-weight: 300;
+  line-height: 128.571%;
+}
+
+/* 책정보 - 작가 텍스트 */
+.book-info__author--size {
+  font-size: 5px;
+}
+
+/* 책 내부 로고 */
+.brunch__cover::after {
+  content: '';
+  display: block;
+  width: 26px;
+  height: 5px;
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-image: url(/assets/images/logo-in-book.svg);
+  background-repeat: no-repeat;
 }
 
 /* 레이아웃-플렉스박스 */
@@ -327,7 +364,7 @@ img {
 .card__sentence::before {
   content: '';
   width: 15px;
-  background-image: url(../../assets/images/icon-double-quotation.svg);
+  background-image: url(/assets/images/icon-double-quotation.svg);
   background-repeat: no-repeat;
   flex-shrink: 0;
 }
@@ -351,7 +388,7 @@ img {
   content: '';
   width: 10px;
   height: 10px;
-  background-image: url(../../assets/images/icon-right-direction.svg);
+  background-image: url(/assets/images/icon-right-direction.svg);
   background-repeat: no-repeat;
   flex-shrink: 0;
 }
@@ -381,7 +418,6 @@ img {
 .top-author__info {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 15px;
   width: 121px;
 }
@@ -572,15 +608,15 @@ img {
 }
 
 .sns__list__kakao {
-  background-image: url(../../assets/images/icon-social-kakao.svg);
+  background-image: url(/assets/images/icon-social-kakao.svg);
 }
 
 .sns__list__facebook {
-  background-image: url(../../assets/images/icon-social-facebook.svg);
+  background-image: url(/assets/images/icon-social-facebook.svg);
 }
 
 .sns__list__instagram {
-  background-image: url(../../assets/images/icon-social-instagram.svg);
+  background-image: url(/assets/images/icon-social-instagram.svg);
 }
 
 .hide-text {
@@ -609,8 +645,7 @@ img {
   width: 87px;
   height: 16px;
   background-repeat: no-repeat;
-  background-position: 0px 0.5px; /* 밑에 하얀 선이 보여서 임시 처리 */
-  background-image: url(../../assets/images/icon-logo-white.svg);
+  background-image: url(/assets/images/icon-logo-white.svg);
 }
 
 .tos .style-color {
@@ -623,7 +658,7 @@ img {
   height: 40px;
   border-radius: 50%;
   background-color: var(--white);
-  background-image: url(../../assets/images/icon-scroll-to-top.svg);
+  background-image: url(/assets/images/icon-scroll-to-top.svg);
   background-repeat: no-repeat;
   background-position: center center;
   margin-bottom: 0px;
@@ -631,4 +666,10 @@ img {
   position: sticky;
   bottom: 112px;
   left: 82vw;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
