@@ -10,7 +10,7 @@ const clientId = import.meta.env.VITE_CLIENT_ID;
 const topBtnNode = document.querySelector('.btn-top');
 // 탑 버튼 클릭 이벤트 (맨 위로 이동)
 topBtnNode.addEventListener('click', () => {
-  window.scrollTo(0, 0);
+  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 });
 
 // (작성된 글 내용에서) HTML 태그 제거하는 함수
@@ -86,7 +86,7 @@ const getRankBrunch = async () => {
     arr.sort((a, b) => {
       return b.views - a.views;
     });
-
+    console.log(arr);
     // 요즘 뜨는 브런치 화면 렌더링 함수 호출
     renderBrunch(arr);
   } catch (error) {
@@ -102,10 +102,10 @@ const renderSubscribeAuthor = async authorArr => {
   const topAuthorGridNode = document.getElementById('topAuthor');
   for (const e of authorArr) {
     // 데이터가 입력되지 않은 경우 빈 문자열로 처리
-    const userImage = e.user.image ? apiUrl + e.user.image : '';
-    const userName = e.user.name ? e.user.name : '';
-    const userJob = e.user.extra.job ? e.user.extra.job : '';
-    const userBio = e.user.extra.biography ? e.user.extra.biography : '';
+    const userImage = e.image ? apiUrl + e.image : '';
+    const userName = e.name ? e.name : '';
+    const userJob = e.extra.job ? e.extra.job : '';
+    const userBio = e.extra.biography ? e.extra.biography : '';
     // 화면 렌더링
     topAuthorGridNode.innerHTML += `
       <a class="top-author__info" href="/src/pages/AuthorPage/index.html?userId=${e._id}">
@@ -147,7 +147,7 @@ const getSubscribeAuthor = async () => {
 
     // 상위 4명만 자르기
     authorArr = authorArr.slice(0, 4);
-
+    console.log(authorArr);
     // TOP 구독 작가 화면 렌더링 함수 호출
     renderSubscribeAuthor(authorArr);
   } catch (error) {
