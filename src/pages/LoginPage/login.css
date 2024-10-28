@@ -1,33 +1,3 @@
-/* CSS RESET */
-* {
-  margin: unset;
-  margin-block: unset;
-  margin-inline: unset;
-  font-weight: unset;
-  padding: 0;
-  box-sizing: border-box;
-  line-height: 1;
-}
-
-/* TYPOGRAPHY */
-@font-face {
-  font-family: sans-serif;
-  font-style: normal;
-  font-weight: 200;
-  src: url('/src/assets/fonts/Pretendard-Light.otf') format('truetype');
-}
-
-/* CUSTOM PROPERTIES */
-:root {
-  --black_100: #000;
-  --black_90: #111;
-  --grey_80: #8e8e8e;
-  --grey_60: #aaa;
-  --grey_40: #d7d7d7;
-  --white: #fff;
-  --mint: #00c8be;
-}
-
 /* LAYOUT */
 body {
   display: flex;
@@ -54,7 +24,7 @@ body {
   max-width: 248px;
   aspect-ratio: 248 / 259;
   margin: 0 auto 12px;
-  background-image: url(/src/assets/images/login_header.png);
+  background-image: url(/public/assets/images/login_header.png);
   background-size: cover;
 }
 
@@ -120,7 +90,7 @@ input::placeholder {
 .checkbox-icon {
   width: 20px;
   height: 20px;
-  background-image: url(/src/assets/images/checkbox_unchecked.png);
+  background-image: url(/public/assets/images/checkbox_unchecked.png);
   background-size: cover;
   display: inline-block;
   margin-right: 8px;
@@ -141,7 +111,7 @@ input::placeholder {
 /* 체크된 상태 */
 input[type='checkbox']:checked + .checkbox-icon {
   content: '';
-  background-image: url(/src/assets/images/checkbox_checked.png);
+  background-image: url(/public/assets/images/checkbox_checked.png);
 }
 
 button {
