@@ -91,14 +91,14 @@ document.addEventListener('DOMContentLoaded', function () {
           sessionStorage.setItem(`image`, data.item.image);
         }
 
-        // // 이전 페이지로 리다이렉트 (저장된 URL로 이동, 기본값은 메인 페이지 url)
-        // const redirectUrl =
-        //   sessionStorage.getItem('prevPage') ||
-        //   '/src/pages/MainPage/index.html';
-        // window.location.href = redirectUrl;
+        // 이전 페이지로 리다이렉트 (저장된 URL로 이동, 기본값은 메인 페이지 url)
+        const redirectUrl =
+          sessionStorage.getItem('prevPage') ||
+          '/src/pages/MainPage/index.html';
+        window.location.href = redirectUrl;
 
-        // // URL 삭제 (한 번 리다이렉트 후, 다음에는 적용되지 않도록)
-        // sessionStorage.removeItem('prevPage');
+        // URL 삭제 (한 번 리다이렉트 후, 다음에는 적용되지 않도록)
+        sessionStorage.removeItem('prevPage');
 
         // 로그인 실패
       } else {
