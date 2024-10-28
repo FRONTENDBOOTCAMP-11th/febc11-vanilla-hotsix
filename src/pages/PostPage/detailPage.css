@@ -184,6 +184,7 @@ img {
   margin-left: auto;
   margin-right: 13px;
   padding: 0;
+  background-color: unset;
 }
 
 .comment__text {
