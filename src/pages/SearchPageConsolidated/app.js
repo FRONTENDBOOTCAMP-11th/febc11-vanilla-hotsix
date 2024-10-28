@@ -13,24 +13,42 @@ class SearchPage {
       {
         title: '딸의 정부청사 출장에 부모님이 동행하는 이유',
         content:
-          '분이 많네요, 감사드립니다! 직장인(신입)으로 올룡도에서 근무하며 얻게 된 직장생활에 도움 되는...',
+          '감사드립니다! 직장인(신입)으로 울릉도에서 근무하며 얻게 된 직장생활에 도움 되는 꿀팁...',
         date: 'Apr 19. 2024',
         writer: '은설 aka 꿈꾸는 알',
+      },
+
+      {
+        title: `덴마크의 '꿀 하트' 쿠키, Honninghjerter`,
+        content:
+          '오늘날까지 같은 주소에서 영업 중이다. 덴마크의 여왕 잉그리드도 이 꿀케이크 제과점을 자주 찾는다...',
+        date: 'Nov 16. 2023',
+        writer: 'Windsbird',
       },
     ];
     this.authors = [
       {
         nickname: '꿀아빠',
-        description: '두아들 아빠 기록남기기 좋아하는 아빠 고민하는 아빠입니다',
-        tags: ['tag1', 'tag2', 'tag3'],
+        description: '두아들 아빠 기록남기기 좋아하는 아빠입니다',
+        tags: ['여행'],
       },
       {
-        nickname: '별아빠',
-        description: '자녀들과 함께하는 순간을 기록하는 아빠입니다',
-        tags: ['tagA', 'tagB', 'tagC'],
+        nickname: '꿀별',
+        description:
+          '글 쓰고 디자인 하는 사람. 마음이 담긴 일을 해요. 하는 일에 마음을 담아요.',
+        tags: [
+          '콘텐츠',
+          '만화',
+          '여행',
+          '크리에이터',
+          '어쩌구',
+          '저쩌구',
+          '이러쿵',
+        ],
       },
     ];
 
+    this.activeTab = 'articles'; // 기본 활성 탭 설정
     this.init();
   }
 
@@ -46,8 +64,21 @@ class SearchPage {
 
     this.addSearchToLocalStorage(searchText);
     this.updateViewForSearch();
-    this.displayArticleResults(searchText);
     this.addCloseButton();
+
+    // 검색어에 따른 글과 작가 목록 필터링
+    this.filteredArticles = this.getFilteredArticles(searchText);
+    this.filteredAuthors = this.authors.filter(author =>
+      author.nickname.includes(searchText),
+    );
+
+    // 현재 활성화된 탭에 따라 결과를 표시
+    if (this.activeTab === 'articles') {
+      this.displayArticleResults();
+    } else {
+      this.displayAuthorResults();
+    }
+    this.createNavTab();
   }
 
   addSearchToLocalStorage(searchText) {
@@ -65,24 +96,64 @@ class SearchPage {
     this.recentSection.style.display = 'none';
   }
 
-  displayArticleResults(searchText) {
-    const existingNavTab = document.querySelector('.nav-tab');
-    if (existingNavTab) existingNavTab.remove();
+  createNavTab() {
+    // nav-tab 중복 생성 방지
+    if (document.querySelector('.nav-tab')) return;
 
-    document
-      .querySelectorAll('.search-info, .articles, .authors')
-      .forEach(el => el.remove());
-
-    const filteredResults = this.getFilteredArticles(searchText);
-
-    const navTab = this.createNavTab();
-    const searchInfo = this.createSearchInfo(filteredResults.length, '글');
-    const articlesSection = this.createArticlesSection(filteredResults);
-
-    this.contents.append(searchInfo, articlesSection);
+    const navTab = document.createElement('section');
+    navTab.className = 'nav-tab';
+    navTab.innerHTML = `
+      <ul class="tabs">
+        <li class="${this.activeTab === 'articles' ? 'active' : ''}" data-type="articles">글</li>
+        <li class="${this.activeTab === 'authors' ? 'active' : ''}" data-type="authors">작가</li>
+      </ul>
+    `;
     this.searchSection.after(navTab);
 
-    navTab.addEventListener('click', e => this.handleTabClick(e, searchText));
+    // 탭 클릭 이벤트
+    navTab.addEventListener('click', e => this.handleTabClick(e));
+  }
+
+  handleTabClick(e) {
+    const clickedTab = e.target;
+    const type = clickedTab.getAttribute('data-type');
+
+    // 활성화된 탭 상태 업데이트
+    this.activeTab = type;
+
+    const tabs = document.querySelectorAll('.tabs li');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    clickedTab.classList.add('active');
+
+    // 현재 활성 탭에 따라 표시할 목록 결정
+    if (this.activeTab === 'articles') {
+      this.displayArticleResults();
+    } else {
+      this.displayAuthorResults();
+    }
+  }
+
+  displayArticleResults() {
+    const articlesSection = this.createArticlesSection(this.filteredArticles);
+    this.contents.innerHTML = ''; // 콘텐츠 초기화
+    this.contents.append(articlesSection);
+    this.updateSearchInfo(this.filteredArticles.length, '글');
+  }
+
+  displayAuthorResults() {
+    const authorsSection = this.createAuthorsSection(this.filteredAuthors);
+    this.contents.innerHTML = ''; // 콘텐츠 초기화
+    this.contents.append(authorsSection);
+    this.updateSearchInfo(this.filteredAuthors.length, '작가');
+  }
+
+  updateSearchInfo(count, type) {
+    const searchInfo =
+      document.querySelector('.search-info') ||
+      document.createElement('section');
+    searchInfo.className = 'search-info';
+    searchInfo.innerHTML = `<span>${type} 검색 결과 ${count}건</span>`;
+    if (!document.contains(searchInfo)) this.contents.prepend(searchInfo);
   }
 
   getFilteredArticles(searchText) {
@@ -93,25 +164,6 @@ class SearchPage {
     );
   }
 
-  createNavTab() {
-    const navTab = document.createElement('section');
-    navTab.className = 'nav-tab';
-    navTab.innerHTML = `
-      <ul class="tabs">
-        <li class="active">글</li>
-        <li>작가</li>
-      </ul>
-    `;
-    return navTab;
-  }
-
-  createSearchInfo(count, type) {
-    const searchInfo = document.createElement('section');
-    searchInfo.className = 'search-info';
-    searchInfo.innerHTML = `<span>${type} 검색 결과 ${count}건</span>`;
-    return searchInfo;
-  }
-
   createArticlesSection(results) {
     const articlesSection = document.createElement('section');
     articlesSection.className = 'articles';
@@ -119,11 +171,11 @@ class SearchPage {
       const article = document.createElement('article');
       article.innerHTML = `
         <div class="article-title">
-          <h2>${result.title}</h2>
+          <h2>${this.highlightKeyword(result.title, this.searchInput.value)}</h2>
         </div>
         <div class="article-contents">
           <div class="article-letters">
-            <p>${result.content}</p>
+            <p>${this.highlightKeyword(result.content, this.searchInput.value)}</p>
             <footer>
               <span class="article-date">${result.date}</span>
               <span class="article-writer">by ${result.writer}</span>
@@ -135,6 +187,36 @@ class SearchPage {
       articlesSection.appendChild(article);
     });
     return articlesSection;
+  }
+
+  createAuthorsSection(results) {
+    const authorsSection = document.createElement('section');
+    authorsSection.className = 'authors';
+
+    results.forEach(author => {
+      const authorDiv = document.createElement('div');
+      authorDiv.className = 'author';
+      authorDiv.innerHTML = `
+        <div class="author-contents">
+          <div class="author-image"></div>
+          <div class="author-letters">
+            <div class="author-nickname">${this.highlightKeyword(author.nickname, this.searchInput.value)}</div>
+            <div class="author-description">${author.description}</div>
+          </div>
+        </div>
+        <ul class="tags">${author.tags.map(tag => `<li class="tag">${tag}</li>`).join('')}</ul>
+      `;
+      authorsSection.appendChild(authorDiv);
+    });
+
+    return authorsSection;
+  }
+
+  highlightKeyword(text, keyword) {
+    return text.replace(
+      new RegExp(`(${keyword})`, 'gi'),
+      '<span class="keyword">$1</span>',
+    );
   }
 
   addCloseButton() {
@@ -160,74 +242,10 @@ class SearchPage {
     this.loadRecentSearches();
   }
 
-  handleTabClick(e, searchText) {
-    const clickedTab = e.target;
-    const tabs = document.querySelectorAll('.tabs li');
-
-    tabs.forEach(tab => tab.classList.remove('active'));
-    clickedTab.classList.add('active');
-
-    const searchInfo = document.querySelector('.search-info');
-    const isAuthorTab = clickedTab.innerText === '작가';
-
-    if (isAuthorTab) {
-      this.toggleAuthorsSection(searchText, true);
-      const filteredAuthors = this.authors.filter(author =>
-        author.nickname.includes(searchText),
-      );
-      searchInfo.innerHTML = `<span>작가 검색 결과 ${filteredAuthors.length}건</span>`;
-    } else {
-      this.toggleAuthorsSection(searchText, false);
-      const filteredArticles = this.getFilteredArticles(searchText);
-      searchInfo.innerHTML = `<span>글 검색 결과 ${filteredArticles.length}건</span>`;
-    }
-  }
-
-  toggleAuthorsSection(searchText, showAuthors) {
-    const authorsSection = document.querySelector('.authors');
-    const articlesSection = document.querySelector('.articles');
-
-    if (showAuthors) {
-      articlesSection.style.display = 'none';
-      if (!authorsSection) this.createAuthorsSection(searchText);
-      else authorsSection.style.display = 'flex';
-    } else {
-      if (authorsSection) authorsSection.style.display = 'none';
-      articlesSection.style.display = 'flex';
-    }
-  }
-
-  createAuthorsSection(searchText) {
-    const authorsSection = document.createElement('section');
-    authorsSection.className = 'authors';
-
-    const filteredAuthors = this.authors.filter(author =>
-      author.nickname.includes(searchText),
-    );
-    filteredAuthors.forEach(author => {
-      const authorDiv = document.createElement('div');
-      authorDiv.className = 'author';
-      authorDiv.innerHTML = `
-        <div class="author-contents">
-          <div class="author-image"></div>
-          <div class="author-letters">
-            <div class="author-nickname">${this.highlightKeyword(author.nickname, searchText)}</div>
-            <div class="author-description">${author.description}</div>
-          </div>
-        </div>
-        <ul class="tags">${author.tags.map(tag => `<li class="tag">${tag}</li>`).join('')}</ul>
-      `;
-      authorsSection.appendChild(authorDiv);
-    });
-
-    this.contents.appendChild(authorsSection);
-  }
-
-  highlightKeyword(text, keyword) {
-    return text.replace(
-      new RegExp(`(${keyword})`, 'gi'),
-      '<span class="keyword">$1</span>',
-    );
+  loadRecentSearches() {
+    this.historyList.innerHTML = '';
+    const searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+    searches.forEach(search => this.createHistoryItem(search));
   }
 
   createHistoryItem(search) {
@@ -236,12 +254,6 @@ class SearchPage {
     item.innerHTML = `<span>${search}</span> <button class="delete-btn"></button>`;
     item.addEventListener('click', e => this.handleHistoryClick(e, search));
     this.historyList.appendChild(item);
-  }
-
-  loadRecentSearches() {
-    this.historyList.innerHTML = '';
-    const searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
-    searches.forEach(search => this.createHistoryItem(search));
   }
 
   handleHistoryClick(e, search) {
