@@ -291,7 +291,7 @@ class SearchPage {
     this.searchInput.value = '';
     this.searchSection.style.borderBottom = '1px solid var(--grey_50)';
     this.recommendSection.style.display = 'flex';
-    this.recentSection.style.display = 'block';
+    this.recentSection.style.display = 'flex';
 
     document
       .querySelectorAll(
