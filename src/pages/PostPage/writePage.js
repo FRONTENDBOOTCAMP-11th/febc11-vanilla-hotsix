@@ -18,7 +18,7 @@ class Post {
     title,
     content,
     subtitle = '',
-    image = `/files/${clientId}/park.jpg`,
+    image = `${apiUrl}/files/${clientId}/park.jpg`,
   ) {
     this.type = 'post';
     this.title = title;
@@ -114,6 +114,9 @@ document.addEventListener('keydown', e => {
 // let inspectBtn = document.querySelector('#modal-inspect');
 let cancelBtn = document.querySelector('#modal-cancel');
 
+// post.content의 내용을 DOM으로 변경하기 위한 DOMParser 생성
+const parser = new DOMParser();
+
 // 발행 버튼 클릭시
 postBtn.addEventListener('click', async () => {
   if (titleInputNode.value.trim() === '') {
@@ -129,7 +132,14 @@ postBtn.addEventListener('click', async () => {
       subtitleInputNode.value,
     );
 
-    console.log(post);
+    // post.content 내용을 DOM으로 변환
+    const doc = parser.parseFromString(post.content, 'text/html');
+    // 생성된 post.content의 첫번째 img 태그 찾기
+    const firstImg = doc.querySelector('img');
+
+    if (firstImg) {
+      post.image = firstImg.src;
+    }
 
     // 생성된 게시글 객체 서버로 전송
     try {
@@ -166,6 +176,15 @@ saveBtn.addEventListener('click', async () => {
       subtitleInputNode.value,
     );
     post.private = true; // post 객체에 private 속성 추가
+
+    // post.content 내용을 DOM으로 변환
+    const doc = parser.parseFromString(post.content, 'text/html');
+    // 생성된 post.content의 첫번째 img 태그 찾기
+    const firstImg = doc.querySelector('img');
+
+    if (firstImg) {
+      post.image = firstImg.src;
+    }
 
     // 생성된 게시글 객체 서버로 전송
     try {
@@ -238,7 +257,6 @@ fileInputNode.addEventListener('change', async e => {
 
         // 이미지 미리보기를 위해 editableDiv에 삽입
         editableDiv.appendChild(img);
-        console.log(editableDiv.innerHTML);
       } catch (error) {
         console.log(error);
       }
