@@ -10,6 +10,7 @@ let subtitleInputNode = document.querySelector('#subtitleInput');
 let editableDiv = document.querySelector('#editableDiv');
 let closeBtn = document.querySelector('#closeBtn');
 let checkBtn = document.querySelector('#checkBtn');
+let checkBtnImg = document.querySelector('#checkBtnImg');
 
 // 매개변수 (type : 'post'로 고정, title, subtitle, content: string)
 class Post {
@@ -35,13 +36,39 @@ closeBtn.addEventListener('click', () => {
 
 // 체크버튼 mouseDown시 체크버튼 색상 변경
 checkBtn.addEventListener('mousedown', () => {
-  checkBtn.setAttribute('src', '/assets/images/icon-check_green.svg');
+  checkBtnImg.setAttribute('src', '/assets/images/icon-check_green.svg');
 });
 
 // 체크버튼 mouseUp시 (1) 색상 변경 (2) 모달창 오픈
 checkBtn.addEventListener('mouseup', () => {
-  checkBtn.setAttribute('src', '/assets/images/icon-check_black.svg');
+  checkBtnImg.setAttribute('src', '/assets/images/icon-check_black.svg');
   modal.className = 'modalWindow visible';
+});
+
+// 기본 탭 순서에서 제외
+checkBtn.setAttribute('tabindex', '-1');
+
+// 체크버튼을 마지막으로 선택되게 하기 위해 tabindex 조정
+// 포커스 가능한 모든 요소 선택
+const focusableElements = Array.from(
+  document.querySelectorAll('button, input, a, [tabindex="0"]'),
+);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Tab' && !e.shiftKey) {
+    // 현재 포커스되어 있는 요소 반환
+    const activeElement = document.activeElement;
+    // activeElement가 현재 페이지의 focusableElements 요소중 마지막 요소이면 true를 반환
+    const isLastFocusable =
+      activeElement === focusableElements[focusableElements.length - 1];
+
+    if (isLastFocusable) {
+      e.preventDefault();
+      checkBtn.focus();
+    } else if (activeElement === checkBtn) {
+      e.preventDefault();
+      closeBtn.focus();
+    }
+  }
 });
 
 // modal 노드 획득

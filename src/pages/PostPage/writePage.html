@@ -24,17 +24,13 @@
       <header class="header">
         <div class="l_wrapper">
           <div class="header-container">
-            <button>
-              <img
-                id="closeBtn"
-                src="/assets/images/icon-close.svg"
-                alt="닫기 버튼"
-              />
+            <button id="closeBtn">
+              <img src="/assets/images/icon-close.svg" alt="닫기 버튼" />
             </button>
-            <span>글쓰기</span>
-            <button>
+            <h1 tabindex="0">글쓰기</h1>
+            <button id="checkBtn">
               <img
-                id="checkBtn"
+                id="checkBtnImg"
                 src="/assets/images/icon-check_black.svg"
                 alt="확인 버튼"
               />
@@ -82,17 +78,23 @@
                 style="display: none"
                 multiple
               />
-              <img
-                id="uploadImg"
-                src="/assets/images/icon-add_img.svg"
-                alt="이미지 업로드 버튼"
-              />
-              <img
-                id="text-align-btn"
-                src="/assets/images/icon-text-alignment_left.svg"
-                alt="게시글 텍스트 정렬 버튼"
-              />
-              <img src="/assets/images/icon-hide-keyboard.svg" alt="" />
+              <button>
+                <img
+                  id="uploadImg"
+                  src="/assets/images/icon-add_img.svg"
+                  alt="이미지 업로드 버튼"
+                />
+              </button>
+              <button>
+                <img
+                  id="text-align-btn"
+                  src="/assets/images/icon-text-alignment_left.svg"
+                  alt="게시글 텍스트 정렬 버튼"
+                />
+              </button>
+              <button>
+                <img src="/assets/images/icon-hide-keyboard.svg" alt="" />
+              </button>
             </div>
           </div>
         </section>

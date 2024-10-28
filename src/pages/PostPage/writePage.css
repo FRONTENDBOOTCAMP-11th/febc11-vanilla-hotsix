@@ -74,7 +74,7 @@ img {
   height: 50px;
 }
 
-.header-container span {
+.header-container h1 {
   color: var(--black_90);
   font-size: 19px;
   font-weight: 600;
@@ -181,10 +181,14 @@ img {
   height: 40px;
 }
 
-.controls img:nth-child(3) {
+.controls button {
+  background-color: unset;
+}
+
+.controls button:nth-child(3) {
   margin-left: 24px;
 }
 
-.controls img:last-child {
+.controls button:last-child {
   margin-left: auto;
 }
