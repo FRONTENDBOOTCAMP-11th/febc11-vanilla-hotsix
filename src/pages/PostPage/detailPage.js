@@ -29,13 +29,11 @@ const monthNames = [
 // 게시글 정보를 가져오는 함수
 const getPost = async () => {
   try {
-    // 엔드 포인트 동적으로 수정 필요
     const response = await axios.get(`${apiUrl}/posts/${postId}`, {
       headers: {
         'client-id': clientId,
       },
     });
-    console.log(response.data.item);
 
     // 최근 본 게시글 저장하기
     // 기존 게시글 배열을 불러오기 (없으면 빈 배열 생성)
@@ -48,7 +46,7 @@ const getPost = async () => {
     if (!isDuplicate) {
       // 스프레드 문법으로 새로운 게시글을 추가하여 배열 업데이트
       posts = [...posts, response.data.item];
-  
+
       // 업데이트된 배열을 다시 localStorage에 저장
       localStorage.setItem('posts', JSON.stringify(posts));
     }
@@ -119,7 +117,9 @@ async function printHeader() {
   const dateObj = new Date(year, month, day);
 
   titleDivNode.innerHTML = curruntPost.title;
-  subTitleSpanNode.innerHTML = curruntPost.extra.subTitle;
+  if (curruntPost.extra.subTitle) {
+    subTitleSpanNode.innerHTML = curruntPost.extra.subTitle;
+  }
   authorSpanNode.innerHTML = curruntPost.user.name;
   timeSpanNode.innerHTML = `${monthNames[dateObj.getMonth() - 1]} ${day}. ${year}`;
 }
@@ -130,34 +130,13 @@ async function printArticle() {
   // 1차적으로 가져온 content를 HTML로 변환하여 삽입
   articleNode.innerHTML = curruntPost.content;
 
-  // content 안에 img 태그 찾기
-  const images = articleNode.querySelectorAll('img');
+  // content 안에 .wrap_img_float 클래스 찾기(이 div 때문에 이미지에 고정너비가 부여되어 오른쪽으로 overflow)
   const imgWrappers = articleNode.querySelectorAll('.wrap_img_float');
-  console.log(imgWrappers);
-  console.log(images);
 
-  // 사용자가 이미지를 넣었다면 실행
-  if (images || imgWrappers) {
+  if (imgWrappers) {
     // image 감싸고 있는 div의 고정 너비값 없애기
     for (const item of imgWrappers) {
       item.removeAttribute('style');
-    }
-
-    // 각 img 태그의 src 속성에서 경로부분만 추출하고, API로 요청
-    for (const img of images) {
-      const src = img.getAttribute('src');
-
-      if (src) {
-        try {
-          // API 요청 : getImg 함수에 추출한 경로를 넘겨줌
-          const newSrc = await getImg(src);
-
-          // 이미지 태그의 src 속성을 완전히 새로운 Blob URL로 대체
-          img.src = newSrc;
-        } catch (error) {
-          console.error('이미지 요청 중 오류 발생', error);
-        }
-      }
     }
   }
 }
@@ -165,12 +144,14 @@ await printArticle();
 
 // 태그를 출력하는 함수
 async function printTags() {
-  curruntPost.tag?.forEach(tag => {
-    let span = document.createElement('span');
-    span.className = 'tag';
-    span.innerHTML = tag;
-    tagsSectionNode.appendChild(span);
-  });
+  if (curruntPost.tag) {
+    curruntPost.tag?.forEach(tag => {
+      let span = document.createElement('span');
+      span.className = 'tag';
+      span.innerHTML = tag;
+      tagsSectionNode.appendChild(span);
+    });
+  }
 }
 printTags();
 
@@ -178,68 +159,71 @@ printTags();
 async function printComments() {
   const replies = curruntPost.replies;
 
-  let commentCount = document.querySelector('.count-num');
-  commentCount.innerHTML = curruntPost.replies.length;
+  // 게시글에 댓글이 추가된 있다면 댓글 렌더링
+  if (replies) {
+    let commentCount = document.querySelector('.count-num');
+    commentCount.innerHTML = curruntPost.replies.length;
 
-  for (let comment of replies) {
-    const [date, time] = curruntPost.createdAt.split(' ');
-    const [year, month, day] = date.split('.');
-    const dateObj = new Date(year, month, day);
-    // 유저가 프사를 안 해 놨을 때 지정해놓을 기본 이미지 필요
-    const userImage = comment.user.image
-      ? comment.user.image
-      : `/files/${clientId}/user-muzi.webp`;
-    const imgSrc = await getImg(userImage);
+    for (let comment of replies) {
+      const [date, time] = curruntPost.createdAt.split(' ');
+      const [year, month, day] = date.split('.');
+      const dateObj = new Date(year, month, day);
+      // 유저가 프사를 안 해 놨을 때 지정해놓을 기본 이미지 필요
+      const userImage = comment.user.image
+        ? comment.user.image
+        : `/files/${clientId}/user-muzi.webp`;
+      const imgSrc = await getImg(userImage);
 
-    let span = document.createElement('span');
-    span.innerText = comment.user.name;
-    let kebabMenu = document.createElement('img');
-    kebabMenu.src = '../../assets/images/button-kebab-menu.svg';
-    let menuBtn = document.createElement('button');
-    menuBtn.setAttribute('class', 'kebab-menu');
-    menuBtn.appendChild(kebabMenu);
-    let nameDiv = document.createElement('div');
-    nameDiv.setAttribute('class', 'name');
-    nameDiv.appendChild(span);
-    nameDiv.appendChild(menuBtn);
+      let span = document.createElement('span');
+      span.innerText = comment.user.name;
+      let kebabMenu = document.createElement('img');
+      kebabMenu.src = '../../assets/images/button-kebab-menu.svg';
+      let menuBtn = document.createElement('button');
+      menuBtn.setAttribute('class', 'kebab-menu');
+      menuBtn.appendChild(kebabMenu);
+      let nameDiv = document.createElement('div');
+      nameDiv.setAttribute('class', 'name');
+      nameDiv.appendChild(span);
+      nameDiv.appendChild(menuBtn);
 
-    let timeSpan = document.createElement('span');
-    timeSpan.setAttribute('class', 'time');
-    timeSpan.innerText = `${monthNames[dateObj.getMonth() - 1]} ${day}. ${year}`;
-    let commentHeader = document.createElement('div');
-    commentHeader.setAttribute('class', 'comment__header');
-    commentHeader.appendChild(nameDiv);
-    commentHeader.appendChild(timeSpan);
+      let timeSpan = document.createElement('span');
+      timeSpan.setAttribute('class', 'time');
+      timeSpan.innerText = `${monthNames[dateObj.getMonth() - 1]} ${day}. ${year}`;
+      let commentHeader = document.createElement('div');
+      commentHeader.setAttribute('class', 'comment__header');
+      commentHeader.appendChild(nameDiv);
+      commentHeader.appendChild(timeSpan);
 
-    let commentTxt = document.createElement('p');
-    commentTxt.setAttribute('class', 'comment__text');
-    commentTxt.innerText = comment.content;
+      let commentTxt = document.createElement('p');
+      commentTxt.setAttribute('class', 'comment__text');
+      commentTxt.innerText = comment.content;
 
-    let replyBtn = document.createElement('button');
-    replyBtn.innerText = '답글달기';
-    let commentFooter = document.createElement('div');
-    commentFooter.setAttribute('class', 'comment__footer');
-    commentFooter.appendChild(replyBtn);
+      let replyBtn = document.createElement('button');
+      replyBtn.innerText = '답글달기';
+      let commentFooter = document.createElement('div');
+      commentFooter.setAttribute('class', 'comment__footer');
+      commentFooter.appendChild(replyBtn);
 
-    let commentContents = document.createElement('section');
-    commentContents.setAttribute('class', 'comment__contents');
-    commentContents.appendChild(commentHeader);
-    commentContents.appendChild(commentTxt);
-    commentContents.appendChild(commentFooter);
+      let commentContents = document.createElement('section');
+      commentContents.setAttribute('class', 'comment__contents');
+      commentContents.appendChild(commentHeader);
+      commentContents.appendChild(commentTxt);
+      commentContents.appendChild(commentFooter);
 
-    let profileImg = document.createElement('img');
-    profileImg.setAttribute('class', 'profile-img');
-    profileImg.src = imgSrc ? imgSrc : '';
-    let commentProfile = document.createElement('section');
-    commentProfile.setAttribute('class', 'comment__profile');
-    commentProfile.appendChild(profileImg);
+      let profileImg = document.createElement('img');
+      profileImg.setAttribute('class', 'profile-img');
+      profileImg.src = imgSrc ? imgSrc : '';
+      let commentProfile = document.createElement('section');
+      commentProfile.setAttribute('class', 'comment__profile');
+      commentProfile.appendChild(profileImg);
 
-    let commentNode = document.createElement('div');
-    commentNode.setAttribute('class', 'comment');
-    commentNode.appendChild(commentProfile);
-    commentNode.appendChild(commentContents);
+      let commentNode = document.createElement('div');
+      commentNode.setAttribute('class', 'comment');
+      commentNode.appendChild(commentProfile);
+      commentNode.appendChild(commentContents);
 
-    commentsNode.appendChild(commentNode);
+      commentsNode.appendChild(commentNode);
+    }
   }
 }
 printComments();
@@ -316,7 +300,7 @@ bookmarkBtn.addEventListener('click', async () => {
           },
         },
       );
-      likeIcon.src = '../../assets/images/icon-like.svg';
+      likeIcon.src = '/assets/images/icon-like.svg';
       myBookmarkList = await getBookmarks();
       curruntPost = await getPost();
       likeCountSpan.innerHTML = curruntPost.bookmarks;
@@ -331,7 +315,7 @@ bookmarkBtn.addEventListener('click', async () => {
           },
         },
       );
-      likeIcon.src = '../../assets/images/icon-like_empty.svg';
+      likeIcon.src = '/assets/images/icon-like_empty.svg';
       myBookmarkList = await getBookmarks();
       curruntPost = await getPost();
       likeCountSpan.innerHTML = curruntPost.bookmarks;
@@ -344,9 +328,9 @@ bookmarkBtn.addEventListener('click', async () => {
 // 북마크 상태에 따라 좋아요 버튼 스타일 변경
 async function printBookmark() {
   if (myBookmarkList.some(item => item.post._id == curruntPost._id)) {
-    likeIcon.src = '../../assets/images/icon-like.svg';
+    likeIcon.src = '/assets/images/icon-like.svg';
   } else {
-    likeIcon.src = '../../assets/images/icon-like_empty.svg';
+    likeIcon.src = '/assets/images/icon-like_empty.svg';
   }
 }
 printBookmark();
@@ -373,6 +357,8 @@ async function printFooter() {
   let likeCount = document.querySelector('.like-count');
   let commentCount = document.querySelector('.comment-count');
   likeCount.innerHTML = curruntPost.bookmarks;
-  commentCount.innerHTML = curruntPost.replies.length;
+  if (curruntPost.replies) {
+    commentCount.innerHTML = curruntPost.replies.length;
+  }
 }
 printFooter();
