@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="postDetailPage.css" />
+    <link rel="stylesheet" href="detailPage.css" />
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="../../components/header/header.css" />
     <link rel="stylesheet" href="../../components/subscribe/subscribe.css" />
@@ -19,9 +19,9 @@
           <div class="header__title"></div>
           <span class="header__subtitle"></span>
           <div class="header__info">
-            <img src="../../assets/images/icon-by.svg" class="info__by" />
+            <img src="/assets/images/icon-by.svg" class="info__by" />
             <span class="info__author"></span>
-            <img src="../../assets/images/dot-center.svg" class="info__dot" />
+            <img src="/assets/images/dot-center.svg" class="info__dot" />
             <span class="info__time"></span>
           </div>
         </div>
@@ -32,7 +32,7 @@
           <section class="main__tags"></section>
           <section class="main__comments">
             <div class="comments-count">
-              댓글 <span class="count-num"></span>
+              댓글 <span class="count-num">0</span>
             </div>
             <div class="comments"></div>
             <section class="comments__comment-input">
@@ -77,24 +77,21 @@
             <div class="footer__icons-container">
               <button id="bookmarkBtn">
                 <img
-                  src="../../assets/images/icon-like.svg"
+                  src="/assets/images/icon-like.svg"
                   class="icon"
                   id="icon-like"
                 />
               </button>
               <span class="like-count"></span>
-              <img src="../../assets/images/icon-share.svg" class="icon" />
-              <img
-                src="../../assets/images/icon-comment.svg"
-                class="icon-comment"
-              />
-              <span class="comment-count"></span>
+              <img src="/assets/images/icon-share.svg" class="icon" />
+              <img src="/assets/images/icon-comment.svg" class="icon-comment" />
+              <span class="comment-count">0</span>
             </div>
           </div>
         </div>
       </footer>
     </div>
-    <script src="postDetailPage.js" type="module"></script>
+    <script src="detailPage.js" type="module"></script>
     <script src="../../components/header/header.js" type="module"></script>
     <script
       src="../../components/subscribe/subscribe.js"
