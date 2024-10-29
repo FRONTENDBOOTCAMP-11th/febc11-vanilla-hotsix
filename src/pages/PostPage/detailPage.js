@@ -108,7 +108,7 @@ async function printHeader() {
   const dateObj = new Date(year, month, day);
 
   titleDivNode.innerHTML = curruntPost.title;
-  if (curruntPost.extra.subTitle) {
+  if (curruntPost.extra) {
     subTitleSpanNode.innerHTML = curruntPost.extra.subTitle;
   }
   authorSpanNode.innerHTML = curruntPost.user.name;
