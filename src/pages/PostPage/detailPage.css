@@ -207,6 +207,16 @@ img {
   border: 1px solid #ddd;
 }
 
+.login-require {
+  padding: 20px;
+  height: 100px;
+  color: var(--grey_55);
+}
+
+.login-require:hover {
+  cursor: pointer;
+}
+
 .input-area {
   padding: 16px 20px;
   border-bottom: 1px solid #ddd;
@@ -327,13 +337,6 @@ img {
   font-size: 14px;
 }
 
-.subscribed {
-  padding: 0 10px;
-  background-color: #00c6be;
-  line-height: 258%;
-  color: white;
-}
-
 .footer__icons {
   border-top: 1px solid #eeeeee;
   color: #333;
@@ -344,6 +347,18 @@ img {
   display: flex;
   align-items: center;
   line-height: 150%;
+}
+
+.footer__icons-container button {
+  background-color: unset;
+}
+
+.footer__icons-container button:hover {
+  cursor: pointer;
+}
+
+#commentIcon {
+  margin-left: auto;
 }
 
 .footer__icons .icon {
@@ -370,6 +385,5 @@ img {
 .icon-comment {
   width: 21px;
   height: 21px;
-  margin-left: auto;
   margin-right: 3px;
 }
