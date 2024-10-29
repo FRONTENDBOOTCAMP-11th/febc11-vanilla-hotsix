@@ -16,13 +16,13 @@
       <header-component></header-component>
       <header class="header">
         <div class="l_wrapper">
-          <div class="header__title"></div>
-          <span class="header__subtitle"></span>
+          <div class="header__title" tabindex="0"></div>
+          <span class="header__subtitle" tabindex="0"></span>
           <div class="header__info">
             <img src="/assets/images/icon-by.svg" class="info__by" />
-            <span class="info__author"></span>
+            <span class="info__author" tabindex="0"></span>
             <img src="/assets/images/dot-center.svg" class="info__dot" />
-            <span class="info__time"></span>
+            <span class="info__time" tabindex="0"></span>
           </div>
         </div>
       </header>
@@ -63,15 +63,18 @@
           <div class="l_wrapper">
             <header class="author-info__header">
               <div class="author__nickname">
-                <div class="nickname"></div>
-                <span class="job"></span>
+                <div class="nickname" tabindex="0"></div>
+                <span class="job" tabindex="0"></span>
               </div>
               <!-- 나중에 이미지로 변경 -->
               <img class="author__photo" />
             </header>
             <p class="author-info__contents"></p>
             <footer class="author-info__footer">
-              <div>구독자 <span class="subscriber" id="subscriber"></span></div>
+              <div tabindex="0">
+                구독자
+                <span class="subscriber" id="subscriber" tabindex="0"></span>
+              </div>
               <subscribe-component></subscribe-component>
             </footer>
           </div>
