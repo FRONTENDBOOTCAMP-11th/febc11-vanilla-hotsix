@@ -266,27 +266,41 @@ printAddReply();
 const commentSubmitBtn = document.querySelector('#commentSubmitBtn');
 commentSubmitBtn.addEventListener('click', async () => {
   const commentInput = document.querySelector('#commentInput');
-  try {
-    const response = await axios.post(
-      `${apiUrl}/posts/${postId}/replies`,
-      {
-        content: commentInput.value,
-      },
-      {
-        headers: {
-          'client-id': clientId,
-          Authorization: `Bearer ${token}`,
+  if (commentInput.value) {
+    try {
+      const response = await axios.post(
+        `${apiUrl}/posts/${postId}/replies`,
+        {
+          content: commentInput.value,
         },
-      },
-    );
-    console.log(response);
-    // 새 댓글만 추가
-    addComment(response.data.item);
-    commentCount.innerHTML = parseInt(commentCount.innerHTML) + 1;
-    commentInput.value = '';
-  } catch (error) {
-    console.log(error);
+        {
+          headers: {
+            'client-id': clientId,
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      console.log(response);
+      // 새 댓글만 추가
+      addComment(response.data.item);
+      commentCount.innerHTML = parseInt(commentCount.innerHTML) + 1;
+      commentInput.value = '';
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    alert('댓글을 입력하세요.');
   }
+});
+
+// 댓글 등록 버튼 클릭할 때 색상 변경
+commentSubmitBtn.addEventListener('mousedown', () => {
+  let btnImg = commentSubmitBtn.querySelector('img');
+  btnImg.src = '/assets/images/button-comment-submit_clicked.svg';
+});
+commentSubmitBtn.addEventListener('mouseup', () => {
+  let btnImg = commentSubmitBtn.querySelector('img');
+  btnImg.src = '/assets/images/button-comment-submit_default.svg';
 });
 
 // 댓글 삭제하기
