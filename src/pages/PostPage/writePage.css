@@ -142,6 +142,10 @@ img {
   line-height: 90%;
 }
 
+.input-container input:focus {
+  outline: 1px solid var(--grey_35);
+}
+
 .contents-input {
   padding: 25px 0 0;
 }
@@ -161,6 +165,10 @@ img {
   content: attr(data-placeholder);
   position: absolute;
   color: #959595;
+}
+
+#editableDiv:focus {
+  outline: 1px solid var(--grey_35);
 }
 
 .text-center {
