@@ -2,16 +2,22 @@ document.addEventListener('DOMContentLoaded', function () {
   // Elements
   const form = document.querySelector('form');
   const nicknameInput = document.getElementById('nickname');
+  const checkNicknameButton = document.getElementById('check-nickname');
+  const nicknameFeedback = document.getElementById('nickname-feedback');
+
   const emailInput = document.getElementById('email');
   const checkEmailButton = document.getElementById('check-email');
   const emailFeedback = document.getElementById('email-feedback');
+
   const passwordInput = document.getElementById('password');
   const passwordFeedback = document.getElementById('password-feedback');
   const eyeIconPassword = document.getElementById('toggle-password');
+
   const confirmPasswordInput = document.getElementById('confirm-password');
   const eyeIconConfirmPassword = document.getElementById(
     'toggle-confirm-password',
   );
+
   const signupButton = document.querySelector('.signup-button');
 
   // 환경변수
@@ -33,6 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
   checkEmailButton.disabled = true;
   checkEmailButton.style.color = 'var(--grey_60)';
   checkEmailButton.style.cursor = 'unset';
+
+  checkNicknameButton.disabled = true;
+  checkNicknameButton.style.color = 'var(--grey_60)';
+  checkNicknameButton.style.cursor = 'unset';
 
   // 인풋 입력 상태 추적 변수 초기화
   let isNicknameValid = false;
@@ -60,8 +70,52 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 닉네임 입력 여부 확인
   nicknameInput.addEventListener('input', function () {
-    isNicknameValid = nicknameInput.value.trim() !== '';
+    const nickname = nicknameInput.value;
+    isNicknameValid = nickname.trim() !== '';
+
+    if (isNicknameValid) {
+      checkNicknameButton.disabled = false;
+      checkNicknameButton.style.color = 'var(--mint)';
+      checkNicknameButton.style.cursor = 'pointer';
+    } else {
+      checkNicknameButton.disabled = true;
+      checkNicknameButton.style.color = 'var(--grey_60)';
+      checkNicknameButton.style.cursor = 'unset';
+    }
     checkFormValidity();
+  });
+
+  // 닉네임 중복 확인
+  checkNicknameButton.addEventListener('click', function () {
+    const nickname = nicknameInput.value;
+
+    // API 호출
+    fetch(`${apiUrl}/users/name?name=${nickname}`, {
+      headers: {
+        'client-id': clientID,
+        'Content-type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('API response: ', data);
+
+        if (data.ok) {
+          nicknameFeedback.classList.remove('hidden');
+          nicknameFeedback.textContent = '사용할 수 있는 별명입니다.';
+          nicknameFeedback.style.color = 'var(--mint)';
+        } else if (data.message === '이미 등록된 이름입니다.') {
+          nicknameFeedback.classList.remove('hidden');
+          nicknameFeedback.textContent = '이미 등록된 별명입니다.';
+          nicknameFeedback.style.color = '#fc3b75';
+        }
+
+        checkFormValidity();
+      })
+      .catch(error => {
+        console.error('에러 발생: ', error);
+        alert('별명 중복 확인 중 오류가 발생했습니다.');
+      });
   });
 
   // 이메일 유효성 검사
@@ -78,12 +132,13 @@ document.addEventListener('DOMContentLoaded', function () {
       emailFeedback.style.color = '#fc3b75';
       checkEmailButton.disabled = true;
       checkEmailButton.style.color = 'var(--grey_60)';
+      checkEmailButton.style.cursor = 'unset';
       isEmailChecked = false;
     } else {
       // 유효한 이메일 형식일 경우 버튼 활성화
       emailFeedback.classList.add('hidden'); // 피드백 숨기기
       emailFeedback.textContent = '';
-      checkEmailButton.disabled = false; // 버튼 활성화
+      checkEmailButton.disabled = false;
       checkEmailButton.style.color = 'var(--mint)';
       checkEmailButton.style.cursor = 'pointer';
       isEmailChecked = false; // 중복 확인은 아직 필요함!
