@@ -275,6 +275,8 @@ fileInputNode.addEventListener('change', async e => {
     for (const file of filesArray) {
       // 첨부한 이미지 파일을 formData에 삽입
       formData.append('attach', file);
+      // 동일한 이미지 첨부 가능하게 하기 위해 파일 입력 요소 초기화
+      fileInputNode.value = '';
 
       // 이미지 첨부시 서버로 전송
       try {
@@ -283,7 +285,6 @@ fileInputNode.addEventListener('change', async e => {
             'client-id': clientId,
           },
         });
-        console.log(response);
 
         // 응답값에서 path를 이미지 src 속성으로 지정
         const img = document.createElement('img');
