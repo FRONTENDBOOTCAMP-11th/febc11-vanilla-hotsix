@@ -225,13 +225,15 @@ class SearchPage {
     results.forEach(result => {
       const textOnlyContent = result.content.replace(/<[^>]*>/g, '');
       const articleImage = `https://11.fesp.shop/${result.image}`;
-
       const dateObj = new Date(result.createdAt);
       const options = { month: 'short', day: 'numeric', year: 'numeric' };
       const formattedDate = dateObj.toLocaleDateString('en-US', options);
 
+      const postId = result._id;
+
       const article = document.createElement('article');
       article.innerHTML = `
+        <a href="../../pages/PostPage/detailPage.html?postId=${postId}">
         <div class="article-title">
           <h2>${this.highlightKeyword(result.title, this.searchInput.value)}</h2>
         </div>
@@ -261,9 +263,12 @@ class SearchPage {
       const description = author.extra?.biography || [];
       const keywords = author.extra?.keyword || [];
 
+      const authorId = author._id;
+
       const authorDiv = document.createElement('div');
       authorDiv.className = 'author';
       authorDiv.innerHTML = `
+        <a href="../../pages/AuthorPage/index.html?userId=${authorId}">
         <div class="author-contents">
           <div class="author-image" style="background-image: url('${authorImage}'); background-size: cover;"></div>
           <div class="author-letters">

@@ -278,6 +278,7 @@ article {
 .author-contents {
   display: flex;
   gap: 4.5%;
+  cursor: pointer;
 }
 
 .author-image {
