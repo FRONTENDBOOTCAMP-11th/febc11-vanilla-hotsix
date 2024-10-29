@@ -6,11 +6,11 @@ import isLogin from '../../api/isLogin';
 // 페이지 진입 시 즉시 로그인 상태 확인
 (async () => {
   const loginStatus = await isLogin();
-  
+
   if (loginStatus) {
-    console.log("로그인 상태입니다.");
+    console.log('로그인 상태입니다.');
   } else {
-    console.log("로그인이 필요합니다.");
+    console.log('로그인이 필요합니다.');
     // 로그인 필요 시 로그인 페이지 이동
     window.location.href = '/src/pages/LoginPage/index.html';
   }
@@ -24,6 +24,7 @@ const clientId = import.meta.env.VITE_CLIENT_ID;
 const author = document.querySelector('.author');
 const post = document.querySelector('.post');
 const post2 = document.querySelector('.post2');
+const post3 = document.querySelector('.mybox-my-contents');
 
 // accessToken 가져오기
 let token = '';
@@ -171,3 +172,67 @@ const getBookedPost = async () => {
   }
 };
 getBookedPost();
+
+// 내 게시글 불러오기
+const getMyPost = async () => {
+  try {
+    const res = await axios.get(`${apiUrl}/posts/users?type=info`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'client-id': clientId,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const myPost = res.data.item;
+    console.log(res.data.item);
+
+    if (myPost) {
+      post3.innerHTML = await Promise.all(
+        myPost.map(async p => {
+          return `
+            <li class="mybox-my-contents-list" data-id="${p._id}">
+              <h3 class="mybox-my-contents-title">${p.title}</h3>
+              <p class="mybox-my-contents-subtitle">${p.extra.subTitle}</p>
+              <p class="mybox-my-contents-date">${p.updatedAt}</p>
+            </li>
+          `;
+        }),
+      ).then(htmlStrings => htmlStrings.join(''));
+
+      // 게시글 클릭 시 이벤트 추가
+      document.querySelectorAll('.mybox-my-contents-list').forEach(item => {
+        item.addEventListener('click', () => {
+          const postId = item.getAttribute('data-id');
+          // 게시글 ID를 URL로 전달하여 PostDetailPage로 이동
+          window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
+        });
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+getMyPost();
+
+// 로그아웃
+const logoutBtn = document.querySelector('.logout-button');
+logoutBtn.addEventListener('click', () => {
+  if (confirm('정말 로그아웃 하시겠습니까?')) {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('image');
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('posts');
+
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('image');
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('name');
+
+    alert('로그아웃 되었습니다.');
+    window.location.href = '/src/pages/MainPage/index.html';
+  }
+});

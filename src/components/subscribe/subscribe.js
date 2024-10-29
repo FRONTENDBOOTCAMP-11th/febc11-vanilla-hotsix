@@ -26,7 +26,9 @@ export class Subscribe extends HTMLElement {
     // URL에서 userId 추출하기
     const params = new URLSearchParams(window.location.search);
     let userIdFromUrl = params.get('userId');
-    this.userId = Number(localStorage.getItem('userId')) || Number(userIdFromUrl);
+    this.userId = Number(userIdFromUrl)
+      ? Number(userIdFromUrl)
+      : Number(localStorage.getItem('userId'));
 
     // 컴포넌트 구조 설정
     this.innerHTML = `
@@ -163,4 +165,6 @@ export class Subscribe extends HTMLElement {
 }
 
 // 커스텀 요소 정의
-customElements.define('subscribe-component', Subscribe);
+if (token) {
+  customElements.define('subscribe-component', Subscribe);
+}

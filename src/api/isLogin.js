@@ -42,6 +42,20 @@ const isLogin = async () => {
 
     return true;
   } catch (err) {
+    // storage 정리
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('image');
+    localStorage.removeItem('email');
+    localStorage.removeItem('name');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('posts');
+
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('image');
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('name');
     console.error('Token refresh failed:', err);
     return false;
   }
