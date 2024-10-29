@@ -17,7 +17,9 @@ import isLogin from '../../api/isLogin';
 const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 // 토큰 획득
-const token = sessionStorage.getItem('accessToken');
+const token = sessionStorage.getItem('accessToken')
+  ? sessionStorage.getItem('accessToken')
+  : localStorage.getItem('accessToken');
 
 let titleInputNode = document.querySelector('#titleInput');
 let subtitleInputNode = document.querySelector('#subtitleInput');
@@ -160,6 +162,8 @@ postBtn.addEventListener('click', async () => {
       post.image = fisrtImagePath;
     }
 
+    console.log(post);
+
     // 생성된 게시글 객체 서버로 전송
     try {
       const res = await axios.post(`${apiUrl}/posts`, post, {
@@ -177,6 +181,7 @@ postBtn.addEventListener('click', async () => {
       subtitleInputNode.value = '';
       editableDiv.innerHTML = '';
 
+      console.log(res);
       // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
       const postId = res.data.item._id;
       window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
