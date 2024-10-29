@@ -184,6 +184,7 @@ img {
   margin-left: auto;
   margin-right: 13px;
   padding: 0;
+  background-color: unset;
 }
 
 .comment__text {
@@ -248,13 +249,10 @@ img {
 }
 
 .submit-area button {
-  color: #959595;
-  font-size: 13px;
-  line-height: 223%;
-  padding: 0 14px;
   background-color: unset;
-  border: 1px solid #ddd;
   border-radius: 30px;
+  width: 50px;
+  height: 30px;
 }
 
 .footer__author-info {
