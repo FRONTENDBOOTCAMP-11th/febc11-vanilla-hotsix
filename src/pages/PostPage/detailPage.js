@@ -77,7 +77,7 @@ let curruntPost = await getPost();
 // 게시글을 쓴 작가 정보를 가져오는 함수
 const getAuthorInfo = async () => {
   try {
-    const authorId = curruntPost.user._id;
+    const authorId = localStorage.getItem('userId');
     const response = await axios.get(`${apiUrl}/users/${authorId}`, {
       headers: {
         'client-id': clientId,
@@ -419,10 +419,12 @@ async function printAuthor() {
   let authorImg = document.querySelector('.author__photo');
 
   authorNickname.innerHTML = curruntPost.user.name;
-  authorJob.innerHTML = author.extra.job;
-  authorInfo.innerHTML = author.extra.biography;
-  authorSubs.innerHTML = author.bookmarkedBy.users;
-  authorImg.src = `${apiUrl}${author.image}`;
+  if (author) {
+    authorJob.innerHTML = author.extra.job;
+    authorInfo.innerHTML = author.extra.biography;
+    authorSubs.innerHTML = author.bookmarkedBy.users;
+    authorImg.src = `${apiUrl}${author.image}`;
+  }
 }
 printAuthor();
 
