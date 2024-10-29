@@ -8,7 +8,7 @@
 /* Styles */
 .container {
   height: 100vh;
-  padding-left: 20px;
+  padding-left: 25px;
 }
 
 .mybox-container {
@@ -150,4 +150,53 @@
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-style: italic;
   font-weight: 400;
+}
+
+.mybox-my-contents-container{
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+.mybox-my-contents{
+  margin-top: 14px;
+  max-height: 325px;
+  overflow-y: scroll;
+}
+.mybox-my-contents-list{
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  border-top: 1px solid var(--grey_20);
+  padding: 14px 0;
+}
+.mybox-my-contents-title{
+  color: var(--black_90);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.mybox-my-contents-subtitle{
+  color: var(--grey_70);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.mybox-my-contents-date{
+  color: var(--grey_70);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.logout-button-container{
+  width: 100%;
+  padding-right: 25px;
+}
+.logout-button{
+  width: 100%;
+  margin: 20px 0 120px;
+  height: 50px;
+  border-radius: 30px;
+  background-color: var(--mint);
+  color: var(--white);
 }
