@@ -139,7 +139,7 @@ postBtn.addEventListener('click', async () => {
     // editableDiv.innerHTML의 img 태그들 찾기
     const Images = editableDiv.querySelectorAll('img');
     // 첫 번째 이미지는 경로를 추출하여 대표이미지로 설정
-    const fisrtImagePath = Images[0].src.match(/\/files\/.+$/);
+    const fisrtImagePath = Images[0]?.src.match(/\/files\/.+$/);
 
     // 모든 이미지 경로 추출하여 /files/부터의 경로로 변경
     for (const img of Images) {
@@ -199,7 +199,7 @@ saveBtn.addEventListener('click', async () => {
     // editableDiv.innerHTML의 img 태그들 찾기
     const Images = editableDiv.querySelectorAll('img');
     // 첫 번째 이미지는 경로를 추출하여 대표이미지로 설정
-    const fisrtImagePath = Images[0].src.match(/\/files\/.+$/);
+    const fisrtImagePath = Images[0]?.src.match(/\/files\/.+$/);
 
     // 모든 이미지 경로 추출하여 /files/부터의 경로로 변경
     for (const img of Images) {
