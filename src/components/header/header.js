@@ -6,7 +6,7 @@ class HeaderComponent extends HTMLElement {
   constructor() {
     super();
     this.currentURL = window.location.href; // 현재 URL 저장
-    this.image;
+    this.image = 'assets/images/logo-circle.svg'; // 기본 이미지
     this.renderHeader(); // 헤더 렌더링
   }
 
@@ -58,7 +58,7 @@ class HeaderComponent extends HTMLElement {
               ? '<button class="header-controller start">시작하기</button>'
               : `
             <button class="header-controller notification"></button>
-            <img class="header-controller profile" src=${this.image} alt="프로필 사진"/>`
+            <a href="/src/pages/MyPage/index.html"><img class="header-controller profile" src=${this.image} alt="프로필 사진"/></a>`
           }
         </div>
       </div>
@@ -69,7 +69,6 @@ class HeaderComponent extends HTMLElement {
   addEventListeners() {
     const notification = this.querySelector('.notification');
     const search = this.querySelector('.search');
-    const profile = this.querySelector('.profile');
     const start = this.querySelector('.start');
     const back = this.querySelector('.back');
 
@@ -82,11 +81,6 @@ class HeaderComponent extends HTMLElement {
     // 검색 클릭 시 발견 페이지로 이동
     search?.addEventListener('click', () => {
       window.location.href = '/src/pages/SearchPage/index.html';
-    });
-
-    // 프로필 클릭 시 내 서랍 페이지로 이동
-    profile?.addEventListener('click', () => {
-      window.location.href = '/src/pages/MyPage/index.html';
     });
 
     // 시작하기 클릭 시 로그인 페이지로 이동

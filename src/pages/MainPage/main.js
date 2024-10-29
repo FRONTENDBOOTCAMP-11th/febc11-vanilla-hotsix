@@ -72,7 +72,7 @@ const renderBrunch = async arr => {
 // 게시물 받아오기 위한 서버 통신(요즘 뜨는 브런치)
 const getRankBrunch = async () => {
   try {
-    const response = await axios.get(apiUrl + '/posts?type=info', {
+    const response = await axios.get(apiUrl + '/posts', {
       headers: {
         'client-id': clientId,
       },
@@ -80,13 +80,16 @@ const getRankBrunch = async () => {
 
     // 서버에서 넘어온 게시물 데이터
     const result = response.data;
-    const arr = result.item;
+    let arr = result.item;
 
     // 조회수(views) 순으로 정렬
     arr.sort((a, b) => {
       return b.views - a.views;
     });
-    console.log(arr);
+
+    // 상위 10개만 자르기
+    arr = arr.slice(0, 10);
+
     // 요즘 뜨는 브런치 화면 렌더링 함수 호출
     renderBrunch(arr);
   } catch (error) {
