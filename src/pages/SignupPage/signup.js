@@ -18,6 +18,22 @@ document.addEventListener('DOMContentLoaded', function () {
   const apiUrl = import.meta.env.VITE_API_URL;
   const clientID = import.meta.env.VITE_CLIENT_ID;
 
+  // 페이지 로드 시, 캐시 무시하고 강제 새로고침
+  window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+      this.window.location.reload();
+    }
+  });
+
+  // 버튼 초기화
+  signupButton.disabled = true;
+  signupButton.style.backgroundColor = 'var(--grey_60)';
+  signupButton.style.cursor = 'unset';
+
+  checkEmailButton.disabled = true;
+  checkEmailButton.style.color = 'var(--grey_60)';
+  checkEmailButton.style.cursor = 'unset';
+
   // 인풋 입력 상태 추적 변수 초기화
   let isNicknameValid = false;
   let isEmailValid = false;
@@ -54,21 +70,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     isEmailValid = re.test(String(email).toLowerCase());
 
-    if (email.trim() === '') {
-      emailFeedback.classList.add('hidden'); // 입력값이 없으면 피드백 숨기기
-      emailFeedback.textContent = '';
-      isEmailValid = false;
+    if (email === '' || !isEmailValid) {
+      emailFeedback.classList.remove('hidden');
+      emailFeedback.textContent = email
+        ? '유효하지 않은 이메일 주소입니다.'
+        : ''; // 빈 값일 때는 텍스트 숨김
+      emailFeedback.style.color = '#fc3b75';
+      checkEmailButton.disabled = true;
+      checkEmailButton.style.color = 'var(--grey_60)';
       isEmailChecked = false;
     } else {
-      if (!isEmailValid) {
-        emailFeedback.classList.remove('hidden');
-        emailFeedback.textContent = '유효하지 않은 이메일 주소입니다.';
-        emailFeedback.style.color = '#fc3b75';
-      } else {
-        emailFeedback.textContent = '';
-        isEmailChecked = false; // 중복 확인은 아직 필요함!
-      }
+      // 유효한 이메일 형식일 경우 버튼 활성화
+      emailFeedback.classList.add('hidden'); // 피드백 숨기기
+      emailFeedback.textContent = '';
+      checkEmailButton.disabled = false; // 버튼 활성화
+      checkEmailButton.style.color = 'var(--mint)';
+      checkEmailButton.style.cursor = 'pointer';
+      isEmailChecked = false; // 중복 확인은 아직 필요함!
     }
+
     checkFormValidity();
   });
 
@@ -222,16 +242,5 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('에러 발생:', error);
         alert('회원가입 중 오류가 발생했습니다.');
       });
-  });
-
-  // 버튼 초기화
-  signupButton.disabled = true;
-  signupButton.style.backgroundColor = 'var(--grey_60)';
-
-  // 페이지 로드 시, 캐시 무시하고 강제 새로고침
-  window.addEventListener('pageshow', function (event) {
-    if (event.persisted) {
-      this.window.location.reload();
-    }
   });
 });
