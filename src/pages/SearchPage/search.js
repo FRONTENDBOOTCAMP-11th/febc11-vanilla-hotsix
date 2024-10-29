@@ -221,7 +221,15 @@ class SearchPage {
   createArticlesSection(results) {
     const articlesSection = document.createElement('section');
     articlesSection.className = 'articles';
+
     results.forEach(result => {
+      const textOnlyContent = result.content.replace(/<[^>]*>/g, '');
+      const articleImage = `https://11.fesp.shop/${result.image}`;
+
+      const dateObj = new Date(result.createdAt);
+      const options = { month: 'short', day: 'numeric', year: 'numeric' };
+      const formattedDate = dateObj.toLocaleDateString('en-US', options);
+
       const article = document.createElement('article');
       article.innerHTML = `
         <div class="article-title">
@@ -229,13 +237,13 @@ class SearchPage {
         </div>
         <div class="article-contents">
           <div class="article-letters">
-            <p>${this.highlightKeyword(result.content, this.searchInput.value)}</p>
+            <p>${this.highlightKeyword(textOnlyContent, this.searchInput.value)}</p>
             <footer>
-              <span class="article-date">${result.date}</span>
-              <span class="article-writer">by ${result.writer}</span>
+              <span class="article-date">${formattedDate}</span>
+              <span class="article-writer">by ${result.user.name}</span>
             </footer>
           </div>
-          <div class="image-placeholder"></div>
+          <div class="image-placeholder" style="background-image: url('${articleImage}'); background-size: cover;"></div>
         </div>
       `;
       articlesSection.appendChild(article);
@@ -246,6 +254,7 @@ class SearchPage {
   createAuthorsSection(results) {
     const authorsSection = document.createElement('section');
     authorsSection.className = 'authors';
+
     results.forEach(author => {
       const authorImage = `https://11.fesp.shop/${author.image}`;
       const name = author.name || [];

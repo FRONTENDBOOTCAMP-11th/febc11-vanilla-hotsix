@@ -234,6 +234,13 @@ article {
 .article-letters p {
   flex-grow: 1;
   line-height: 2;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
 
 .article-letters footer {
