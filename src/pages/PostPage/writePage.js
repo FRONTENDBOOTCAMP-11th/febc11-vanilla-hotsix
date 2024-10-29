@@ -125,11 +125,7 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// let inspectBtn = document.querySelector('#modal-inspect');
 let cancelBtn = document.querySelector('#modal-cancel');
-
-// post.content의 내용을 DOM으로 변경하기 위한 DOMParser 생성
-const parser = new DOMParser();
 
 // 발행 버튼 클릭시
 postBtn.addEventListener('click', async () => {
@@ -242,6 +238,12 @@ saveBtn.addEventListener('click', async () => {
     alert('제목을 입력하세요.');
     closeModal();
   }
+});
+
+// 맞춤법 검사 버튼 클릭
+let inspectBtn = document.querySelector('#modal-inspect');
+inspectBtn.addEventListener('click', () => {
+  alert('준비중입니다.');
 });
 
 // 취소 버튼을 누르면 닫힘
