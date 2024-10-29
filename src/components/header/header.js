@@ -6,13 +6,14 @@ class HeaderComponent extends HTMLElement {
   constructor() {
     super();
     this.currentURL = window.location.href; // 현재 URL 저장
-    this.image = '/files/vanilla06/white_dog.jpg';
+    this.image = '/files/vanilla06/white_dog.jpg'; // 기본 이미지
     this.renderHeader(); // 헤더 렌더링
   }
 
   connectedCallback() {
-    // localStorage에서 이미지를 가져온 후 렌더링
-    const storedImage = localStorage.getItem('image');
+    // localStorage 또는 sessionStorage 이미지를 가져온 후 렌더링
+    const storedImage =
+      localStorage.getItem('image') || sessionStorage.getItem('image');
     if (storedImage) {
       this.image = storedImage;
       this.updateImage();
