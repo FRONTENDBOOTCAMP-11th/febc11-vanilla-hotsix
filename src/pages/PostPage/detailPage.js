@@ -1,11 +1,26 @@
 'use strict';
 import axios from 'axios';
-import getImg from '../../api/getImg';
+import isLogin from '../../api/isLogin';
+
+// 페이지 진입 시 즉시 로그인 상태 확인
+(async () => {
+  const loginStatus = await isLogin();
+
+  if (loginStatus) {
+    console.log('로그인 상태입니다.');
+  } else {
+    console.log('로그인이 필요합니다.');
+    // 로그인 필요 시 로그인 페이지 이동
+    window.location.href = '/src/pages/LoginPage/index.html';
+  }
+})();
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 // 토큰 획득
-const token = sessionStorage.getItem('accessToken');
+const token = sessionStorage.getItem('accessToken')
+  ? sessionStorage.getItem('accessToken')
+  : localStorage.getItem('accessToken');
 
 // URL에서 postId 추출하기
 const params = new URLSearchParams(window.location.search);
@@ -51,6 +66,7 @@ const getPost = async () => {
       localStorage.setItem('posts', JSON.stringify(posts));
     }
 
+    localStorage.setItem('userId', response.data.item.user._id);
     return response.data.item;
   } catch (error) {
     console.log(error);
@@ -73,31 +89,6 @@ const getAuthorInfo = async () => {
   }
 };
 const author = await getAuthorInfo();
-
-// 로그인한 유저 정보를 가져오는 함수
-const getLoginUser = async () => {
-  try {
-    // 세션 스토리지에 저장된 이메일 주소 얻어오기
-    const userEmail = sessionStorage.getItem('email');
-
-    // 회원 가입된 전체 유저 객체 얻어오기
-    const response = await axios.get(`${apiUrl}/users`, {
-      headers: {
-        'client-id': clientId,
-      },
-    });
-    const users = response.data.item;
-
-    // 세션 스토리지에 저장된 이메일 주소와 같은 이메일을 가진 유저를 users 객체에서 찾기
-    const index = users.findIndex(user => user.email === userEmail);
-    const loginUser = users[index];
-
-    return loginUser;
-  } catch (error) {
-    console.log(error);
-  }
-};
-const loginUser = await getLoginUser();
 
 const pageTitleNode = document.querySelector('title');
 const titleDivNode = document.querySelector('.header__title');
@@ -139,6 +130,13 @@ async function printArticle() {
       item.removeAttribute('style');
     }
   }
+  // 이미지 태그 모두 찾아서 경로 수정
+  const images = articleNode.querySelectorAll('img');
+  for (const img of images) {
+    const src = img.getAttribute('src');
+    const newSrc = `${apiUrl}${src}`;
+    img.src = newSrc;
+  }
 }
 await printArticle();
 
@@ -155,108 +153,157 @@ async function printTags() {
 }
 printTags();
 
-// 댓글은 추가될 때마다 태그를 생성해야 하기에 createElement로 작성
+// 현재 댓글 개수 출력해주는 DOM 노드 획득
+const commentCount = document.querySelector('.count-num');
+
+// 현재 게시글 댓글 목록 불러오기 + 렌더링
 async function printComments() {
-  const replies = curruntPost.replies;
-
-  // 게시글에 댓글이 추가된 있다면 댓글 렌더링
-  if (replies) {
-    let commentCount = document.querySelector('.count-num');
-    commentCount.innerHTML = curruntPost.replies.length;
-
-    for (let comment of replies) {
-      const [date, time] = curruntPost.createdAt.split(' ');
-      const [year, month, day] = date.split('.');
-      const dateObj = new Date(year, month, day);
-      // 유저가 프사를 안 해 놨을 때 지정해놓을 기본 이미지 필요
-      const userImage = comment.user.image
-        ? comment.user.image
-        : `/files/${clientId}/user-muzi.webp`;
-      const imgSrc = await getImg(userImage);
-
-      let span = document.createElement('span');
-      span.innerText = comment.user.name;
-      let kebabMenu = document.createElement('img');
-      kebabMenu.src = '../../assets/images/button-kebab-menu.svg';
-      let menuBtn = document.createElement('button');
-      menuBtn.setAttribute('class', 'kebab-menu');
-      menuBtn.appendChild(kebabMenu);
-      let nameDiv = document.createElement('div');
-      nameDiv.setAttribute('class', 'name');
-      nameDiv.appendChild(span);
-      nameDiv.appendChild(menuBtn);
-
-      let timeSpan = document.createElement('span');
-      timeSpan.setAttribute('class', 'time');
-      timeSpan.innerText = `${monthNames[dateObj.getMonth() - 1]} ${day}. ${year}`;
-      let commentHeader = document.createElement('div');
-      commentHeader.setAttribute('class', 'comment__header');
-      commentHeader.appendChild(nameDiv);
-      commentHeader.appendChild(timeSpan);
-
-      let commentTxt = document.createElement('p');
-      commentTxt.setAttribute('class', 'comment__text');
-      commentTxt.innerText = comment.content;
-
-      let replyBtn = document.createElement('button');
-      replyBtn.innerText = '답글달기';
-      let commentFooter = document.createElement('div');
-      commentFooter.setAttribute('class', 'comment__footer');
-      commentFooter.appendChild(replyBtn);
-
-      let commentContents = document.createElement('section');
-      commentContents.setAttribute('class', 'comment__contents');
-      commentContents.appendChild(commentHeader);
-      commentContents.appendChild(commentTxt);
-      commentContents.appendChild(commentFooter);
-
-      let profileImg = document.createElement('img');
-      profileImg.setAttribute('class', 'profile-img');
-      profileImg.src = imgSrc ? imgSrc : '';
-      let commentProfile = document.createElement('section');
-      commentProfile.setAttribute('class', 'comment__profile');
-      commentProfile.appendChild(profileImg);
-
-      let commentNode = document.createElement('div');
-      commentNode.setAttribute('class', 'comment');
-      commentNode.appendChild(commentProfile);
-      commentNode.appendChild(commentContents);
-
-      commentsNode.appendChild(commentNode);
+  try {
+    // 현재 게시물 댓글 불러오기
+    const response = await axios.get(`${apiUrl}/posts/${postId}/replies`, {
+      headers: {
+        'client-id': clientId,
+      },
+    });
+    const comments = response.data.item;
+    commentCount.innerHTML = comments.length;
+    // 댓글 출력하기
+    if (comments) {
+      // 기존에 달려 있는 댓글 전체 렌더링
+      comments.forEach(comment => addComment(comment));
     }
+  } catch (error) {
+    console.log(error);
   }
 }
 printComments();
 
+// 댓글 추가하는 함수
+function addComment(comment) {
+  const [date, time] = curruntPost.createdAt.split(' ');
+  const [year, month, day] = date.split('.');
+  const dateObj = new Date(year, month, day);
+  // 유저가 프사를 안 해 놨을 때 지정해놓을 기본 이미지 필요
+  let userImage = '';
+  if (comment.user.image) {
+    userImage = `${apiUrl}${comment.user.image}`;
+  } else {
+    userImage = `${apiUrl}/files/${clientId}/user-muzi.webp`;
+  }
+  const imgSrc = userImage;
+
+  let span = document.createElement('span');
+  span.innerText = comment.user.name;
+  let kebabMenu = document.createElement('img');
+  kebabMenu.src = '/assets/images/button-kebab-menu.svg';
+  let menuBtn = document.createElement('button');
+  menuBtn.setAttribute('class', 'kebab-menu');
+  menuBtn.appendChild(kebabMenu);
+  let nameDiv = document.createElement('div');
+  nameDiv.setAttribute('class', 'name');
+  nameDiv.appendChild(span);
+  nameDiv.appendChild(menuBtn);
+
+  let timeSpan = document.createElement('span');
+  timeSpan.setAttribute('class', 'time');
+  timeSpan.innerText = `${monthNames[dateObj.getMonth() - 1]} ${day}. ${year}`;
+  let commentHeader = document.createElement('div');
+  commentHeader.setAttribute('class', 'comment__header');
+  commentHeader.appendChild(nameDiv);
+  commentHeader.appendChild(timeSpan);
+
+  let commentTxt = document.createElement('p');
+  commentTxt.setAttribute('class', 'comment__text');
+  commentTxt.innerText = comment.content;
+
+  let replyBtn = document.createElement('button');
+  replyBtn.innerText = '답글달기';
+  let commentFooter = document.createElement('div');
+  commentFooter.setAttribute('class', 'comment__footer');
+  commentFooter.appendChild(replyBtn);
+
+  let commentContents = document.createElement('section');
+  commentContents.setAttribute('class', 'comment__contents');
+  commentContents.appendChild(commentHeader);
+  commentContents.appendChild(commentTxt);
+  commentContents.appendChild(commentFooter);
+
+  let profileImg = document.createElement('img');
+  profileImg.setAttribute('class', 'profile-img');
+  profileImg.src = imgSrc ? imgSrc : '';
+  let commentProfile = document.createElement('section');
+  commentProfile.setAttribute('class', 'comment__profile');
+  commentProfile.appendChild(profileImg);
+
+  let commentNode = document.createElement('div');
+  commentNode.setAttribute('class', 'comment');
+  commentNode.appendChild(commentProfile);
+  commentNode.appendChild(commentContents);
+
+  commentsNode.appendChild(commentNode);
+}
+
 // 댓글 추가란 렌더링하는 함수
 async function printAddReply() {
-  const imgSrc = loginUser.image
-    ? loginUser.image
-    : `/files/${clientId}/user-muzi.webp`;
-  const userImg = await getImg(imgSrc);
+  let userName = '';
+  let userImage = '';
+  // 세션 혹은 로컬스토리지에서 로그인 유저 name, image 가져오기
+  userName = sessionStorage.getItem('name')
+    ? sessionStorage.getItem('name')
+    : localStorage.getItem('name');
+  userImage = sessionStorage.getItem('image')
+    ? sessionStorage.getItem('image')
+    : localStorage.getItem('image');
 
   // 출력을 위한 DOM 노드 획득
-  let commentInputNode = document.querySelector('.comments__comment-input');
-
-  // innerHTML로 HTML 출력
-  commentInputNode.innerHTML = `
-    <div class="input-area">
-      <div class="input-area__profile">
-        <img class="img" src="${userImg}" />
-        ${loginUser.name}
-      </div>
-      <textarea
-        name=""
-        id="commentInput"
-        placeholder="댓글을 입력하세요."
-      ></textarea>
-    </div>
-    <div class="submit-area">
-      <button>등록</button>
-    </div>
-  `;
+  const myCommentProfile = document.querySelector('.input-area__profile');
+  myCommentProfile.innerHTML = `<img class="img" src="${apiUrl}${userImage}" />
+  ${userName}`;
 }
 printAddReply();
+
+// 댓글 등록 버튼 click 이벤트리스너 (댓글 등록)
+const commentSubmitBtn = document.querySelector('#commentSubmitBtn');
+commentSubmitBtn.addEventListener('click', async () => {
+  const commentInput = document.querySelector('#commentInput');
+  if (commentInput.value) {
+    try {
+      const response = await axios.post(
+        `${apiUrl}/posts/${postId}/replies`,
+        {
+          content: commentInput.value,
+        },
+        {
+          headers: {
+            'client-id': clientId,
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      console.log(response);
+      // 새 댓글만 추가
+      addComment(response.data.item);
+      commentCount.innerHTML = parseInt(commentCount.innerHTML) + 1;
+      commentInput.value = '';
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    alert('댓글을 입력하세요.');
+  }
+});
+
+// 댓글 등록 버튼 클릭할 때 색상 변경
+commentSubmitBtn.addEventListener('mousedown', () => {
+  let btnImg = commentSubmitBtn.querySelector('img');
+  btnImg.src = '/assets/images/button-comment-submit_clicked.svg';
+});
+commentSubmitBtn.addEventListener('mouseup', () => {
+  let btnImg = commentSubmitBtn.querySelector('img');
+  btnImg.src = '/assets/images/button-comment-submit_default.svg';
+});
+
+// 댓글 삭제하기
 
 // 북마크 목록 가져오기
 async function getBookmarks() {
@@ -337,8 +384,6 @@ printBookmark();
 
 // 작가란 화면을 출력하는 함수
 async function printAuthor() {
-  const imgSrc = await getImg(author.image);
-
   let authorNickname = document.querySelector('.nickname');
   let authorJob = document.querySelector('.job');
   let authorInfo = document.querySelector('.author-info__contents');
@@ -349,7 +394,7 @@ async function printAuthor() {
   authorJob.innerHTML = author.extra.job;
   authorInfo.innerHTML = author.extra.biography;
   authorSubs.innerHTML = author.bookmarkedBy.users;
-  authorImg.src = imgSrc;
+  authorImg.src = `${apiUrl}${author.image}`;
 }
 printAuthor();
 

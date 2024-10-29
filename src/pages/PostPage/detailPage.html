@@ -38,8 +38,7 @@
             <section class="comments__comment-input">
               <div class="input-area">
                 <div class="input-area__profile">
-                  <div class="img"></div>
-                  주정
+                  <img class="img" />
                 </div>
                 <textarea
                   name=""
@@ -48,7 +47,12 @@
                 ></textarea>
               </div>
               <div class="submit-area">
-                <button>등록</button>
+                <button id="commentSubmitBtn">
+                  <img
+                    src="/assets/images/button-comment-submit_default.svg"
+                    alt=""
+                  />
+                </button>
               </div>
             </section>
           </section>
@@ -83,7 +87,11 @@
                 />
               </button>
               <span class="like-count"></span>
-              <img src="/assets/images/icon-share.svg" class="icon" />
+              <img
+                id="shareIcon"
+                src="/assets/images/icon-share.svg"
+                class="icon"
+              />
               <img src="/assets/images/icon-comment.svg" class="icon-comment" />
               <span class="comment-count">0</span>
             </div>
