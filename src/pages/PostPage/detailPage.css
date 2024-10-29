@@ -337,13 +337,6 @@ img {
   font-size: 14px;
 }
 
-.subscribed {
-  padding: 0 10px;
-  background-color: #00c6be;
-  line-height: 258%;
-  color: white;
-}
-
 .footer__icons {
   border-top: 1px solid #eeeeee;
   color: #333;
@@ -354,6 +347,18 @@ img {
   display: flex;
   align-items: center;
   line-height: 150%;
+}
+
+.footer__icons-container button {
+  background-color: unset;
+}
+
+.footer__icons-container button:hover {
+  cursor: pointer;
+}
+
+#commentIcon {
+  margin-left: auto;
 }
 
 .footer__icons .icon {
@@ -380,6 +385,5 @@ img {
 .icon-comment {
   width: 21px;
   height: 21px;
-  margin-left: auto;
   margin-right: 3px;
 }

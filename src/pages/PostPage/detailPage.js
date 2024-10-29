@@ -348,49 +348,55 @@ let bookmarkBtn = document.querySelector('#bookmarkBtn');
 const likeIcon = document.querySelector('#icon-like');
 
 bookmarkBtn.addEventListener('click', async () => {
-  const myBookmarkId = myBookmarkList.find(
-    item => item.post._id === curruntPost._id,
-  );
-  const likeCountSpan = document.querySelector('.like-count');
-  try {
-    // 내 북마크 목록에 현재 게시물의 id와 같은 id를 가진애가 없다면 : 북마크 추가
-    if (!myBookmarkId) {
-      // 하트 아이콘 획득
-      const response = await axios.post(
-        `${apiUrl}/bookmarks/post`,
-        {
-          target_id: curruntPost._id,
-          memo: '',
-        },
-        {
-          headers: {
-            'client-id': clientId,
-            Authorization: `Bearer ${token}`,
+  if (myBookmarkList) {
+    const myBookmarkId = myBookmarkList.find(
+      item => item.post._id === curruntPost._id,
+    );
+    const likeCountSpan = document.querySelector('.like-count');
+    try {
+      // 내 북마크 목록에 현재 게시물의 id와 같은 id를 가진애가 없다면 : 북마크 추가
+      if (!myBookmarkId) {
+        // 하트 아이콘 획득
+        const response = await axios.post(
+          `${apiUrl}/bookmarks/post`,
+          {
+            target_id: curruntPost._id,
+            memo: '',
           },
-        },
-      );
-      likeIcon.src = '/assets/images/icon-like.svg';
-      myBookmarkList = await getBookmarks();
-      curruntPost = await getPost();
-      likeCountSpan.innerHTML = curruntPost.bookmarks;
-    } else {
-      // 북마크 되어 있다면 : 북마크 제거
-      const response = await axios.delete(
-        `${apiUrl}/bookmarks/${myBookmarkId._id}`,
-        {
-          headers: {
-            'client-id': clientId,
-            Authorization: `Bearer ${token}`,
+          {
+            headers: {
+              'client-id': clientId,
+              Authorization: `Bearer ${token}`,
+            },
           },
-        },
-      );
-      likeIcon.src = '/assets/images/icon-like_empty.svg';
-      myBookmarkList = await getBookmarks();
-      curruntPost = await getPost();
-      likeCountSpan.innerHTML = curruntPost.bookmarks;
+        );
+        likeIcon.src = '/assets/images/icon-like.svg';
+        myBookmarkList = await getBookmarks();
+        curruntPost = await getPost();
+        likeCountSpan.innerHTML = curruntPost.bookmarks;
+      } else {
+        // 북마크 되어 있다면 : 북마크 제거
+        const response = await axios.delete(
+          `${apiUrl}/bookmarks/${myBookmarkId._id}`,
+          {
+            headers: {
+              'client-id': clientId,
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        likeIcon.src = '/assets/images/icon-like_empty.svg';
+        myBookmarkList = await getBookmarks();
+        curruntPost = await getPost();
+        likeCountSpan.innerHTML = curruntPost.bookmarks;
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
+  } else {
+    likeIcon.addEventListener('click', () => {
+      window.location.href = '/src/pages/LoginPage/index.html';
+    });
   }
 });
 
