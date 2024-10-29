@@ -46,7 +46,7 @@
   border-radius: 50%;
   background-color: var(--grey_65);
 }
-.start{
+.start {
   width: 62px;
   height: 24px;
   border-radius: 15px;
@@ -56,4 +56,14 @@
   font-weight: 400;
   line-height: 1.5;
   padding: 5px 13px;
+}
+.back {
+  color: transparent;
+  background-color: transparent;
+  background-image: url('/assets/images/arrow-left.svg');
+  background-size: cover;
+  background-position: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -4px;
 }
