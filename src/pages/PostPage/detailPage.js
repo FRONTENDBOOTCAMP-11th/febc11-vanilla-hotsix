@@ -109,7 +109,9 @@ async function printHeader() {
 
   titleDivNode.innerHTML = curruntPost.title;
   if (curruntPost.extra) {
-    subTitleSpanNode.innerHTML = curruntPost.extra.subTitle;
+    subTitleSpanNode.innerHTML = curruntPost.extra.subTitle
+      ? curruntPost.extra.subTitle
+      : '';
   }
   authorSpanNode.innerHTML = curruntPost.user.name;
   timeSpanNode.innerHTML = `${monthNames[dateObj.getMonth() - 1]} ${day}. ${year}`;
