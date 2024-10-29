@@ -288,10 +288,28 @@ fileInputNode.addEventListener('change', async e => {
         // 응답값에서 path를 이미지 src 속성으로 지정
         const img = document.createElement('img');
         img.src = `${apiUrl}${response.data.item[0].path}`;
-        img.style.margin = '10px 0';
+        // 이미지가 독립된 한 줄을 차지하도록 설정
+        img.style.display = 'block';
+        img.style.margin = '0 auto';
 
-        // 이미지 미리보기를 위해 editableDiv에 삽입
-        editableDiv.appendChild(img);
+        // 사용자가 선택한 텍스트 또는 커서 위치 정보 가져오기
+        const selection = window.getSelection();
+
+        // 커서가 editableDiv 안에 위치해있다면 실행
+        if (selection.rangeCount > 0) {
+          // 현재 선택된 첫 번째 범위 가져오기.
+          // range : 실제로 커서가 있는 위치를 나타내는 범위 객체
+          const range = selection.getRangeAt(0);
+          range.insertNode(img); // 커서 위치에 이미지 삽입
+          range.setStartAfter(img); // 커서를 이미지 뒤로 이동
+          // 시작 지점으로 커서를 이동시킨다.
+          range.collapse(true);
+          // selection 객체의 모든 범위 제거하여 현재 선택 상태 초기화
+          selection.removeAllRanges();
+          // 앞서 설정한 range를 selection에 추가하여 커서가 이미지 뒤에 위치하도록 함.
+          selection.addRange(range);
+        }
+        editableDiv.focus();
 
         // 이미지 이후 한줄을 띄워서 커서가 자동으로 아래에 위치하게 함
         const spacer = document.createElement('div');
