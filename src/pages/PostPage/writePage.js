@@ -292,7 +292,11 @@ fileInputNode.addEventListener('change', async e => {
 
         // 이미지 미리보기를 위해 editableDiv에 삽입
         editableDiv.appendChild(img);
-        console.log(img);
+
+        // 이미지 이후 한줄을 띄워서 커서가 자동으로 아래에 위치하게 함
+        const spacer = document.createElement('div');
+        spacer.innerHTML = '<br>';
+        editableDiv.appendChild(spacer);
       } catch (error) {
         console.log(error);
       }
