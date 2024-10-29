@@ -207,6 +207,16 @@ img {
   border: 1px solid #ddd;
 }
 
+.login-require {
+  padding: 20px;
+  height: 100px;
+  color: var(--grey_55);
+}
+
+.login-require:hover {
+  cursor: pointer;
+}
+
 .input-area {
   padding: 16px 20px;
   border-bottom: 1px solid #ddd;
