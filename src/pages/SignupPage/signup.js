@@ -1,3 +1,13 @@
+// 페이지 접근 시, 로그인 된 상태라면 메인 페이지로 리다이렉트
+import isLogin from '/src/api/isLogin.js';
+
+(async () => {
+  const loggedIn = await isLogin();
+  if (!loggedIn) {
+    window.location.href = '/src/pages/MainPage/index.html';
+  }
+})();
+
 document.addEventListener('DOMContentLoaded', function () {
   // Elements
   const form = document.querySelector('form');
@@ -62,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ) {
       signupButton.disabled = false;
       signupButton.style.backgroundColor = 'var(--mint)'; // 버튼 활성화
+      signupButton.style.cursor = 'pointer';
     } else {
       signupButton.disabled = true;
       signupButton.style.backgroundColor = 'var(--grey_60)'; // 버튼 비활성화
@@ -168,7 +179,13 @@ document.addEventListener('DOMContentLoaded', function () {
           emailFeedback.textContent = '사용할 수 있는 이메일입니다.';
           emailFeedback.style.color = 'var(--mint)';
           isEmailChecked = true;
-        } else {
+        } else if (data.message === '잘못된 입력값이 있습니다.') {
+          emailFeedback.classList.remove('hidden');
+          emailFeedback.textContent = '유효한 이메일 주소를 입력해 주세요.';
+          emailFeedback.style.color = '#fc3b75';
+          isEmailChecked = false;
+        } else if (data.message === '이미 등록된 이메일입니다.') {
+          emailFeedback.classList.remove('hidden');
           emailFeedback.textContent = '이미 존재하는 이메일입니다.';
           emailFeedback.style.color = '#fc3b75';
           isEmailChecked = false;
@@ -288,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(data => {
         if (data.ok) {
           alert('회원가입이 성공적으로 완료되었습니다!');
-          window.location.href = '/src/pages/mainPage/index.html'; // 메인 페이지로 리다이렉트
+          window.location.href = '/src/pages/loginPage/index.html'; // 로그인 페이지로 리다이렉트
         } else {
           alert('회원가입에 실패했습니다: ' + data.message);
         }
