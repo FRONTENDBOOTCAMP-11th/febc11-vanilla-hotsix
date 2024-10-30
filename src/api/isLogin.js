@@ -51,6 +51,7 @@ const isLogin = async () => {
     localStorage.removeItem('authorId');
     localStorage.removeItem('posts');
     localStorage.removeItem('id');
+    localStorage.removeItem('recentSearches');
 
     sessionStorage.removeItem('accessToken');
     sessionStorage.removeItem('refreshToken');

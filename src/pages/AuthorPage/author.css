@@ -100,7 +100,7 @@
   font-weight: 300;
   line-height: 1.4;
 }
-.post-subtitle{
+.post-subtitle {
   color: var(--grey_70);
   font-size: 12px;
   font-weight: 300;
@@ -118,9 +118,9 @@
   overflow: hidden;
   word-break: break-word;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical
-} 
-.post-content *{
+  -webkit-box-orient: vertical;
+}
+.post-content * {
   display: inline;
 }
 .post-status-container {

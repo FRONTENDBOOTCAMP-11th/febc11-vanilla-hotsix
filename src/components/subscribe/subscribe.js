@@ -26,6 +26,8 @@ export class Subscribe extends HTMLElement {
       parseInt(userIdFromUrl) || parseInt(localStorage.getItem('authorId'));
     console.log('id ', this.userId);
     this.ismyId = parseInt(userIdFromUrl) === Number(myId);
+    console.log('this.ismyId', this.ismyId)
+    console.log(Number(myId), parseInt(userIdFromUrl))
 
     // 컴포넌트 구조 설정
     this.innerHTML = `

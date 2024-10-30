@@ -63,7 +63,6 @@ const getPost = async () => {
     } else {
       subscribeContainer.style.display = 'block'; // 요소를 다시 표시
     }
-
     return response.data.item;
   } catch (error) {
     console.log(error);
@@ -75,7 +74,7 @@ console.log(curruntPost);
 // 게시글을 쓴 작가 정보를 가져오는 함수
 const getAuthorInfo = async () => {
   try {
-    const authorId = localStorage.getItem('userId');
+    const authorId = localStorage.getItem('authorId');
     const response = await axios.get(`${apiUrl}/users/${authorId}`, {
       headers: {
         'client-id': clientId,

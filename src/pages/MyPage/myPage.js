@@ -26,6 +26,11 @@ const post = document.querySelector('.post');
 const post2 = document.querySelector('.post2');
 const post3 = document.querySelector('.mybox-my-contents');
 
+const change = document.querySelector('.change-button');
+change.addEventListener("click", () => {
+  window.location.href='/src/pages/MyPage/userInfo.html'
+})
+
 // accessToken 가져오기
 let token = '';
 if (sessionStorage.getItem('accessToken')) {
