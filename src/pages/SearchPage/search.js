@@ -138,8 +138,6 @@ class SearchPage {
     }
   }
 
-  // 필터링 부분은 getFilteredAuthors를 사용하여 검색어에 맞게 작가 목록을 필터링합니다.
-
   getFilteredArticles(searchText) {
     return this.articles.filter(
       article =>
@@ -242,7 +240,15 @@ class SearchPage {
             <p>${this.highlightKeyword(textOnlyContent, this.searchInput.value)}</p>
             <footer>
               <span class="article-date">${formattedDate}</span>
-              <span class="article-writer">by ${result.user.name}</span>
+              <img
+                class="seperator-dot" 
+                src="/public/assets/images/seperator-dot.svg"
+              />
+              <img
+                class="seperator-text-by"
+                src="/public/assets/images/seperator-text-by.svg"
+              />
+              <span class="article-writer">${result.user.name}</span>
             </footer>
           </div>
           <div class="image-placeholder" style="background-image: url('${articleImage}'); background-size: cover;"></div>
@@ -267,9 +273,9 @@ class SearchPage {
 
       const authorDiv = document.createElement('div');
       authorDiv.className = 'author';
-      authorDiv.innerHTML = `
-        <a href="../../pages/AuthorPage/index.html?userId=${authorId}">
+      authorDiv.innerHTML = `        
         <div class="author-contents">
+          <a href="../../pages/AuthorPage/index.html?userId=${authorId}">
           <div class="author-image" style="background-image: url('${authorImage}'); background-size: cover;"></div>
           <div class="author-letters">
             <div class="author-nickname">${this.highlightKeyword(name, this.searchInput.value)}</div>
@@ -278,6 +284,22 @@ class SearchPage {
         </div>
         <ul class="tags">${keywords.map(tag => `<li class="tag">${tag}</li>`).join('')}</ul>
       `;
+
+      // 작가 태그 영역을 클릭했을 때
+      const tags = authorDiv.querySelectorAll('.tag');
+      tags.forEach(tag => {
+        tag.addEventListener('click', e => {
+          // 링크 이동 방지
+          e.preventDefault();
+          e.stopPropagation();
+
+          // 태그 내용을 검색어로 제출
+          const tagText = tag.textContent.trim();
+          this.searchInput.value = tagText;
+          this.form.dispatchEvent(new Event('submit'));
+        });
+      });
+
       authorsSection.appendChild(authorDiv);
     });
     return authorsSection;
@@ -341,5 +363,18 @@ class SearchPage {
   }
 }
 
-// 초기화
-document.addEventListener('DOMContentLoaded', () => new SearchPage());
+// SearchPage 초기화
+document.addEventListener('DOMContentLoaded', () => {
+  const searchPage = new SearchPage();
+
+  // 태그 클릭 시 검색어로 제출
+  const tags = document.querySelectorAll('.tag');
+  tags.forEach(tag => {
+    tag.addEventListener('click', () => {
+      const tagText = tag.textContent.trim();
+
+      searchPage.searchInput.value = tagText;
+      searchPage.form.dispatchEvent(new Event('submit'));
+    });
+  });
+});
