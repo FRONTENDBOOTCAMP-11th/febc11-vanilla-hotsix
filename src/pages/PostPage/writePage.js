@@ -17,7 +17,9 @@ import isLogin from '../../api/isLogin';
 const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 // 토큰 획득
-const token = sessionStorage.getItem('accessToken');
+const token = sessionStorage.getItem('accessToken')
+  ? sessionStorage.getItem('accessToken')
+  : localStorage.getItem('accessToken');
 
 let titleInputNode = document.querySelector('#titleInput');
 let subtitleInputNode = document.querySelector('#subtitleInput');
@@ -132,16 +134,16 @@ postBtn.addEventListener('click', async () => {
   if (titleInputNode.value.trim() === '') {
     alert('제목을 입력하세요');
     closeModal();
-  } else if (editableDiv.innerHTML.trim() === '') {
+  } else if (editableDiv.innerText.trim() === '') {
     alert('내용을 입력하세요');
     closeModal();
   } else {
     // editableDiv.innerHTML의 img 태그들 찾기
     const Images = editableDiv.querySelectorAll('img');
     // 첫 번째 이미지는 경로를 추출하여 대표이미지로 설정
-    const fisrtImagePath = Images[0].src.match(/\/files\/.+$/);
+    const fisrtImagePath = Images[0]?.src.match(/\/files\/.+$/);
 
-    // 모든 이미지 경로 추출하여 /files/부터의 경로로 변경
+    // 모든 이미지의 src 속성 수정
     for (const img of Images) {
       const imagePath = img.src;
       console.log(imagePath);
@@ -159,6 +161,8 @@ postBtn.addEventListener('click', async () => {
     if (fisrtImagePath) {
       post.image = fisrtImagePath;
     }
+
+    console.log(post);
 
     // 생성된 게시글 객체 서버로 전송
     try {
@@ -177,6 +181,7 @@ postBtn.addEventListener('click', async () => {
       subtitleInputNode.value = '';
       editableDiv.innerHTML = '';
 
+      console.log(res);
       // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
       const postId = res.data.item._id;
       window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
@@ -188,56 +193,7 @@ postBtn.addEventListener('click', async () => {
 
 // 저장 버튼 클릭시
 saveBtn.addEventListener('click', async () => {
-  if (titleInputNode.value.trim() || editableDiv.innerHTML) {
-    let post = new Post(
-      titleInputNode.value,
-      editableDiv.innerHTML,
-      subtitleInputNode.value,
-    );
-    post.private = true; // post 객체에 private 속성 추가
-
-    // editableDiv.innerHTML의 img 태그들 찾기
-    const Images = editableDiv.querySelectorAll('img');
-    // 첫 번째 이미지는 경로를 추출하여 대표이미지로 설정
-    const fisrtImagePath = Images[0].src.match(/\/files\/.+$/);
-
-    // 모든 이미지 경로 추출하여 /files/부터의 경로로 변경
-    for (const img of Images) {
-      const imagePath = img.src;
-      console.log(imagePath);
-      const newImagePath = imagePath?.match(/\/files\/.+$/);
-      console.log(newImagePath[0]);
-      img.src = newImagePath[0];
-    }
-
-    if (fisrtImagePath) {
-      post.image = fisrtImagePath;
-    }
-
-    // 생성된 게시글 객체 서버로 전송
-    try {
-      const res = await axios.post(`${apiUrl}/posts`, post, {
-        headers: {
-          'Content-Type': 'application/json',
-          'client-id': clientId,
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // 객체 생성 후 입력칸 초기화
-      titleInputNode.value = '';
-      subtitleInputNode.value = '';
-      editableDiv.innerHTML = '';
-
-      // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
-      const postId = res.data.item._id;
-      window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
-    } catch (error) {
-      console.log(error);
-    }
-  } else {
-    alert('제목을 입력하세요.');
-    closeModal();
-  }
+  alert('준비중입니다.');
 });
 
 // 맞춤법 검사 버튼 클릭

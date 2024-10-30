@@ -1,19 +1,5 @@
 'use strict';
 import axios from 'axios';
-import isLogin from '../../api/isLogin';
-
-// 페이지 진입 시 즉시 로그인 상태 확인
-// (async () => {
-//   const loginStatus = await isLogin();
-
-//   if (loginStatus) {
-//     console.log('로그인 상태입니다.');
-//   } else {
-//     console.log('로그인이 필요합니다.');
-//     // 로그인 필요 시 로그인 페이지 이동
-//     window.location.href = '/src/pages/LoginPage/index.html';
-//   }
-// })();
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
@@ -73,11 +59,12 @@ const getPost = async () => {
   }
 };
 let curruntPost = await getPost();
+console.log(curruntPost);
 
 // 게시글을 쓴 작가 정보를 가져오는 함수
 const getAuthorInfo = async () => {
   try {
-    const authorId = curruntPost.user._id;
+    const authorId = localStorage.getItem('userId');
     const response = await axios.get(`${apiUrl}/users/${authorId}`, {
       headers: {
         'client-id': clientId,
@@ -242,6 +229,7 @@ function addComment(comment) {
 
   let commentNode = document.createElement('div');
   commentNode.setAttribute('class', 'comment');
+  commentNode.setAttribute('tabindex', '0');
   commentNode.appendChild(commentProfile);
   commentNode.appendChild(commentContents);
 
@@ -419,10 +407,12 @@ async function printAuthor() {
   let authorImg = document.querySelector('.author__photo');
 
   authorNickname.innerHTML = curruntPost.user.name;
-  authorJob.innerHTML = author.extra.job;
-  authorInfo.innerHTML = author.extra.biography;
-  authorSubs.innerHTML = author.bookmarkedBy.users;
-  authorImg.src = `${apiUrl}${author.image}`;
+  if (author) {
+    authorJob.innerHTML = author.extra.job;
+    authorInfo.innerHTML = author.extra.biography;
+    authorSubs.innerHTML = author.bookmarkedBy.users;
+    authorImg.src = `${apiUrl}${author.image}`;
+  }
 }
 printAuthor();
 
