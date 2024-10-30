@@ -242,7 +242,15 @@ class SearchPage {
             <p>${this.highlightKeyword(textOnlyContent, this.searchInput.value)}</p>
             <footer>
               <span class="article-date">${formattedDate}</span>
-              <span class="article-writer">by ${result.user.name}</span>
+              <img
+                class="seperator-dot" 
+                src="/public/assets/images/seperator-dot.svg"
+              />
+              <img
+                class="seperator-text-by"
+                src="/public/assets/images/seperator-text-by.svg"
+              />
+              <span class="article-writer">${result.user.name}</span>
             </footer>
           </div>
           <div class="image-placeholder" style="background-image: url('${articleImage}'); background-size: cover;"></div>
