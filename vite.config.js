@@ -11,6 +11,7 @@ export default defineConfig({
         postWrite: 'src/pages/PostPage/writePage.html',
         postDetail: 'src/pages/PostPage/detailPage.html',
         myPage: 'src/pages/MyPage/index.html',
+        editInfo: 'src/pages/MyPage/userInfo.html',
         login: 'src/pages/LoginPage/index.html',
         signUp: `src/pages/SignupPage/index.html`,
         author: 'src/pages/AuthorPage/index.html',
