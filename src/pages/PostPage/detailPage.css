@@ -73,10 +73,21 @@ img {
   flex-direction: column;
 }
 
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
 .main__article p {
   font-size: 17.3px;
   color: #1b1b1b;
-  margin: 10px 0;
   font-weight: 300;
   line-height: 160%;
 }
@@ -184,6 +195,7 @@ img {
   margin-left: auto;
   margin-right: 13px;
   padding: 0;
+  background-color: unset;
 }
 
 .comment__text {
@@ -204,6 +216,16 @@ img {
 
 .comments__comment-input {
   border: 1px solid #ddd;
+}
+
+.login-require {
+  padding: 20px;
+  height: 100px;
+  color: var(--grey_55);
+}
+
+.login-require:hover {
+  cursor: pointer;
 }
 
 .input-area {
@@ -248,13 +270,10 @@ img {
 }
 
 .submit-area button {
-  color: #959595;
-  font-size: 13px;
-  line-height: 223%;
-  padding: 0 14px;
   background-color: unset;
-  border: 1px solid #ddd;
   border-radius: 30px;
+  width: 50px;
+  height: 30px;
 }
 
 .footer__author-info {
@@ -329,13 +348,6 @@ img {
   font-size: 14px;
 }
 
-.subscribed {
-  padding: 0 10px;
-  background-color: #00c6be;
-  line-height: 258%;
-  color: white;
-}
-
 .footer__icons {
   border-top: 1px solid #eeeeee;
   color: #333;
@@ -346,6 +358,18 @@ img {
   display: flex;
   align-items: center;
   line-height: 150%;
+}
+
+.footer__icons-container button {
+  background-color: unset;
+}
+
+.footer__icons-container button:hover {
+  cursor: pointer;
+}
+
+#commentIcon {
+  margin-left: auto;
 }
 
 .footer__icons .icon {
@@ -372,6 +396,5 @@ img {
 .icon-comment {
   width: 21px;
   height: 21px;
-  margin-left: auto;
   margin-right: 3px;
 }

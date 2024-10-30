@@ -4,6 +4,19 @@ document.addEventListener('DOMContentLoaded', function () {
   const rememberLogin = document.querySelector('input[type="checkbox"]');
   const loginButton = document.querySelector('.login-btn');
   const signupButton = document.querySelector('.signup-btn');
+  const accessToken =
+    localStorage.getItem('accessToken') ||
+    sessionStorage.getItem('accessToken');
+
+  // 환경 변수
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const clientId = import.meta.env.VITE_CLIENT_ID;
+
+  // 페이지 접근 시 토큰이 있다면 메인 페이지로 리다이렉트 (로그인 이미 했는데 또 로그인 페이지로 가지 않도록)
+  if (accessToken) {
+    window.location.href = '/src/pages/MainPage/index.html';
+    return;
+  }
 
   // 페이지 로드 시, 캐시 무시하고 강제 새로고침
   window.addEventListener('pageshow', function (event) {
@@ -39,9 +52,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (isEmailValid && isPasswordValid) {
       loginButton.disabled = false; // 로그인 버튼 활성화
       loginButton.style.backgroundColor = 'var(--mint)';
+      signupButton.dsabled = true; // 회원가입 버튼 비활성화, 숨기기
+      signupButton.style.display = 'none';
     } else {
       loginButton.disabled = true; // 로그인 버튼 비활성화
       loginButton.style.backgroundColor = 'var(--grey_60)';
+      signupButton.dsabled = false; // 회원가입 버튼 활성화, 보이기
+      signupButton.style.display = 'block';
     }
   }
 
@@ -56,9 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const email = emailInput.value;
     const password = passwordInput.value;
     const remember = rememberLogin.checked;
-    // 환경 변수 사용
-    const apiUrl = import.meta.env.VITE_API_URL;
-    const clientId = import.meta.env.VITE_CLIENT_ID;
 
     // API 연결
     try {
@@ -76,15 +90,21 @@ document.addEventListener('DOMContentLoaded', function () {
         const data = await response.json();
         console.log(data); // 응답 데이터가 잘 왔는지 확인
 
-        // 로그인 상태 저장
+        // 로그인 정보 저장
         if (remember) {
           localStorage.setItem(`accessToken`, data.item.token.accessToken);
           localStorage.setItem(`refreshToken`, data.item.token.refreshToken);
+          localStorage.setItem(`name`, data.item.name);
           localStorage.setItem(`email`, email);
+          localStorage.setItem(`image`, data.item.image);
+          localStorage.setItem('id', data.item._id);
         } else {
           sessionStorage.setItem(`accessToken`, data.item.token.accessToken);
           sessionStorage.setItem(`refreshToken`, data.item.token.refreshToken);
+          sessionStorage.setItem(`name`, data.item.name);
           sessionStorage.setItem(`email`, email);
+          sessionStorage.setItem(`image`, data.item.image);
+          sessionStorage.setItem('id', data.item._id);
         }
 
         // 이전 페이지로 리다이렉트 (저장된 URL로 이동, 기본값은 메인 페이지 url)

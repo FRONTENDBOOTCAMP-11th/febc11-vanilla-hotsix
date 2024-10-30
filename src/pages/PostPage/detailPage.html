@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="postDetailPage.css" />
+    <link rel="stylesheet" href="detailPage.css" />
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="../../components/header/header.css" />
     <link rel="stylesheet" href="../../components/subscribe/subscribe.css" />
@@ -16,30 +16,30 @@
       <header-component></header-component>
       <header class="header">
         <div class="l_wrapper">
-          <div class="header__title"></div>
-          <span class="header__subtitle"></span>
+          <div class="header__title" tabindex="0"></div>
+          <span class="header__subtitle" tabindex="0"></span>
           <div class="header__info">
-            <img src="../../assets/images/icon-by.svg" class="info__by" />
-            <span class="info__author"></span>
-            <img src="../../assets/images/dot-center.svg" class="info__dot" />
-            <span class="info__time"></span>
+            <img src="/assets/images/icon-by.svg" class="info__by" />
+            <span class="info__author" tabindex="0"></span>
+            <img src="/assets/images/dot-center.svg" class="info__dot" />
+            <span class="info__time" tabindex="0"></span>
           </div>
         </div>
       </header>
       <main class="main">
         <div class="l_wrapper">
-          <article class="main__article"></article>
+          <article class="main__article" tabindex="0"></article>
           <section class="main__tags"></section>
           <section class="main__comments">
             <div class="comments-count">
-              댓글 <span class="count-num"></span>
+              <span tabindex="0">댓글</span>
+              <span class="count-num count" tabindex="0">0</span>
             </div>
             <div class="comments"></div>
             <section class="comments__comment-input">
               <div class="input-area">
                 <div class="input-area__profile">
-                  <div class="img"></div>
-                  주정
+                  <img class="img" />
                 </div>
                 <textarea
                   name=""
@@ -48,7 +48,12 @@
                 ></textarea>
               </div>
               <div class="submit-area">
-                <button>등록</button>
+                <button id="commentSubmitBtn">
+                  <img
+                    src="/assets/images/button-comment-submit_default.svg"
+                    alt=""
+                  />
+                </button>
               </div>
             </section>
           </section>
@@ -59,16 +64,21 @@
           <div class="l_wrapper">
             <header class="author-info__header">
               <div class="author__nickname">
-                <div class="nickname"></div>
-                <span class="job"></span>
+                <div class="nickname" tabindex="0"></div>
+                <span class="job" tabindex="0"></span>
               </div>
               <!-- 나중에 이미지로 변경 -->
               <img class="author__photo" />
             </header>
-            <p class="author-info__contents"></p>
+            <p class="author-info__contents" tabindex="0"></p>
             <footer class="author-info__footer">
-              <div>구독자 <span class="subscriber" id="subscriber"></span></div>
-              <subscribe-component></subscribe-component>
+              <div tabindex="0">
+                구독자
+                <span class="subscriber" id="subscriber" tabindex="0"></span>
+              </div>
+              <div id="subscribe-container">
+                <subscribe-component></subscribe-component>
+              </div>
             </footer>
           </div>
         </section>
@@ -77,24 +87,32 @@
             <div class="footer__icons-container">
               <button id="bookmarkBtn">
                 <img
-                  src="../../assets/images/icon-like.svg"
+                  src="/assets/images/icon-like.svg"
                   class="icon"
                   id="icon-like"
                 />
               </button>
               <span class="like-count"></span>
-              <img src="../../assets/images/icon-share.svg" class="icon" />
-              <img
-                src="../../assets/images/icon-comment.svg"
-                class="icon-comment"
-              />
-              <span class="comment-count"></span>
+              <button>
+                <img
+                  id="shareIcon"
+                  src="/assets/images/icon-share.svg"
+                  class="icon"
+                />
+              </button>
+              <button id="commentIcon">
+                <img
+                  src="/assets/images/icon-comment.svg"
+                  class="icon-comment"
+                />
+              </button>
+              <span class="comment-count count">0</span>
             </div>
           </div>
         </div>
       </footer>
     </div>
-    <script src="postDetailPage.js" type="module"></script>
+    <script src="detailPage.js" type="module"></script>
     <script src="../../components/header/header.js" type="module"></script>
     <script
       src="../../components/subscribe/subscribe.js"

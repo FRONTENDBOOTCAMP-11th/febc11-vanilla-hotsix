@@ -17,7 +17,7 @@ img {
 
 .modalWindow {
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   left: 0;
   top: 0;
   width: 100%;
@@ -32,9 +32,7 @@ img {
 .hidden {
   opacity: 0;
   visibility: hidden;
-  transition:
-    opacity 0.5s ease,
-    visibility 0s 0.5s;
+  transition: opacity 0.5s ease;
 }
 
 .visible {
@@ -48,6 +46,8 @@ img {
   padding: 15px 0;
   font-size: 18px;
   color: var(--mint);
+  width: 100%;
+  background-color: unset;
 }
 
 .modal:not(:last-child) {
@@ -65,6 +65,11 @@ img {
 
 .header {
   border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: white;
+  z-index: 2;
 }
 
 .header-container {
@@ -74,7 +79,7 @@ img {
   height: 50px;
 }
 
-.header-container span {
+.header-container h1 {
   color: var(--black_90);
   font-size: 19px;
   font-weight: 600;
@@ -137,6 +142,10 @@ img {
   line-height: 90%;
 }
 
+.input-container input:focus {
+  outline: 1px solid var(--grey_35);
+}
+
 .contents-input {
   padding: 25px 0 0;
 }
@@ -158,6 +167,18 @@ img {
   color: #959595;
 }
 
+#editableDiv:focus {
+  outline: 1px solid var(--grey_35);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
 .controls {
   background-color: #f8f8f8;
   padding: 22px 0;
@@ -173,10 +194,10 @@ img {
   height: 40px;
 }
 
-.controls img:nth-child(3) {
-  margin-left: 24px;
+.controls button {
+  background-color: unset;
 }
 
-.controls img:last-child {
-  margin-left: auto;
+.controls button:nth-child(2) {
+  margin-right: 24px;
 }

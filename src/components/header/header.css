@@ -6,7 +6,7 @@
   padding: 0 20px;
   position: fixed;
   top: 0;
-  z-index: 2;
+  z-index: 10;
   background-color: var(--white);
   max-width: 480px;
   border-bottom: 1px solid var(--grey_35);
@@ -17,7 +17,7 @@
 }
 .brunchstory {
   color: transparent;
-  background-image: url('../../assets/images/LOGO.png');
+  background-image: url('/assets/images/LOGO.png');
   background-size: cover;
   background-position: center;
   width: 120px;
@@ -34,18 +34,20 @@
   width: 30px;
   height: 30px;
   background-color: transparent;
+  cursor: pointer;
 }
 .notification {
-  background-image: url('../../assets/images/notification.svg');
+  background-image: url('/assets/images/notification.svg');
 }
 .search {
-  background-image: url('../../assets/images/search.svg');
+  background-image: url('/assets/images/search.svg');
 }
 .profile {
   border-radius: 50%;
   background-color: var(--grey_65);
+  vertical-align: top;
 }
-.start{
+.start {
   width: 62px;
   height: 24px;
   border-radius: 15px;
@@ -55,4 +57,17 @@
   font-weight: 400;
   line-height: 1.5;
   padding: 5px 13px;
+}
+.back {
+  color: transparent;
+  background-color: transparent;
+  background-image: url('/assets/images/arrow-left.svg');
+  background-size: cover;
+  background-position: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -4px;
+}
+.border-delete {
+  border-bottom: unset;
 }

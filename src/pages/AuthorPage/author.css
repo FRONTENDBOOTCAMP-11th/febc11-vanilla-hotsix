@@ -14,6 +14,16 @@
   padding: 0 20px;
   padding-bottom: 100px;
 }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
 
 /* 작가 프로필 */
 .author-info {
@@ -90,7 +100,7 @@
   font-weight: 300;
   line-height: 1.4;
 }
-.post-subtitle{
+.post-subtitle {
   color: var(--grey_70);
   font-size: 12px;
   font-weight: 300;
@@ -108,9 +118,9 @@
   overflow: hidden;
   word-break: break-word;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical
-} 
-.post-content *{
+  -webkit-box-orient: vertical;
+}
+.post-content * {
   display: inline;
 }
 .post-status-container {

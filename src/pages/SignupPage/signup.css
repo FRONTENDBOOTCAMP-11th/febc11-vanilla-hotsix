@@ -1,11 +1,16 @@
 /* LAYOUT */
 .signup-container {
-  width: 90%;
+  /* width: 90%;
   max-width: 400px;
   background-color: var(--white);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  */
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--white);
   text-align: center;
 }
 
@@ -66,7 +71,6 @@ input[type='password'] {
   right: 0;
   margin: 6px 0 8px 0;
   font-size: 13px;
-  font-weight: semibold;
   color: var(--mint);
   background-color: transparent;
   border: 1px solid currentColor;
@@ -75,13 +79,7 @@ input[type='password'] {
   cursor: pointer;
 }
 
-#email-feedback {
-  position: absolute;
-  transform: translateY(32px);
-  font-size: 12px;
-}
-
-#password-feedback {
+.feedback {
   position: absolute;
   transform: translateY(34px);
   font-size: 12px;
@@ -98,7 +96,7 @@ input[type='password'] {
   border: none;
   width: 24px;
   height: 24px;
-  background-image: url(/src/assets/images/IconEye.png);
+  background-image: url(/public/assets/images/IconEye.png);
   background-size: cover;
   cursor: pointer;
 }
@@ -114,4 +112,8 @@ input[type='password'] {
   color: var(--white);
   font-size: 16px;
   cursor: pointer;
+}
+
+.padding {
+  padding: 20px;
 }
