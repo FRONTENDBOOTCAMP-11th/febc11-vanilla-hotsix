@@ -22,7 +22,7 @@
     <div class="l_wrapper">
       <header-component></header-component>
       <main class="container" role="main">
-        <section class="author-info">
+        <form class="author-info">
 
           <h4 class="author-info-title">작가명</h4>
           <div class="author-info_container">
@@ -30,8 +30,8 @@
             <button type="button" class="check-button" id="check-nickname">
               중복확인
             </button>
-            <div class="feedback hidden" id="nickname-feedback"></div>
           </div>
+          <div class="feedback hidden" id="nickname-feedback"></div>
           
           <h4 class="author-info-title">작가역할</h4>
           <div class="author-info_container">
@@ -42,8 +42,9 @@
           <textarea type="text" class="author-info__description" tabindex="0" placeholder="자기소개를 입력해 주세요"></textarea>
 
           <img class="author-info__avatar" src="#" alt="작가의 프로필 이미지" />
-        </section>
-        <button class="change-info">저장하기</button>
+          <input type="file" id="fileInputNode" style="display: none;" />
+          <button type="submit" class="change-info disable">저장하기</button>
+        </form>
       </main>
       <navbar-component></navbar-component>
     </div>
