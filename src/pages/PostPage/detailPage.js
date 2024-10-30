@@ -146,6 +146,7 @@ printTags();
 
 // 현재 댓글 개수 출력해주는 DOM 노드 획득
 const commentCount = document.querySelector('.count-num');
+let footerCommentCount = document.querySelector('.comment-count');
 
 // 현재 게시글 댓글 목록 불러오기 + 렌더링
 async function printComments() {
@@ -293,6 +294,7 @@ commentSubmitBtn?.addEventListener('click', async () => {
       // 새 댓글만 추가
       addComment(response.data.item);
       commentCount.innerHTML = parseInt(commentCount.innerHTML) + 1;
+      footerCommentCount.innerHTML = parseInt(footerCommentCount.innerHTML) + 1;
       commentInput.value = '';
     } catch (error) {
       console.log(error);
@@ -311,8 +313,6 @@ commentSubmitBtn?.addEventListener('mouseup', () => {
   let btnImg = commentSubmitBtn.querySelector('img');
   btnImg.src = '/assets/images/button-comment-submit_default.svg';
 });
-
-// 댓글 삭제하기
 
 // 북마크 목록 가져오기
 async function getBookmarks() {
@@ -420,10 +420,29 @@ printAuthor();
 
 async function printFooter() {
   let likeCount = document.querySelector('.like-count');
-  let commentCount = document.querySelector('.comment-count');
   likeCount.innerHTML = curruntPost.bookmarks;
   if (curruntPost.replies) {
-    commentCount.innerHTML = curruntPost.replies.length;
+    footerCommentCount.innerHTML = curruntPost.replies.length;
   }
 }
 printFooter();
+
+// SNS 공유 아이콘 클릭
+let snsShagerIcon = document.querySelector('#shareIcon');
+snsShagerIcon.addEventListener('click', () => {
+  alert('준비중입니다.');
+});
+
+// 댓글 버튼을 눌렀을 때 댓글 목록 보이기/안보이기
+const commentIcon = document.querySelector('#commentIcon');
+// 댓글 보이기 상태관리 변수
+let isShowComments = true;
+commentIcon.addEventListener('click', () => {
+  if (isShowComments) {
+    commentsNode.style.display = 'none';
+    isShowComments = false;
+  } else {
+    commentsNode.style.display = 'block';
+    isShowComments = true;
+  }
+});
