@@ -3,7 +3,7 @@ import isLogin from '/src/api/isLogin.js';
 
 (async () => {
   const loggedIn = await isLogin();
-  if (!loggedIn) {
+  if (loggedIn) {
     window.location.href = '/src/pages/MainPage/index.html';
   }
 })();
@@ -92,7 +92,11 @@ document.addEventListener('DOMContentLoaded', function () {
       checkNicknameButton.disabled = true;
       checkNicknameButton.style.color = 'var(--grey_60)';
       checkNicknameButton.style.cursor = 'unset';
+
+      nicknameFeedback.classList.add('hidden');
+      nicknameFeedback.textContent = '';
     }
+
     checkFormValidity();
   });
 
