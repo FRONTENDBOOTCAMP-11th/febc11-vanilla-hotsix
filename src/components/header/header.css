@@ -6,7 +6,7 @@
   padding: 0 20px;
   position: fixed;
   top: 0;
-  z-index: 2;
+  z-index: 10;
   background-color: var(--white);
   max-width: 480px;
   border-bottom: 1px solid var(--grey_35);
