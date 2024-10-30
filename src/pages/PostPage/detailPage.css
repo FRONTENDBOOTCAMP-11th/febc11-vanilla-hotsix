@@ -73,6 +73,18 @@ img {
   flex-direction: column;
 }
 
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
 .main__article p {
   font-size: 17.3px;
   color: #1b1b1b;
