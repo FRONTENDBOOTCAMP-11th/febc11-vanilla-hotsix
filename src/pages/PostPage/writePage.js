@@ -34,6 +34,7 @@ class Post {
     title,
     content,
     subtitle = '',
+    textAlign = 'text-left',
     image = `/files/${clientId}/park.jpg`,
   ) {
     this.type = 'post';
@@ -42,6 +43,7 @@ class Post {
     this.image = image;
     this.extra = {
       subtitle: subtitle,
+      textAlign: textAlign,
     };
   }
 }
@@ -151,10 +153,23 @@ postBtn.addEventListener('click', async () => {
       img.src = newImagePath[0];
     }
 
+    // editableDiv의 텍스트 정렬 클래스에 따라 게시글 객체에 정보 저장
+    const textAlignClass = editableDiv.className;
+    let textAlign;
+
+    if (textAlignClass === 'text-center') {
+      textAlign = 'text-center';
+    } else if (textAlignClass === 'text-right') {
+      textAlign = 'text-right';
+    } else {
+      textAlign = 'text-left';
+    }
+
     let post = new Post(
       titleInputNode.value,
       editableDiv.innerHTML,
       subtitleInputNode.value,
+      textAlign,
     );
 
     if (fisrtImagePath) {
@@ -162,32 +177,31 @@ postBtn.addEventListener('click', async () => {
     }
 
     console.log(post);
-    console.log(editableDiv);
 
     // 생성된 게시글 객체 서버로 전송
-    // try {
-    //   const res = await axios.post(`${apiUrl}/posts`, post, {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'client-id': clientId,
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   });
+    try {
+      const res = await axios.post(`${apiUrl}/posts`, post, {
+        headers: {
+          'Content-Type': 'application/json',
+          'client-id': clientId,
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    //   closeModal();
+      closeModal();
 
-    //   // 객체 생성 후 입력칸 초기화
-    //   titleInputNode.value = '';
-    //   subtitleInputNode.value = '';
-    //   editableDiv.innerHTML = '';
+      // 객체 생성 후 입력칸 초기화
+      titleInputNode.value = '';
+      subtitleInputNode.value = '';
+      editableDiv.innerHTML = '';
 
-    //   console.log(res);
-    //   // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
-    //   const postId = res.data.item._id;
-    //   window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      console.log(res);
+      // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
+      const postId = res.data.item._id;
+      window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
+    } catch (error) {
+      console.log(error);
+    }
   }
 });
 

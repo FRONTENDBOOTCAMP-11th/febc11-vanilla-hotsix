@@ -126,6 +126,8 @@ async function printArticle() {
     const newSrc = `${apiUrl}${src}`;
     img.src = newSrc;
   }
+
+  articleNode.classList.add(curruntPost.extra.textAlign);
 }
 await printArticle();
 
