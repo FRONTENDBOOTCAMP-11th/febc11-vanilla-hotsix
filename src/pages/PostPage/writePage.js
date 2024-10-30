@@ -56,7 +56,6 @@ checkBtn.addEventListener('mousedown', () => {
 });
 
 // modal 노드 획득
-let pageTitle = document.querySelector('#pageTitle');
 let modal = document.querySelector('.modalWindow');
 let postBtn = document.querySelector('#modal-post');
 let saveBtn = document.querySelector('#modal-save');
@@ -163,31 +162,32 @@ postBtn.addEventListener('click', async () => {
     }
 
     console.log(post);
+    console.log(editableDiv);
 
     // 생성된 게시글 객체 서버로 전송
-    try {
-      const res = await axios.post(`${apiUrl}/posts`, post, {
-        headers: {
-          'Content-Type': 'application/json',
-          'client-id': clientId,
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    // try {
+    //   const res = await axios.post(`${apiUrl}/posts`, post, {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'client-id': clientId,
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   });
 
-      closeModal();
+    //   closeModal();
 
-      // 객체 생성 후 입력칸 초기화
-      titleInputNode.value = '';
-      subtitleInputNode.value = '';
-      editableDiv.innerHTML = '';
+    //   // 객체 생성 후 입력칸 초기화
+    //   titleInputNode.value = '';
+    //   subtitleInputNode.value = '';
+    //   editableDiv.innerHTML = '';
 
-      console.log(res);
-      // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
-      const postId = res.data.item._id;
-      window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
-    } catch (error) {
-      console.log(error);
-    }
+    //   console.log(res);
+    //   // 게시글 작성 완료 후 방금 작성한 게시물 상세 페이지로 이동
+    //   const postId = res.data.item._id;
+    //   window.location.href = `/src/pages/PostPage/detailPage.html?postId=${postId}`;
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 });
 
@@ -208,7 +208,7 @@ cancelBtn.addEventListener('click', closeModal);
 // 외부 클릭시 닫힘
 window.onclick = function (event) {
   if (event.target === modal) {
-    modal.classList.add('hidden');
+    closeModal();
   }
 };
 
