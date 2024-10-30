@@ -68,16 +68,13 @@ const getPost = async () => {
       localStorage.setItem('posts', JSON.stringify(posts));
     }
 
+    // 구독 버튼 렌더링을 위한 작가 정보 비교/저장
     const authorId = response.data.item.user._id;
     localStorage.setItem('authorId', authorId);
     let userId = localStorage.getItem('id');
     if (Number(userId) === authorId) {
-      console.log('같음');
-      console.log(subscribeContainer); // null이 아닌지 확인
       subscribeContainer.style.display = 'none';
     } else {
-      console.log('다름');
-      console.log(subscribeContainer); // null이 아닌지 확인
       subscribeContainer.style.display = 'block'; // 요소를 다시 표시
     }
 
