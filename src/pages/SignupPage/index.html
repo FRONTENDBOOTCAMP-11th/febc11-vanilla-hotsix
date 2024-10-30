@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>회원가입</title>
+    <link rel="icon" href="/assets/images/logo-circle.svg" />
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="signup.css" />
   </head>
@@ -14,7 +15,10 @@
       <form>
         <div class="nickname-input">
           <input type="text" id="nickname" placeholder="별명" required />
-          <!-- <button type="button" class="check-button">중복확인</button> -->
+          <button type="button" class="check-button" id="check-nickname">
+            중복확인
+          </button>
+          <div class="feedback hidden" id="nickname-feedback"></div>
         </div>
 
         <div class="email-input">
@@ -22,7 +26,7 @@
           <button type="button" class="check-button" id="check-email">
             중복확인
           </button>
-          <div class="feedback hidden" id="email-feedback">aaa</div>
+          <div class="feedback hidden" id="email-feedback"></div>
         </div>
 
         <div class="password-input">
@@ -53,7 +57,7 @@
             id="toggle-confirm-password"
             tabindex="-1"
           ></button>
-          <div class="feedback hidden" id="password-feedback">bbb</div>
+          <div class="feedback hidden" id="password-feedback"></div>
         </div>
 
         <button type="submit" class="signup-button">회원가입</button>
