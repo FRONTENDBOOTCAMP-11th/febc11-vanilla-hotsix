@@ -1,7 +1,0 @@
-[build]
-  command = "npm run build"
-  publish = "dist"
-
-[build.environment]
-  VITE_API_URL = "${VITE_API_URL}"
-  VITE_CLIENT_ID = "${VITE_CLIENT_ID}"
