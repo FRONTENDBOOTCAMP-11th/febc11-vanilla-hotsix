@@ -62,9 +62,9 @@ let curruntPost = await getPost();
 console.log(curruntPost);
 
 // 게시글을 쓴 작가 정보를 가져오는 함수
+const authorId = localStorage.getItem('userId');
 const getAuthorInfo = async () => {
   try {
-    const authorId = localStorage.getItem('userId');
     const response = await axios.get(`${apiUrl}/users/${authorId}`, {
       headers: {
         'client-id': clientId,
@@ -400,13 +400,15 @@ async function printBookmark() {
 }
 printBookmark();
 
+// 작가 정보 출력을 위한 노드 획득 (함수 2개에서 사용예정)
+let authorNickname = document.querySelector('.nickname');
+let authorImg = document.querySelector('.author__photo');
+
 // 작가란 화면을 출력하는 함수
 async function printAuthor() {
-  let authorNickname = document.querySelector('.nickname');
   let authorJob = document.querySelector('.job');
   let authorInfo = document.querySelector('.author-info__contents');
   let authorSubs = document.querySelector('#subscriber');
-  let authorImg = document.querySelector('.author__photo');
 
   authorNickname.innerHTML = curruntPost.user.name;
   if (author) {
@@ -417,6 +419,15 @@ async function printAuthor() {
   }
 }
 printAuthor();
+
+// 작가 홈으로 이동하는 함수
+function goToAuthorPage() {
+  window.location.href = `/src/pages/AuthorPage/index.html?userId=${authorId}`;
+}
+// 작가 닉네임과 프로필사진을 누르면 해당 작가 홈으로 이동
+authorSpanNode.addEventListener('click', goToAuthorPage);
+authorNickname.addEventListener('click', goToAuthorPage);
+authorImg.addEventListener('click', goToAuthorPage);
 
 async function printFooter() {
   let likeCount = document.querySelector('.like-count');
