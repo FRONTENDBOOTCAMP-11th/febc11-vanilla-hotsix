@@ -1,12 +1,12 @@
 // 페이지 접근 시, 로그인 된 상태라면 메인 페이지로 리다이렉트
 import isLogin from '/src/api/isLogin.js';
 
-(async () => {
-  const loggedIn = await isLogin();
-  if (!loggedIn) {
-    window.location.href = '/src/pages/MainPage/index.html';
-  }
-})();
+// (async () => {
+//   const loggedIn = await isLogin();
+//   if (!loggedIn) {
+//     window.location.href = '/src/pages/MainPage/index.html';
+//   }
+// })();
 
 document.addEventListener('DOMContentLoaded', function () {
   // Elements

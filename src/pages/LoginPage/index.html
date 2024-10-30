@@ -7,31 +7,42 @@
     <link rel="icon" href="/assets/images/logo-circle.svg" />
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="login.css" />
+    <!-- 헤더 컴포넌트 불러오기 -->
+    <link rel="stylesheet" href="../../components/header/header.css" />
+    <script src="../../components/header/header.js" type="module"></script>
   </head>
   <body>
     <div class="l_container">
-      <div class="header">
-        <div class="illustration"></div>
+      <!-- 헤더 컴포넌트 -->
+      <header-component class="header-component"></header-component>
+      <div class="padding">
+        <div class="header">
+          <div class="illustration"></div>
+        </div>
+
+        <form class="login">
+          <input
+            type="email"
+            placeholder="이메일"
+            required
+            autocomplete="off"
+          />
+          <input
+            type="password"
+            placeholder="비밀번호"
+            required
+            autocomplete="off"
+          />
+          <label class="remember_login">
+            <input type="checkbox" />
+            <span class="checkbox-icon"></span>
+            <span class="checkbox-label">로그인 정보 저장</span>
+          </label>
+          <button type="submit" class="login-btn">로그인</button>
+          <button type="button" class="signup-btn">회원가입</button>
+        </form>
       </div>
-
-      <form class="login">
-        <input type="email" placeholder="이메일" required autocomplete="off" />
-        <input
-          type="password"
-          placeholder="비밀번호"
-          required
-          autocomplete="off"
-        />
-        <label class="remember_login">
-          <input type="checkbox" />
-          <span class="checkbox-icon"></span>
-          <span class="checkbox-label">로그인 정보 저장</span>
-        </label>
-        <button type="submit" class="login-btn">로그인</button>
-        <button type="button" class="signup-btn">회원가입</button>
-      </form>
     </div>
-
     <script src="login.js" type="module"></script>
   </body>
 </html>
