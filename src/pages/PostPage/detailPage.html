@@ -16,23 +16,24 @@
       <header-component></header-component>
       <header class="header">
         <div class="l_wrapper">
-          <div class="header__title"></div>
-          <span class="header__subtitle"></span>
+          <div class="header__title" tabindex="0"></div>
+          <span class="header__subtitle" tabindex="0"></span>
           <div class="header__info">
             <img src="/assets/images/icon-by.svg" class="info__by" />
-            <span class="info__author"></span>
+            <span class="info__author" tabindex="0"></span>
             <img src="/assets/images/dot-center.svg" class="info__dot" />
-            <span class="info__time"></span>
+            <span class="info__time" tabindex="0"></span>
           </div>
         </div>
       </header>
       <main class="main">
         <div class="l_wrapper">
-          <article class="main__article"></article>
+          <article class="main__article" tabindex="0"></article>
           <section class="main__tags"></section>
           <section class="main__comments">
             <div class="comments-count">
-              댓글 <span class="count-num">0</span>
+              <span tabindex="0">댓글</span>
+              <span class="count-num" tabindex="0">0</span>
             </div>
             <div class="comments"></div>
             <section class="comments__comment-input">
@@ -63,18 +64,26 @@
           <div class="l_wrapper">
             <header class="author-info__header">
               <div class="author__nickname">
-                <div class="nickname"></div>
-                <span class="job"></span>
+                <div class="nickname" tabindex="0"></div>
+                <span class="job" tabindex="0"></span>
               </div>
               <!-- 나중에 이미지로 변경 -->
               <img class="author__photo" />
             </header>
-            <p class="author-info__contents"></p>
+            <p class="author-info__contents" tabindex="0"></p>
             <footer class="author-info__footer">
+<<<<<<< HEAD
               <div>구독자 <span class="subscriber" id="subscriber"></span></div>
               <div id="subscribe-container">
                 <subscribe-component></subscribe-component>
               </div>
+=======
+              <div tabindex="0">
+                구독자
+                <span class="subscriber" id="subscriber" tabindex="0"></span>
+              </div>
+              <subscribe-component></subscribe-component>
+>>>>>>> 4851d34fc32788503518800703dcfeea03f95027
             </footer>
           </div>
         </section>

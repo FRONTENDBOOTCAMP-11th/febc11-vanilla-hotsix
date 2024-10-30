@@ -290,6 +290,10 @@ document.addEventListener('DOMContentLoaded', function () {
       name: nicknameInput.value,
       type: 'user',
       image: '/files/vanilla06/basic-profile.svg',
+      extra: {
+        job: '회원',
+        biography: '',
+      }
     };
 
     // 회원가입 API 요청
