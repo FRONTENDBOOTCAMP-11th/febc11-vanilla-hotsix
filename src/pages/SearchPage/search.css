@@ -247,6 +247,16 @@ article {
   flex-grow: 1;
 }
 
+.seperator-dot {
+  display: inline-block;
+  transform: translateY(-3.5px);
+}
+
+.seperator-text-by {
+  display: inline-block;
+  transform: translateY(2.5px);
+}
+
 .image-placeholder {
   width: 80px;
   height: 80px;
