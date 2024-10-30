@@ -73,6 +73,7 @@ const getPost = async () => {
   }
 };
 let curruntPost = await getPost();
+console.log(curruntPost);
 
 // 게시글을 쓴 작가 정보를 가져오는 함수
 const getAuthorInfo = async () => {
@@ -242,6 +243,7 @@ function addComment(comment) {
 
   let commentNode = document.createElement('div');
   commentNode.setAttribute('class', 'comment');
+  commentNode.setAttribute('tabindex', '0');
   commentNode.appendChild(commentProfile);
   commentNode.appendChild(commentContents);
 

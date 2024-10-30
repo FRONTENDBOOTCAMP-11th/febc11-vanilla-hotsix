@@ -134,7 +134,7 @@ postBtn.addEventListener('click', async () => {
   if (titleInputNode.value.trim() === '') {
     alert('제목을 입력하세요');
     closeModal();
-  } else if (editableDiv.innerHTML.trim() === '') {
+  } else if (editableDiv.innerText.trim() === '') {
     alert('내용을 입력하세요');
     closeModal();
   } else {
@@ -143,7 +143,7 @@ postBtn.addEventListener('click', async () => {
     // 첫 번째 이미지는 경로를 추출하여 대표이미지로 설정
     const fisrtImagePath = Images[0]?.src.match(/\/files\/.+$/);
 
-    // 모든 이미지 경로 추출하여 /files/부터의 경로로 변경
+    // 모든 이미지의 src 속성 수정
     for (const img of Images) {
       const imagePath = img.src;
       console.log(imagePath);
