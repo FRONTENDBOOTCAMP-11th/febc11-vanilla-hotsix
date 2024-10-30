@@ -72,9 +72,9 @@ let curruntPost = await getPost();
 console.log(curruntPost);
 
 // 게시글을 쓴 작가 정보를 가져오는 함수
+const authorId = localStorage.getItem('userId');
 const getAuthorInfo = async () => {
   try {
-    const authorId = localStorage.getItem('authorId');
     const response = await axios.get(`${apiUrl}/users/${authorId}`, {
       headers: {
         'client-id': clientId,
@@ -136,6 +136,8 @@ async function printArticle() {
     const newSrc = `${apiUrl}${src}`;
     img.src = newSrc;
   }
+
+  articleNode.classList.add(curruntPost.extra.textAlign);
 }
 await printArticle();
 
@@ -154,6 +156,7 @@ printTags();
 
 // 현재 댓글 개수 출력해주는 DOM 노드 획득
 const commentCount = document.querySelector('.count-num');
+let footerCommentCount = document.querySelector('.comment-count');
 
 // 현재 게시글 댓글 목록 불러오기 + 렌더링
 async function printComments() {
@@ -301,6 +304,7 @@ commentSubmitBtn?.addEventListener('click', async () => {
       // 새 댓글만 추가
       addComment(response.data.item);
       commentCount.innerHTML = parseInt(commentCount.innerHTML) + 1;
+      footerCommentCount.innerHTML = parseInt(footerCommentCount.innerHTML) + 1;
       commentInput.value = '';
     } catch (error) {
       console.log(error);
@@ -319,8 +323,6 @@ commentSubmitBtn?.addEventListener('mouseup', () => {
   let btnImg = commentSubmitBtn.querySelector('img');
   btnImg.src = '/assets/images/button-comment-submit_default.svg';
 });
-
-// 댓글 삭제하기
 
 // 북마크 목록 가져오기
 async function getBookmarks() {
@@ -408,13 +410,15 @@ async function printBookmark() {
 }
 printBookmark();
 
+// 작가 정보 출력을 위한 노드 획득 (함수 2개에서 사용예정)
+let authorNickname = document.querySelector('.nickname');
+let authorImg = document.querySelector('.author__photo');
+
 // 작가란 화면을 출력하는 함수
 async function printAuthor() {
-  let authorNickname = document.querySelector('.nickname');
   let authorJob = document.querySelector('.job');
   let authorInfo = document.querySelector('.author-info__contents');
   let authorSubs = document.querySelector('#subscriber');
-  let authorImg = document.querySelector('.author__photo');
 
   authorNickname.innerHTML = curruntPost.user.name;
   if (author) {
@@ -426,12 +430,40 @@ async function printAuthor() {
 }
 printAuthor();
 
+// 작가 홈으로 이동하는 함수
+function goToAuthorPage() {
+  window.location.href = `/src/pages/AuthorPage/index.html?userId=${authorId}`;
+}
+// 작가 닉네임과 프로필사진을 누르면 해당 작가 홈으로 이동
+authorSpanNode.addEventListener('click', goToAuthorPage);
+authorNickname.addEventListener('click', goToAuthorPage);
+authorImg.addEventListener('click', goToAuthorPage);
+
 async function printFooter() {
   let likeCount = document.querySelector('.like-count');
-  let commentCount = document.querySelector('.comment-count');
   likeCount.innerHTML = curruntPost.bookmarks;
   if (curruntPost.replies) {
-    commentCount.innerHTML = curruntPost.replies.length;
+    footerCommentCount.innerHTML = curruntPost.replies.length;
   }
 }
 printFooter();
+
+// SNS 공유 아이콘 클릭
+let snsShagerIcon = document.querySelector('#shareIcon');
+snsShagerIcon.addEventListener('click', () => {
+  alert('준비중입니다.');
+});
+
+// 댓글 버튼을 눌렀을 때 댓글 목록 보이기/안보이기
+const commentIcon = document.querySelector('#commentIcon');
+// 댓글 보이기 상태관리 변수
+let isShowComments = true;
+commentIcon.addEventListener('click', () => {
+  if (isShowComments) {
+    commentsNode.style.display = 'none';
+    isShowComments = false;
+  } else {
+    commentsNode.style.display = 'block';
+    isShowComments = true;
+  }
+});

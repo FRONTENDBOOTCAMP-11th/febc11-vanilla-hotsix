@@ -198,10 +198,6 @@ img {
   background-color: unset;
 }
 
-.controls button:nth-child(3) {
-  margin-left: 24px;
-}
-
-.controls button:last-child {
-  margin-left: auto;
+.controls button:nth-child(2) {
+  margin-right: 24px;
 }

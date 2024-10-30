@@ -34,6 +34,7 @@ class Post {
     title,
     content,
     subtitle = '',
+    textAlign = 'text-left',
     image = `/files/${clientId}/park.jpg`,
   ) {
     this.type = 'post';
@@ -42,6 +43,7 @@ class Post {
     this.image = image;
     this.extra = {
       subtitle: subtitle,
+      textAlign: textAlign,
     };
   }
 }
@@ -56,10 +58,8 @@ checkBtn.addEventListener('mousedown', () => {
 });
 
 // modal 노드 획득
-let pageTitle = document.querySelector('#pageTitle');
 let modal = document.querySelector('.modalWindow');
 let postBtn = document.querySelector('#modal-post');
-let saveBtn = document.querySelector('#modal-save');
 let modalQuestion = document.querySelector('#modal-question');
 
 // 포커스 가능한 모든 요소 선택
@@ -152,10 +152,23 @@ postBtn.addEventListener('click', async () => {
       img.src = newImagePath[0];
     }
 
+    // editableDiv의 텍스트 정렬 클래스에 따라 게시글 객체에 정보 저장
+    const textAlignClass = editableDiv.className;
+    let textAlign;
+
+    if (textAlignClass === 'text-center') {
+      textAlign = 'text-center';
+    } else if (textAlignClass === 'text-right') {
+      textAlign = 'text-right';
+    } else {
+      textAlign = 'text-left';
+    }
+
     let post = new Post(
       titleInputNode.value,
       editableDiv.innerHTML,
       subtitleInputNode.value,
+      textAlign,
     );
 
     if (fisrtImagePath) {
@@ -191,11 +204,6 @@ postBtn.addEventListener('click', async () => {
   }
 });
 
-// 저장 버튼 클릭시
-saveBtn.addEventListener('click', async () => {
-  alert('준비중입니다.');
-});
-
 // 맞춤법 검사 버튼 클릭
 let inspectBtn = document.querySelector('#modal-inspect');
 inspectBtn.addEventListener('click', () => {
@@ -208,7 +216,7 @@ cancelBtn.addEventListener('click', closeModal);
 // 외부 클릭시 닫힘
 window.onclick = function (event) {
   if (event.target === modal) {
-    modal.classList.add('hidden');
+    closeModal();
   }
 };
 
