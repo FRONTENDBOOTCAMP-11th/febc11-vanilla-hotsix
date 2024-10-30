@@ -60,7 +60,6 @@ checkBtn.addEventListener('mousedown', () => {
 // modal 노드 획득
 let modal = document.querySelector('.modalWindow');
 let postBtn = document.querySelector('#modal-post');
-let saveBtn = document.querySelector('#modal-save');
 let modalQuestion = document.querySelector('#modal-question');
 
 // 포커스 가능한 모든 요소 선택
@@ -203,11 +202,6 @@ postBtn.addEventListener('click', async () => {
       console.log(error);
     }
   }
-});
-
-// 저장 버튼 클릭시
-saveBtn.addEventListener('click', async () => {
-  alert('준비중입니다.');
 });
 
 // 맞춤법 검사 버튼 클릭
