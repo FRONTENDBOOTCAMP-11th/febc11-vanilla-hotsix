@@ -7,12 +7,9 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
 // accessToken 가져오기
-let token = '';
-if (sessionStorage.getItem('accessToken')) {
-  token = sessionStorage.getItem('accessToken');
-} else {
-  token = localStorage.getItem('accessToken');
-}
+let token =
+  sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');
+let myId = sessionStorage.getItem('id') || localStorage.getItem('id');
 
 // 북마크 삭제 할 id
 let target_id;
@@ -20,17 +17,21 @@ let target_id;
 export class Subscribe extends HTMLElement {
   constructor() {
     super();
-    // 현재 구독 상태
-    this.dummy_issub = false;
+    this.dummy_issub = false; // 현재 구독 상태
+    this.ismyId = null; // 내 아이디인지
 
-    // URL에서 userId 추출하기
     const params = new URLSearchParams(window.location.search);
+    // 작가 홈에서는 url에서 추출
     let userIdFromUrl = params.get('userId');
-    this.userId = Number(userIdFromUrl)
-      ? Number(userIdFromUrl)
-      : Number(localStorage.getItem('userId'));
+    // 상세 게시글에서는 localstorage로 가져오기
+    this.userId =
+      parseInt(userIdFromUrl) || parseInt(localStorage.getItem('authorId'));
+    this.ismyId = this.userId === Number(myId);
 
-    // 컴포넌트 구조 설정
+    console.log('authorId', parseInt(localStorage.getItem('authorId')))
+    console.log('id ', this.userId);
+
+    // 컴포넌트 마크업
     this.innerHTML = `
       <button class="author-info__subscribe-button sub_not">
         <img class="subscribe-icon" src="/assets/images/ico-plus.svg" alt="구독 아이콘"/>
@@ -41,8 +42,8 @@ export class Subscribe extends HTMLElement {
 
   // 연결 후, 콜백함수
   connectedCallback() {
-    // userId가 설정되어 있을 때만 구독 상태를 확인
     if (this.userId) {
+      this.updateVisibility();
       this.updateSubscribe();
     }
 
@@ -55,6 +56,11 @@ export class Subscribe extends HTMLElement {
     );
   }
 
+  // 내 아이디와 같으면 요소를 숨김
+  updateVisibility() {
+    this.style.display = this.ismyId ? 'none' : 'block';
+  }
+
   // 구독 상태를 변경하는 메서드
   async toggleSubscribe() {
     await this.checkSubscribeStatus();
@@ -62,7 +68,6 @@ export class Subscribe extends HTMLElement {
     try {
       if (this.dummy_issub) {
         // 구독이 되어있는 상태라면,
-        console.log('북마크 해제');
         const res = await axios.delete(`${apiUrl}/bookmarks/${target_id}`, {
           headers: {
             'client-id': clientId,
@@ -76,7 +81,6 @@ export class Subscribe extends HTMLElement {
         target_id = null;
       } else {
         // 구독이 안되어있는 상태라면,
-        console.log('북마크 하기');
         const res = await axios.post(
           `${apiUrl}/bookmarks/user`,
           {
@@ -106,7 +110,6 @@ export class Subscribe extends HTMLElement {
 
   // 구독 상태를 서버에서 확인하는 함수
   async checkSubscribeStatus() {
-    console.log('userId:', this.userId);
     try {
       const res = await axios.get(`${apiUrl}/bookmarks/user/${this.userId}`, {
         headers: {
@@ -165,6 +168,4 @@ export class Subscribe extends HTMLElement {
 }
 
 // 커스텀 요소 정의
-if (token) {
-  customElements.define('subscribe-component', Subscribe);
-}
+customElements.define('subscribe-component', Subscribe);

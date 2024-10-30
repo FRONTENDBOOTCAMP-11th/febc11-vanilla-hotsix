@@ -1,59 +1,61 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>작가 홈</title>
-    <!-- 아이콘 설정 -->
-    <link rel="icon" type="image/svg+xml" href="/public/Image.svg" />
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>작가 홈</title>
+  <link rel="icon" type="image/svg+xml" href="/public/Image.svg" />
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="/style.css" />
-    <link rel="stylesheet" href="./author.css" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="./author.css" />
 
-    <!-- Components CSS -->
-    <link rel="stylesheet" href="../../components/header/header.css" />
-    <link rel="stylesheet" href="../../components/navbar/navbar.css" />
-    <link rel="stylesheet" href="../../components/subscribe/subscribe.css" />
+  <!-- Components CSS -->
+  <link rel="stylesheet" href="../../components/header/header.css" />
+  <link rel="stylesheet" href="../../components/navbar/navbar.css" />
+  <link rel="stylesheet" href="../../components/subscribe/subscribe.css" />
 
-    <!-- Components -->
-    <script src="../../components/header/header.js" type="module"></script>
-    <script src="../../components/navbar/navbar.js" type="module"></script>
-    <script
-      src="../../components//subscribe/subscribe.js"
-      type="module"
-    ></script>
-  </head>
-  <body>
-    <div class="l_wrapper">
-      <header-component></header-component>
+  <!-- Components -->
+  <script src="../../components/header/header.js" type="module"></script>
+  <script src="../../components/navbar/navbar.js" type="module"></script>
+  <script src="../../components/subscribe/subscribe.js" type="module"></script>
+</head>
+<body>
+  <div class="l_wrapper">
+    <header-component></header-component>
 
-      <div class="container">
-        <section class="author-info">
-          <div class="author-info__profile">
-            <h2 class="author-info__name"></h2>
-            <p class="author-info__role"></p>
-            <img class="author-info__avatar" />
-          </div>
+    <main class="container" role="main">
+      <section class="author-info" aria-labelledby="author-name">
+        <div class="author-info__profile">
+          <h2 id="author-name" class="author-info__name" tabindex="0">작가 이름</h2>
+          <p class="author-info__role" tabindex="0">작가 역할</p>
+          <img class="author-info__avatar" src="#" alt="작가의 프로필 이미지" />
+        </div>
 
-          <div class="author-info__stats">
-            <div class="flex">
-              <div class="author-info__stat">
-                <span class="author-info__label">구독자</span>
-                <span class="author-info__value bookmarkedBy"></span>
-              </div>
-              <div class="author-info__stat">
-                <span class="author-info__label">관심작가</span>
-                <span class="author-info__value bookmarked"></span>
-              </div>
+        <div class="author-info__stats">
+          <div class="flex">
+            <div class="author-info__stat" tabindex="0">
+              <span class="author-info__label">구독자</span>
+              <span class="author-info__value bookmarkedBy" aria-label="구독자 수"></span>
             </div>
-            <subscribe-component></subscribe-component>
+            <div class="author-info__stat" tabindex="0">
+              <span class="author-info__label">관심작가</span>
+              <span class="author-info__value bookmarked" aria-label="관심작가 수"></span>
+            </div>
           </div>
-        </section>
-        <ul class="post-list--container"></ul>
-      </div>
-      <navbar-component></navbar-component>
-    </div>
-    <script src="./author.js" type="module"></script>
-  </body>
+          <subscribe-component tabindex="0" aria-label="구독 버튼"></subscribe-component>
+        </div>
+      </section>
+
+      <section class="post-list-section" aria-labelledby="post-list-title">
+        <h2 id="post-list-title" class="visually-hidden">게시물 목록</h2>
+        <ul class="post-list--container" tabindex="0" aria-label="작가의 게시물 목록">
+        </ul>
+      </section>
+    </main>
+
+    <navbar-component></navbar-component>
+  </div>
+  <script src="./author.js" type="module"></script>
+</body>
 </html>

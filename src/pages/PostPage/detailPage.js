@@ -66,7 +66,9 @@ const getPost = async () => {
       localStorage.setItem('posts', JSON.stringify(posts));
     }
 
-    localStorage.setItem('userId', response.data.item.user._id);
+    const authorId = response.data.item.user._id;
+    localStorage.setItem('authorId', authorId);
+    
     return response.data.item;
   } catch (error) {
     console.log(error);
