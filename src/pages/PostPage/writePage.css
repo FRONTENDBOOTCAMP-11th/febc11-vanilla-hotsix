@@ -17,7 +17,7 @@ img {
 
 .modalWindow {
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   left: 0;
   top: 0;
   width: 100%;
@@ -65,6 +65,11 @@ img {
 
 .header {
   border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: white;
+  z-index: 2;
 }
 
 .header-container {
@@ -137,6 +142,10 @@ img {
   line-height: 90%;
 }
 
+.input-container input:focus {
+  outline: 1px solid var(--grey_35);
+}
+
 .contents-input {
   padding: 25px 0 0;
 }
@@ -156,6 +165,10 @@ img {
   content: attr(data-placeholder);
   position: absolute;
   color: #959595;
+}
+
+#editableDiv:focus {
+  outline: 1px solid var(--grey_35);
 }
 
 .text-center {

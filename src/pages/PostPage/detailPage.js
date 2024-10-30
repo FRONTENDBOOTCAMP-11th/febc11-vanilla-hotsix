@@ -3,17 +3,17 @@ import axios from 'axios';
 import isLogin from '../../api/isLogin';
 
 // 페이지 진입 시 즉시 로그인 상태 확인
-(async () => {
-  const loginStatus = await isLogin();
+// (async () => {
+//   const loginStatus = await isLogin();
 
-  if (loginStatus) {
-    console.log('로그인 상태입니다.');
-  } else {
-    console.log('로그인이 필요합니다.');
-    // 로그인 필요 시 로그인 페이지 이동
-    window.location.href = '/src/pages/LoginPage/index.html';
-  }
-})();
+//   if (loginStatus) {
+//     console.log('로그인 상태입니다.');
+//   } else {
+//     console.log('로그인이 필요합니다.');
+//     // 로그인 필요 시 로그인 페이지 이동
+//     window.location.href = '/src/pages/LoginPage/index.html';
+//   }
+// })();
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
@@ -119,8 +119,10 @@ async function printHeader() {
   const dateObj = new Date(year, month, day);
 
   titleDivNode.innerHTML = curruntPost.title;
-  if (curruntPost.extra.subTitle) {
-    subTitleSpanNode.innerHTML = curruntPost.extra.subTitle;
+  if (curruntPost.extra) {
+    subTitleSpanNode.innerHTML = curruntPost.extra.subTitle
+      ? curruntPost.extra.subTitle
+      : '';
   }
   authorSpanNode.innerHTML = curruntPost.user.name;
   timeSpanNode.innerHTML = `${monthNames[dateObj.getMonth() - 1]} ${day}. ${year}`;
@@ -209,6 +211,9 @@ function addComment(comment) {
   kebabMenu.src = '/assets/images/button-kebab-menu.svg';
   let menuBtn = document.createElement('button');
   menuBtn.setAttribute('class', 'kebab-menu');
+  menuBtn.addEventListener('click', () => {
+    alert('준비중입니다.');
+  });
   menuBtn.appendChild(kebabMenu);
   let nameDiv = document.createElement('div');
   nameDiv.setAttribute('class', 'name');
@@ -268,14 +273,28 @@ async function printAddReply() {
 
   // 출력을 위한 DOM 노드 획득
   const myCommentProfile = document.querySelector('.input-area__profile');
-  myCommentProfile.innerHTML = `<img class="img" src="${apiUrl}${userImage}" />
-  ${userName}`;
+  const commentInputArea = document.querySelector('.comments__comment-input');
+  // 로그인 되어 있을 때만 댓글 등록 가능
+  if (token) {
+    myCommentProfile.innerHTML = `<img class="img" src="${apiUrl}${userImage}" />
+      ${userName}`;
+  } else {
+    commentInputArea.innerHTML = `
+    <div class="login-require">
+      브런치에 로그인하고 댓글을 입력해보세요!
+    </div>
+    `;
+    const loginRequire = document.querySelector('.login-require');
+    loginRequire?.addEventListener('click', () => {
+      window.location.href = '/src/pages/LoginPage/index.html';
+    });
+  }
 }
 printAddReply();
 
 // 댓글 등록 버튼 click 이벤트리스너 (댓글 등록)
 const commentSubmitBtn = document.querySelector('#commentSubmitBtn');
-commentSubmitBtn.addEventListener('click', async () => {
+commentSubmitBtn?.addEventListener('click', async () => {
   const commentInput = document.querySelector('#commentInput');
   if (commentInput.value) {
     try {
@@ -305,11 +324,11 @@ commentSubmitBtn.addEventListener('click', async () => {
 });
 
 // 댓글 등록 버튼 클릭할 때 색상 변경
-commentSubmitBtn.addEventListener('mousedown', () => {
+commentSubmitBtn?.addEventListener('mousedown', () => {
   let btnImg = commentSubmitBtn.querySelector('img');
   btnImg.src = '/assets/images/button-comment-submit_clicked.svg';
 });
-commentSubmitBtn.addEventListener('mouseup', () => {
+commentSubmitBtn?.addEventListener('mouseup', () => {
   let btnImg = commentSubmitBtn.querySelector('img');
   btnImg.src = '/assets/images/button-comment-submit_default.svg';
 });
@@ -319,13 +338,16 @@ commentSubmitBtn.addEventListener('mouseup', () => {
 // 북마크 목록 가져오기
 async function getBookmarks() {
   try {
-    const response = await axios.get(`${apiUrl}/bookmarks/post/`, {
-      headers: {
-        'client-id': clientId,
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data.item;
+    // 로그인 되어 있을 때만 북마크 목록 가져오기 함수 실행
+    if (token) {
+      const response = await axios.get(`${apiUrl}/bookmarks/post/`, {
+        headers: {
+          'client-id': clientId,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.item;
+    }
   } catch (error) {
     console.log(error);
   }
@@ -337,55 +359,61 @@ let bookmarkBtn = document.querySelector('#bookmarkBtn');
 const likeIcon = document.querySelector('#icon-like');
 
 bookmarkBtn.addEventListener('click', async () => {
-  const myBookmarkId = myBookmarkList.find(
-    item => item.post._id === curruntPost._id,
-  );
-  const likeCountSpan = document.querySelector('.like-count');
-  try {
-    // 내 북마크 목록에 현재 게시물의 id와 같은 id를 가진애가 없다면 : 북마크 추가
-    if (!myBookmarkId) {
-      // 하트 아이콘 획득
-      const response = await axios.post(
-        `${apiUrl}/bookmarks/post`,
-        {
-          target_id: curruntPost._id,
-          memo: '',
-        },
-        {
-          headers: {
-            'client-id': clientId,
-            Authorization: `Bearer ${token}`,
+  if (myBookmarkList) {
+    const myBookmarkId = myBookmarkList.find(
+      item => item.post._id === curruntPost._id,
+    );
+    const likeCountSpan = document.querySelector('.like-count');
+    try {
+      // 내 북마크 목록에 현재 게시물의 id와 같은 id를 가진애가 없다면 : 북마크 추가
+      if (!myBookmarkId) {
+        // 하트 아이콘 획득
+        const response = await axios.post(
+          `${apiUrl}/bookmarks/post`,
+          {
+            target_id: curruntPost._id,
+            memo: '',
           },
-        },
-      );
-      likeIcon.src = '/assets/images/icon-like.svg';
-      myBookmarkList = await getBookmarks();
-      curruntPost = await getPost();
-      likeCountSpan.innerHTML = curruntPost.bookmarks;
-    } else {
-      // 북마크 되어 있다면 : 북마크 제거
-      const response = await axios.delete(
-        `${apiUrl}/bookmarks/${myBookmarkId._id}`,
-        {
-          headers: {
-            'client-id': clientId,
-            Authorization: `Bearer ${token}`,
+          {
+            headers: {
+              'client-id': clientId,
+              Authorization: `Bearer ${token}`,
+            },
           },
-        },
-      );
-      likeIcon.src = '/assets/images/icon-like_empty.svg';
-      myBookmarkList = await getBookmarks();
-      curruntPost = await getPost();
-      likeCountSpan.innerHTML = curruntPost.bookmarks;
+        );
+        likeIcon.src = '/assets/images/icon-like.svg';
+        myBookmarkList = await getBookmarks();
+        curruntPost = await getPost();
+        likeCountSpan.innerHTML = curruntPost.bookmarks;
+      } else {
+        // 북마크 되어 있다면 : 북마크 제거
+        const response = await axios.delete(
+          `${apiUrl}/bookmarks/${myBookmarkId._id}`,
+          {
+            headers: {
+              'client-id': clientId,
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        likeIcon.src = '/assets/images/icon-like_empty.svg';
+        myBookmarkList = await getBookmarks();
+        curruntPost = await getPost();
+        likeCountSpan.innerHTML = curruntPost.bookmarks;
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
+  } else {
+    likeIcon.addEventListener('click', () => {
+      window.location.href = '/src/pages/LoginPage/index.html';
+    });
   }
 });
 
 // 북마크 상태에 따라 좋아요 버튼 스타일 변경
 async function printBookmark() {
-  if (myBookmarkList.some(item => item.post._id == curruntPost._id)) {
+  if (myBookmarkList?.some(item => item.post._id == curruntPost._id)) {
     likeIcon.src = '/assets/images/icon-like.svg';
   } else {
     likeIcon.src = '/assets/images/icon-like_empty.svg';
