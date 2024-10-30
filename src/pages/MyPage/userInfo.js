@@ -121,7 +121,7 @@ checkBtn.addEventListener('click', async function () {
         ? '원본과 같은 별명입니다.'
         : '이미 등록된 별명입니다.';
       nickFeedback.style.color = '#fc3b75';
-      isNicknameValid = false; // 닉네임 중복 검사 실패
+      isNicknameValid = false;
     } else {
       // 그 외의 오류 처리
       console.error('에러 발생: ', error);
