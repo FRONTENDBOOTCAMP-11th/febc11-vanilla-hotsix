@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/public/Image.svg" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="./userInfo.css" />
+
+    <!-- Components CSS -->
+    <link rel="stylesheet" href="../../components/header/header.css" />
+    <link rel="stylesheet" href="../../components/navbar/navbar.css" />
+
+    <!-- Components -->
+    <script src="../../components/header/header.js" type="module"></script>
+    <script src="../../components/navbar/navbar.js" type="module"></script>
+    <title>내 정보 변경</title>
+  </head>
+  <body>
+    <div class="l_wrapper">
+      <header-component></header-component>
+      <main class="container" role="main">
+        <form class="author-info">
+
+          <h4 class="author-info-title">작가명</h4>
+          <div class="author-info_container">
+            <input type="text" class="author-info__name" placeholder="작가명을 입력해 주세요" required />
+            <button type="button" class="check-button" id="check-nickname">
+              중복확인
+            </button>
+          </div>
+          <div class="feedback hidden" id="nickname-feedback"></div>
+          
+          <h4 class="author-info-title">작가역할</h4>
+          <div class="author-info_container">
+            <input type="text" class="author-info__role" placeholder="작가역할을 입력해 주세요" required />
+          </div>
+
+          <h4 class="author-info-title">작가 소개</h4>
+          <textarea type="text" class="author-info__description" tabindex="0" placeholder="자기소개를 입력해 주세요"></textarea>
+
+          <img class="author-info__avatar" src="#" alt="작가의 프로필 이미지" />
+          <input type="file" id="fileInputNode" style="display: none;" />
+          <button type="submit" class="change-info disable">저장하기</button>
+        </form>
+      </main>
+      <navbar-component></navbar-component>
+    </div>
+    <script type="module" src="./userInfo.js"></script>
+  </body>
+</html>

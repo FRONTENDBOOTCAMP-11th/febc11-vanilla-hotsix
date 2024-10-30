@@ -45,13 +45,17 @@ class HeaderComponent extends HTMLElement {
   renderHeader() {
     const isMainPage = this.currentURL.includes('MainPage');
     const isAuthorPage = this.currentURL.includes('AuthorPage');
+    const isLoginPage = this.currentURL.includes('LoginPage');
+    const isSignupPage = this.currentURL.includes('signupPage');
 
     // MainPage에서는 브런치스토리 로고, 그 외에는 뒤로가기 버튼
     // 로그인 미완료시 시작하기 버튼, 그 외에는 알림/프로필 버튼
     this.innerHTML = `
-      <div class="header-container ${isAuthorPage ? 'change_container' : ''}">
+      <div class="header-container ${isAuthorPage ? 'change_container' : ''} ${isLoginPage || isSignupPage ? 'border-delete' : ''}">
         ${isMainPage ? '<a href="/src/pages/MainPage/index.html" class="brunchstory">Brunch Story</a>' : '<button class="back">뒤로가기</button>'}
-        <div class="header-controllers">
+        ${
+          !(isLoginPage || isSignupPage)
+            ? `<div class="header-controllers">
           <button class="header-controller search"></button>
           ${
             !this.isLogin()
@@ -60,7 +64,9 @@ class HeaderComponent extends HTMLElement {
             <button class="header-controller notification"></button>
             <a href="/src/pages/MyPage/index.html"><img class="header-controller profile" src=${this.image} alt="프로필 사진"/></a>`
           }
-        </div>
+        </div>`
+            : ''
+        }
       </div>
     `;
   }

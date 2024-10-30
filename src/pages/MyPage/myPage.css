@@ -194,9 +194,18 @@
 }
 .logout-button{
   width: 100%;
-  margin: 20px 0 120px;
+  margin: 10px 0 120px;
   height: 50px;
   border-radius: 30px;
   background-color: var(--mint);
   color: var(--white);
+}
+.change-button{
+  width: 100%;
+  margin-top: 20px;
+  height: 50px;
+  border-radius: 30px;
+  background-color: var(--white);
+  color: var(--mint);
+  border: 1px solid var(--mint);
 }

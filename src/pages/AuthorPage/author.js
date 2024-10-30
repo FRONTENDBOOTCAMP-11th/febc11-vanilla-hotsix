@@ -65,7 +65,7 @@ const monthNames = [
 // 해당 유저의 게시물 목록 가져오기
 const getUserPost = async () => {
   try {
-    const res = await axios.get(apiUrl + `/posts/users/${userId}?type=info`, {
+    const res = await axios.get(apiUrl + `/posts/users/${userId}`, {
       headers: {
         'client-id': clientId,
         'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const getUserPost = async () => {
           const formattedDate = `${monthNames[dateObj.getMonth()]} ${day}. ${year}`;
 
           return `
-            <li class="post" data-id="${post._id}">
+            <li class="post" data-id="${post._id}" tabindex="0">
               <p class="post-category">${post.type}</p>
               <h3 class="post-title">${post.title}</h3>
               <span class="post-content">${post.content}</span>

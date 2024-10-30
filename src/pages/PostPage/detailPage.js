@@ -27,6 +27,8 @@ const monthNames = [
   'Dec',
 ];
 
+const subscribeContainer = document.getElementById('subscribe-container');
+
 // 게시글 정보를 가져오는 함수
 const getPost = async () => {
   try {
@@ -52,7 +54,15 @@ const getPost = async () => {
       localStorage.setItem('posts', JSON.stringify(posts));
     }
 
-    localStorage.setItem('userId', response.data.item.user._id);
+    // 구독 버튼 렌더링을 위한 작가 정보 비교/저장
+    const authorId = response.data.item.user._id;
+    localStorage.setItem('authorId', authorId);
+    let userId = localStorage.getItem('id');
+    if (Number(userId) === authorId) {
+      subscribeContainer.style.display = 'none';
+    } else {
+      subscribeContainer.style.display = 'block'; // 요소를 다시 표시
+    }
     return response.data.item;
   } catch (error) {
     console.log(error);
