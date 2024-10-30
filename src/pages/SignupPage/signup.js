@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (data.ok) {
           alert('회원가입이 성공적으로 완료되었습니다!');
-          window.location.href = '/src/pages/loginPage/index.html'; // 로그인 페이지로 리다이렉트
+          window.location.href = '/src/pages/LoginPage/index.html'; // 로그인 페이지로 리다이렉트
         } else {
           alert('회원가입에 실패했습니다: ' + data.message);
         }
