@@ -72,7 +72,7 @@ let curruntPost = await getPost();
 console.log(curruntPost);
 
 // 게시글을 쓴 작가 정보를 가져오는 함수
-const authorId = localStorage.getItem('userId');
+const authorId = localStorage.getItem('authorId');
 const getAuthorInfo = async () => {
   try {
     const response = await axios.get(`${apiUrl}/users/${authorId}`, {
