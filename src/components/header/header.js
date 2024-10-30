@@ -6,7 +6,7 @@ class HeaderComponent extends HTMLElement {
   constructor() {
     super();
     this.currentURL = window.location.href; // 현재 URL 저장
-    this.image = 'assets/images/logo-circle.svg'; // 기본 이미지
+    this.image = '/assets/images/basic-profile.svg'; // 기본 이미지
     this.renderHeader(); // 헤더 렌더링
   }
 
