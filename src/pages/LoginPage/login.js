@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
     localStorage.getItem('accessToken') ||
     sessionStorage.getItem('accessToken');
 
+  // 환경 변수
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const clientId = import.meta.env.VITE_CLIENT_ID;
+
   // 페이지 접근 시 토큰이 있다면 메인 페이지로 리다이렉트 (로그인 이미 했는데 또 로그인 페이지로 가지 않도록)
   if (accessToken) {
     window.location.href = '/src/pages/MainPage/index.html';
@@ -48,9 +52,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (isEmailValid && isPasswordValid) {
       loginButton.disabled = false; // 로그인 버튼 활성화
       loginButton.style.backgroundColor = 'var(--mint)';
+      signupButton.dsabled = true; // 회원가입 버튼 비활성화, 숨기기
+      signupButton.style.display = 'none';
     } else {
       loginButton.disabled = true; // 로그인 버튼 비활성화
       loginButton.style.backgroundColor = 'var(--grey_60)';
+      signupButton.dsabled = false; // 회원가입 버튼 활성화, 보이기
+      signupButton.style.display = 'block';
     }
   }
 
@@ -65,9 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const email = emailInput.value;
     const password = passwordInput.value;
     const remember = rememberLogin.checked;
-    // 환경 변수 사용
-    const apiUrl = import.meta.env.VITE_API_URL;
-    const clientId = import.meta.env.VITE_CLIENT_ID;
 
     // API 연결
     try {
