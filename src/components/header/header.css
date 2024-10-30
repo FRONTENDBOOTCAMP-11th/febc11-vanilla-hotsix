@@ -45,6 +45,7 @@
 .profile {
   border-radius: 50%;
   background-color: var(--grey_65);
+  vertical-align: top;
 }
 .start {
   width: 62px;
