@@ -48,14 +48,17 @@ const isLogin = async () => {
     localStorage.removeItem('image');
     localStorage.removeItem('email');
     localStorage.removeItem('name');
-    localStorage.removeItem('userId');
+    localStorage.removeItem('authorId');
     localStorage.removeItem('posts');
+    localStorage.removeItem('id');
+    localStorage.removeItem('recentSearches');
 
     sessionStorage.removeItem('accessToken');
     sessionStorage.removeItem('refreshToken');
     sessionStorage.removeItem('image');
     sessionStorage.removeItem('email');
     sessionStorage.removeItem('name');
+    sessionStorage.removeItem('id');
     console.error('Token refresh failed:', err);
     return false;
   }

@@ -1,61 +1,59 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- 아이콘 설정 -->
-    <link rel="icon" type="image/svg+xml" href="/public/Image.svg" />
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/public/Image.svg" />
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="/style.css" />
-    <link rel="stylesheet" href="./myPage.css" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="./myPage.css" />
 
-    <!-- Components CSS -->
-    <link rel="stylesheet" href="../../components/header/header.css" />
-    <link rel="stylesheet" href="../../components/navbar/navbar.css" />
-    <link rel="stylesheet" href="../../components/subscribe/subscribe.css" />
+  <!-- Components CSS -->
+  <link rel="stylesheet" href="../../components/header/header.css" />
+  <link rel="stylesheet" href="../../components/navbar/navbar.css" />
+  <link rel="stylesheet" href="../../components/subscribe/subscribe.css" />
 
-    <!-- Components -->
-    <script src="../../components/header/header.js" type="module"></script>
-    <script src="../../components/navbar/navbar.js" type="module"></script>
-    <script
-      src="../../components//subscribe/subscribe.js"
-      type="module"
-    ></script>
-    <title>내 서랍</title>
-  </head>
-  <body>
-    <div class="l_wrapper">
-      <header-component></header-component>
+  <!-- Components -->
+  <script src="../../components/header/header.js" type="module"></script>
+  <script src="../../components/navbar/navbar.js" type="module"></script>
+  <script src="../../components/subscribe/subscribe.js" type="module"></script>
+  <title>내 서랍</title>
+</head>
+<body>
+  <div class="l_wrapper">
+    <header-component></header-component>
 
-      <div class="container">
-        <div class="mybox-container">
-          <h2 class="mybox-category">관심 작가</h2>
-          <div class="mybox-contents-slider author"></div>
-        </div>
-        <div class="mybox-container">
-          <h2 class="mybox-category">최근 본</h2>
-          <div class="mybox-contents-slider post"></div>
-        </div>
-        <div class="mybox-container">
-          <h2 class="mybox-category">관심 글</h2>
-          <div class="mybox-contents-slider post2"></div>
-        </div>
+    <main class="container" role="main">
+      <section class="mybox-container" aria-labelledby="category-authors">
+        <h2 id="category-authors" class="mybox-category" tabindex="0">관심 작가</h2>
+        <div class="mybox-contents-slider author" aria-label="관심 작가 슬라이더"></div>
+      </section>
 
-        <div class="mybox-my-contents-container">
-          <h2 class="mybox-category">내 브런치</h2>
-          <ul class="mybox-my-contents">
-          </ul>
-        </div>
+      <section class="mybox-container" aria-labelledby="category-recently-viewed">
+        <h2 id="category-recently-viewed" class="mybox-category" tabindex="0">최근 본</h2>
+        <div class="mybox-contents-slider post" tabindex="0" aria-label="최근 본 게시물 슬라이더"></div>
+      </section>
 
-        <div class="logout-button-container">
-          <button class="logout-button">로그아웃</button>
-        </div>
+      <section class="mybox-container" aria-labelledby="category-favorite-posts">
+        <h2 id="category-favorite-posts" class="mybox-category" tabindex="0">관심 글</h2>
+        <div class="mybox-contents-slider post2" tabindex="0" aria-label="관심 글 슬라이더"></div>
+      </section>
+
+      <section class="mybox-my-contents-container" aria-labelledby="category-my-brunch">
+        <h2 id="category-my-brunch" class="mybox-category" tabindex="0">내 브런치</h2>
+        <ul class="mybox-my-contents" tabindex="0" aria-label="내 브런치 콘텐츠 목록"></ul>
+      </section>
+
+      <div class="logout-button-container" aria-label="로그아웃 버튼">
+        <button class="change-button" tabindex="0">회원 정보 변경</button>
+        <button class="logout-button" tabindex="0" aria-label="로그아웃 버튼">로그아웃</button>
       </div>
+    </main>
 
-      <navbar-component></navbar-component>
-    </div>
+    <navbar-component></navbar-component>
+  </div>
 
-    <script type="module" src="./myPage.js"></script>
-  </body>
+  <script type="module" src="./myPage.js"></script>
+</body>
 </html>

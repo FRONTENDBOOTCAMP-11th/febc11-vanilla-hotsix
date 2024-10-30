@@ -12,7 +12,7 @@ import isLogin from '../../api/isLogin';
   } else {
     console.log('로그인이 필요합니다.');
     // 로그인 필요 시 로그인 페이지 이동
-    window.location.href = '/src/pages/LoginPage/index.html';
+    //window.location.href = '/src/pages/LoginPage/index.html';
   }
 })();
 
@@ -25,6 +25,11 @@ const author = document.querySelector('.author');
 const post = document.querySelector('.post');
 const post2 = document.querySelector('.post2');
 const post3 = document.querySelector('.mybox-my-contents');
+
+const change = document.querySelector('.change-button');
+change.addEventListener("click", () => {
+  window.location.href='/src/pages/MyPage/userInfo.html'
+})
 
 // accessToken 가져오기
 let token = '';
@@ -57,9 +62,9 @@ const getBookedUser = async () => {
 
           // 렌더링
           return `
-            <div class="author-profile" data-id="${p.user._id}">
+            <div class="author-profile" data-id="${p.user._id}" tabindex="0">
               <img class="author-profile__img" src="${imgSrc}" />
-              <p class="author-profile__name">${p.user.name}</p>
+              <p class="author-profile__name" alt="${p.user.name}의 프로필 이미지">${p.user.name}</p>
             </div>
           `;
         }),
@@ -95,9 +100,9 @@ const getRecentPost = async () => {
 
       // 렌더링하기
       return `
-        <div class="post-recent-container" data-id="${p._id}">
+        <div class="post-recent-container" data-id="${p._id}"  tabindex="0">
           <div class="post-img-container">
-            <img class="post-img" src="${imgSrc}"/>
+            <img class="post-img" src="${imgSrc}" alt="${p.title}의 이미지"/>
             <div class="post-img-info">
               <p class="post-img-title">${p.title}</p>
               <p class="post-img-author">${p.user.name}</p>
@@ -142,9 +147,9 @@ const getBookedPost = async () => {
           // 이미지 변환하기
           const imgSrc = `${apiUrl}${p.post.image}`;
           return `
-            <div class="post-container" data-id="${p.post._id}">
+            <div class="post-container" data-id="${p.post._id}" tabindex="0">
               <div class="post-img-container">
-                <img class="post-img" src="${imgSrc}"/>
+                <img class="post-img" src="${imgSrc}" alt="${p.post.title}의 이미지" />
                 <div class="post-img-info">
                   <p class="post-img-title">${p.post.title}</p>
                   <p class="post-img-author">${p.post.user.name}</p> 
@@ -176,7 +181,7 @@ getBookedPost();
 // 내 게시글 불러오기
 const getMyPost = async () => {
   try {
-    const res = await axios.get(`${apiUrl}/posts/users?type=info`, {
+    const res = await axios.get(`${apiUrl}/posts/users`, {
       headers: {
         'Content-Type': 'application/json',
         'client-id': clientId,
@@ -190,7 +195,7 @@ const getMyPost = async () => {
       post3.innerHTML = await Promise.all(
         myPost.map(async p => {
           return `
-            <li class="mybox-my-contents-list" data-id="${p._id}">
+            <li class="mybox-my-contents-list" data-id="${p._id}" tabindex="0">
               <h3 class="mybox-my-contents-title">${p.title}</h3>
               <p class="mybox-my-contents-subtitle">${p.extra.subTitle}</p>
               <p class="mybox-my-contents-date">${p.updatedAt}</p>

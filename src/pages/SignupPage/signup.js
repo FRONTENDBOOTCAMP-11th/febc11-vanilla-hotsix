@@ -293,7 +293,11 @@ document.addEventListener('DOMContentLoaded', function () {
       password: passwordInput.value,
       name: nicknameInput.value,
       type: 'user',
-      image: '',
+      image: '/files/vanilla06/basic-profile.svg',
+      extra: {
+        job: '회원',
+        biography: '',
+      }
     };
 
     // 회원가입 API 요청

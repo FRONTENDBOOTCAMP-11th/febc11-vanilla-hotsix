@@ -7,12 +7,9 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
 // accessToken 가져오기
-let token = '';
-if (sessionStorage.getItem('accessToken')) {
-  token = sessionStorage.getItem('accessToken');
-} else {
-  token = localStorage.getItem('accessToken');
-}
+let token =
+  sessionStorage.getItem('accessToken') || localStorage.getItem('accessToken');
+let myId = sessionStorage.getItem('id') || localStorage.getItem('id');
 
 // 북마크 삭제 할 id
 let target_id;
@@ -20,15 +17,17 @@ let target_id;
 export class Subscribe extends HTMLElement {
   constructor() {
     super();
-    // 현재 구독 상태
-    this.dummy_issub = false;
+    this.dummy_issub = false; // 현재 구독 상태
+    this.ismyId = null;
 
-    // URL에서 userId 추출하기
     const params = new URLSearchParams(window.location.search);
     let userIdFromUrl = params.get('userId');
-    this.userId = Number(userIdFromUrl)
-      ? Number(userIdFromUrl)
-      : Number(localStorage.getItem('userId'));
+    this.userId =
+      parseInt(userIdFromUrl) || parseInt(localStorage.getItem('authorId'));
+    console.log('id ', this.userId);
+    this.ismyId = parseInt(userIdFromUrl) === Number(myId);
+    console.log('this.ismyId', this.ismyId)
+    console.log(Number(myId), parseInt(userIdFromUrl))
 
     // 컴포넌트 구조 설정
     this.innerHTML = `
@@ -41,6 +40,8 @@ export class Subscribe extends HTMLElement {
 
   // 연결 후, 콜백함수
   connectedCallback() {
+    this.updateVisibility();
+
     // userId가 설정되어 있을 때만 구독 상태를 확인
     if (this.userId) {
       this.updateSubscribe();
@@ -53,6 +54,11 @@ export class Subscribe extends HTMLElement {
         this.toggleSubscribe(); // 상태 토글
       },
     );
+  }
+
+  updateVisibility() {
+    // 내 아이디와 같으면 요소를 숨김
+    this.style.display = this.ismyId ? 'none' : 'block';
   }
 
   // 구독 상태를 변경하는 메서드
