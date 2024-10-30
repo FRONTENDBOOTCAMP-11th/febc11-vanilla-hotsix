@@ -18,20 +18,16 @@ export class Subscribe extends HTMLElement {
   constructor() {
     super();
     this.dummy_issub = false; // 현재 구독 상태
-    this.ismyId = null; // 내 아이디인지
+    this.ismyId = null;
 
     const params = new URLSearchParams(window.location.search);
-    // 작가 홈에서는 url에서 추출
     let userIdFromUrl = params.get('userId');
-    // 상세 게시글에서는 localstorage로 가져오기
     this.userId =
       parseInt(userIdFromUrl) || parseInt(localStorage.getItem('authorId'));
-    this.ismyId = this.userId === Number(myId);
-
-    console.log('authorId', parseInt(localStorage.getItem('authorId')))
     console.log('id ', this.userId);
+    this.ismyId = parseInt(userIdFromUrl) === Number(myId);
 
-    // 컴포넌트 마크업
+    // 컴포넌트 구조 설정
     this.innerHTML = `
       <button class="author-info__subscribe-button sub_not">
         <img class="subscribe-icon" src="/assets/images/ico-plus.svg" alt="구독 아이콘"/>
@@ -42,8 +38,10 @@ export class Subscribe extends HTMLElement {
 
   // 연결 후, 콜백함수
   connectedCallback() {
+    this.updateVisibility();
+
+    // userId가 설정되어 있을 때만 구독 상태를 확인
     if (this.userId) {
-      this.updateVisibility();
       this.updateSubscribe();
     }
 
@@ -56,8 +54,8 @@ export class Subscribe extends HTMLElement {
     );
   }
 
-  // 내 아이디와 같으면 요소를 숨김
   updateVisibility() {
+    // 내 아이디와 같으면 요소를 숨김
     this.style.display = this.ismyId ? 'none' : 'block';
   }
 
@@ -68,6 +66,7 @@ export class Subscribe extends HTMLElement {
     try {
       if (this.dummy_issub) {
         // 구독이 되어있는 상태라면,
+        console.log('북마크 해제');
         const res = await axios.delete(`${apiUrl}/bookmarks/${target_id}`, {
           headers: {
             'client-id': clientId,
@@ -81,6 +80,7 @@ export class Subscribe extends HTMLElement {
         target_id = null;
       } else {
         // 구독이 안되어있는 상태라면,
+        console.log('북마크 하기');
         const res = await axios.post(
           `${apiUrl}/bookmarks/user`,
           {
@@ -110,6 +110,7 @@ export class Subscribe extends HTMLElement {
 
   // 구독 상태를 서버에서 확인하는 함수
   async checkSubscribeStatus() {
+    console.log('userId:', this.userId);
     try {
       const res = await axios.get(`${apiUrl}/bookmarks/user/${this.userId}`, {
         headers: {
@@ -168,4 +169,6 @@ export class Subscribe extends HTMLElement {
 }
 
 // 커스텀 요소 정의
-customElements.define('subscribe-component', Subscribe);
+if (token) {
+  customElements.define('subscribe-component', Subscribe);
+}

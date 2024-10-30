@@ -41,6 +41,8 @@ const monthNames = [
   'Dec',
 ];
 
+const subscribeContainer = document.getElementById('subscribe-container');
+
 // 게시글 정보를 가져오는 함수
 const getPost = async () => {
   try {
@@ -68,7 +70,17 @@ const getPost = async () => {
 
     const authorId = response.data.item.user._id;
     localStorage.setItem('authorId', authorId);
-    
+    let userId = localStorage.getItem('id');
+    if (Number(userId) === authorId) {
+      console.log('같음');
+      console.log(subscribeContainer); // null이 아닌지 확인
+      subscribeContainer.style.display = 'none';
+    } else {
+      console.log('다름');
+      console.log(subscribeContainer); // null이 아닌지 확인
+      subscribeContainer.style.display = 'block'; // 요소를 다시 표시
+    }
+
     return response.data.item;
   } catch (error) {
     console.log(error);
