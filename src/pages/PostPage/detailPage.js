@@ -370,8 +370,6 @@ commentSubmitBtn?.addEventListener('mouseup', () => {
   btnImg.src = '/assets/images/button-comment-submit_default.svg';
 });
 
-// 구독 버튼 클릭시 구독자 수 실시간 렌더링
-
 // 북마크 목록 가져오기
 async function getBookmarks() {
   try {
@@ -461,12 +459,12 @@ printBookmark();
 // 작가 정보 출력을 위한 노드 획득 (함수 2개에서 사용예정)
 let authorNickname = document.querySelector('.nickname');
 let authorImg = document.querySelector('.author__photo');
+let authorSubs = document.querySelector('#subscriber');
 
 // 작가란 화면을 출력하는 함수
 async function printAuthor() {
   let authorJob = document.querySelector('.job');
   let authorInfo = document.querySelector('.author-info__contents');
-  let authorSubs = document.querySelector('#subscriber');
 
   authorNickname.innerHTML = curruntPost.user.name;
   if (author) {
