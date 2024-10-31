@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 인풋 입력 상태 추적 변수 초기화
   let isNicknameValid = false;
+  let isNicknameChecked = false;
   let isEmailValid = false;
   let isEmailChecked = false;
   let isPasswordValid = false;
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function checkFormValidity() {
     if (
       isNicknameValid &&
+      isNicknameChecked &&
       isEmailValid &&
       isEmailChecked &&
       isPasswordValid &&
@@ -119,6 +121,8 @@ document.addEventListener('DOMContentLoaded', function () {
           nicknameFeedback.classList.remove('hidden');
           nicknameFeedback.textContent = '사용할 수 있는 별명입니다.';
           nicknameFeedback.style.color = 'var(--mint)';
+
+          isNicknameChecked = true;
         } else if (data.message === '이미 등록된 이름입니다.') {
           nicknameFeedback.classList.remove('hidden');
           nicknameFeedback.textContent = '이미 등록된 별명입니다.';
