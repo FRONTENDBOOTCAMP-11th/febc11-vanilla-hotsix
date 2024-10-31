@@ -23,7 +23,8 @@ const clientId = import.meta.env.VITE_CLIENT_ID;
 
 // 유저 id
 const userId = localStorage.getItem('id') || sessionStorage.getItem('id');
-const token = localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
+const token =
+  localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
 
 // form
 const form = document.querySelector('.author-info');
@@ -75,6 +76,7 @@ const getUserInfo = async () => {
     userImg.src = `${apiUrl}${data.image}`;
     filePath = data.image;
 
+    return data;
   } catch (err) {
     console.error(err);
   }
@@ -124,7 +126,7 @@ checkBtn.addEventListener('click', async function () {
         'Content-type': 'application/json',
       },
     });
-  
+
     // 200 응답이 성공하면 사용 가능한 닉네임으로 간주
     nickFeedback.textContent = '사용할 수 있는 별명입니다.';
     nickFeedback.style.color = 'var(--mint)';
@@ -132,9 +134,10 @@ checkBtn.addEventListener('click', async function () {
   } catch (error) {
     if (error.response && error.response.status === 409) {
       // 409 Conflict 오류가 발생하면 닉네임이 중복된 것으로 처리
-      nickFeedback.textContent = originalUserData.name === nickname
-        ? '원본과 같은 별명입니다.'
-        : '이미 등록된 별명입니다.';
+      nickFeedback.textContent =
+        originalUserData.name === nickname
+          ? '원본과 같은 별명입니다.'
+          : '이미 등록된 별명입니다.';
       nickFeedback.style.color = '#fc3b75';
       isNicknameValid = false;
     } else {
@@ -143,9 +146,8 @@ checkBtn.addEventListener('click', async function () {
       alert('별명 중복 확인 중 오류가 발생했습니다.');
     }
   }
-  
+
   nickFeedback.classList.remove('hidden');
-  
 });
 
 // 이미지 업로드 버튼
@@ -154,7 +156,7 @@ userImg.addEventListener('click', () => {
 });
 
 // 파일 업로드 시
-fileInputNode.addEventListener('change', async (e) => {
+fileInputNode.addEventListener('change', async e => {
   const file = e.target.files[0];
   if (file) {
     const formData = new FormData();
@@ -206,7 +208,10 @@ form.addEventListener('submit', async function (e) {
   if (userDescription.value !== originalUserData.biography) {
     userData.extra = { ...userData.extra, biography: userDescription.value };
   } else if (originalUserData.biography !== undefined) {
-    userData.extra = { ...userData.extra, biography: originalUserData.biography };
+    userData.extra = {
+      ...userData.extra,
+      biography: originalUserData.biography,
+    };
   }
   if (filePath !== originalUserData.image) userData.image = filePath;
 
@@ -215,10 +220,21 @@ form.addEventListener('submit', async function (e) {
       headers: {
         'Content-Type': 'application/json',
         'client-id': clientId,
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     alert('회원 정보 수정에 성공했습니다.');
+
+    // 새로운 정보로 교체
+    const newInfo = await getUserInfo();
+    if (localStorage.getItem('image')) {
+      localStorage.setItem('image', newInfo.image);
+      localStorage.setItem('name', newInfo.name);
+    } else {
+      sessionStorage.setItem('image', newInfo.image);
+      sessionStorage.setItem('name', newInfo.name);
+    }
+
     window.location.href = '/src/pages/MyPage/index.html';
   } catch (err) {
     console.error('회원 정보 수정에 실패했습니다.', err);
