@@ -12,7 +12,7 @@ import isLogin from '../../api/isLogin';
   } else {
     console.log('로그인이 필요합니다.');
     // 로그인 필요 시 로그인 페이지 이동
-    //window.location.href = '/src/pages/LoginPage/index.html';
+    window.location.href = '/src/pages/LoginPage/index.html';
   }
 })();
 
@@ -197,7 +197,7 @@ const getMyPost = async () => {
           return `
             <li class="mybox-my-contents-list" data-id="${p._id}" tabindex="0">
               <h3 class="mybox-my-contents-title">${p.title}</h3>
-              <p class="mybox-my-contents-subtitle">${p.extra.subTitle}</p>
+              <p class="mybox-my-contents-subtitle">${p.extra.subtitle}</p>
               <p class="mybox-my-contents-date">${p.updatedAt}</p>
             </li>
           `;

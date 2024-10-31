@@ -12,6 +12,17 @@ const token = sessionStorage.getItem('accessToken')
 const params = new URLSearchParams(window.location.search);
 const postId = params.get('postId');
 
+// 로그인한 유저 정보 가져오기
+let userName = sessionStorage.getItem('name')
+  ? sessionStorage.getItem('name')
+  : localStorage.getItem('name');
+let userImage = sessionStorage.getItem('image')
+  ? sessionStorage.getItem('image')
+  : localStorage.getItem('image');
+let userId = sessionStorage.getItem('id')
+  ? sessionStorage.getItem('id')
+  : localStorage.getItem('id');
+
 const monthNames = [
   'Jan',
   'Feb',
@@ -72,7 +83,7 @@ let curruntPost = await getPost();
 console.log(curruntPost);
 
 // 게시글을 쓴 작가 정보를 가져오는 함수
-const authorId = localStorage.getItem('userId');
+const authorId = localStorage.getItem('authorId');
 const getAuthorInfo = async () => {
   try {
     const response = await axios.get(`${apiUrl}/users/${authorId}`, {
@@ -138,6 +149,12 @@ async function printArticle() {
   }
 
   articleNode.classList.add(curruntPost.extra.textAlign);
+
+  // 자동으로 생성되는 span 태그의 인라인 속성 지우기
+  const spans = articleNode.querySelectorAll('span');
+  for (const span of spans) {
+    span.removeAttribute('style');
+  }
 }
 await printArticle();
 
@@ -174,6 +191,8 @@ async function printComments() {
       // 기존에 달려 있는 댓글 전체 렌더링
       comments.forEach(comment => addComment(comment));
     }
+
+    return response.data.item;
   } catch (error) {
     console.log(error);
   }
@@ -185,24 +204,14 @@ function addComment(comment) {
   const [date, time] = curruntPost.createdAt.split(' ');
   const [year, month, day] = date.split('.');
   const dateObj = new Date(year, month, day);
-  // 유저가 프사를 안 해 놨을 때 지정해놓을 기본 이미지 필요
-  let userImage = '';
-  if (comment.user.image) {
-    userImage = `${apiUrl}${comment.user.image}`;
-  } else {
-    userImage = `${apiUrl}/files/${clientId}/user-muzi.webp`;
-  }
-  const imgSrc = userImage;
 
   let span = document.createElement('span');
   span.innerText = comment.user.name;
   let kebabMenu = document.createElement('img');
   kebabMenu.src = '/assets/images/button-kebab-menu.svg';
+  kebabMenu.setAttribute('class', 'kebab-menu-img');
   let menuBtn = document.createElement('button');
   menuBtn.setAttribute('class', 'kebab-menu');
-  menuBtn.addEventListener('click', () => {
-    alert('준비중입니다.');
-  });
   menuBtn.appendChild(kebabMenu);
   let nameDiv = document.createElement('div');
   nameDiv.setAttribute('class', 'name');
@@ -221,11 +230,8 @@ function addComment(comment) {
   commentTxt.setAttribute('class', 'comment__text');
   commentTxt.innerText = comment.content;
 
-  let replyBtn = document.createElement('button');
-  replyBtn.innerText = '답글달기';
   let commentFooter = document.createElement('div');
   commentFooter.setAttribute('class', 'comment__footer');
-  commentFooter.appendChild(replyBtn);
 
   let commentContents = document.createElement('section');
   commentContents.setAttribute('class', 'comment__contents');
@@ -235,7 +241,7 @@ function addComment(comment) {
 
   let profileImg = document.createElement('img');
   profileImg.setAttribute('class', 'profile-img');
-  profileImg.src = imgSrc ? imgSrc : '';
+  profileImg.src = `${apiUrl}${comment.user.image}`;
   let commentProfile = document.createElement('section');
   commentProfile.setAttribute('class', 'comment__profile');
   commentProfile.appendChild(profileImg);
@@ -243,24 +249,53 @@ function addComment(comment) {
   let commentNode = document.createElement('div');
   commentNode.setAttribute('class', 'comment');
   commentNode.setAttribute('tabindex', '0');
+  commentNode.setAttribute('data-id', comment._id);
+  commentNode.setAttribute('data-userId', comment.user._id);
   commentNode.appendChild(commentProfile);
   commentNode.appendChild(commentContents);
 
   commentsNode.appendChild(commentNode);
 }
 
+// 댓글을 삭제하는 함수 (이벤트 위임)
+commentsNode.addEventListener('click', async e => {
+  if (e.target.classList.contains('kebab-menu-img')) {
+    const closestComment = e.target.closest('.comment');
+    const commentId = parseInt(closestComment.getAttribute('data-id'));
+    const commentAuthorId = parseInt(
+      closestComment.getAttribute('data-userid'),
+    );
+    if (userId == commentAuthorId) {
+      if (confirm('정말 이 댓글을 삭제하시겠습니까?')) {
+        try {
+          const response = await axios.delete(
+            `${apiUrl}/posts/${postId}/replies/${commentId}`,
+            {
+              headers: {
+                'client-id': clientId,
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+          console.log(response);
+          closestComment.remove();
+          commentCount.innerHTML = parseInt(commentCount.innerHTML) - 1;
+          footerCommentCount.innerHTML =
+            parseInt(footerCommentCount.innerHTML) - 1;
+          alert('댓글이 삭제되었습니다.');
+        } catch (error) {
+          alert('댓글 삭제에 실패했습니다.');
+          console.log(error);
+        }
+      }
+    } else {
+      alert('자신이 작성한 댓글만 삭제할 수 있습니다.');
+    }
+  }
+});
+
 // 댓글 추가란 렌더링하는 함수
 async function printAddReply() {
-  let userName = '';
-  let userImage = '';
-  // 세션 혹은 로컬스토리지에서 로그인 유저 name, image 가져오기
-  userName = sessionStorage.getItem('name')
-    ? sessionStorage.getItem('name')
-    : localStorage.getItem('name');
-  userImage = sessionStorage.getItem('image')
-    ? sessionStorage.getItem('image')
-    : localStorage.getItem('image');
-
   // 출력을 위한 DOM 노드 획득
   const myCommentProfile = document.querySelector('.input-area__profile');
   const commentInputArea = document.querySelector('.comments__comment-input');
@@ -413,12 +448,12 @@ printBookmark();
 // 작가 정보 출력을 위한 노드 획득 (함수 2개에서 사용예정)
 let authorNickname = document.querySelector('.nickname');
 let authorImg = document.querySelector('.author__photo');
+let authorSubs = document.querySelector('#subscriber');
 
 // 작가란 화면을 출력하는 함수
 async function printAuthor() {
   let authorJob = document.querySelector('.job');
   let authorInfo = document.querySelector('.author-info__contents');
-  let authorSubs = document.querySelector('#subscriber');
 
   authorNickname.innerHTML = curruntPost.user.name;
   if (author) {
