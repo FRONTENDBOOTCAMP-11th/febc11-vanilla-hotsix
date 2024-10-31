@@ -18,6 +18,9 @@ class SearchPage {
   async init() {
     this.form.addEventListener('submit', e => this.handleSearchSubmit(e));
     this.loadRecentSearches();
+
+    const closeButton = document.querySelector('.close-btn');
+    closeButton.addEventListener('click', () => this.resetSearch());
   }
 
   // 검색어 제출 메서드
@@ -143,7 +146,7 @@ class SearchPage {
       const data = await response.json();
       console.log('API Response: ', data);
       this.articles = data.item || [];
-      console.log('Fetched articles:', this.articles); // 여기서 콘솔로 확인
+      console.log('Fetched articles:', this.articles); // 불러와진 articles 확인
     } catch (error) {
       console.error('글 목록을 불러오는 데 실패했습니다: ', error);
     }
@@ -172,31 +175,34 @@ class SearchPage {
 
       const article = document.createElement('article');
       article.innerHTML = `
-        <a href="../../pages/PostPage/detailPage.html?postId=${postId}" style="position: absolute;"></a>
-        <div class="article-title">
-          <h2>${this.highlightKeyword(result.title, this.searchInput.value)}</h2>
-        </div>
-        <div class="article-contents">
-          <div class="article-letters">
-            <p>
-              ${this.highlightKeyword(textOnlyContent, this.searchInput.value)}
-            </p>
-
-            <footer>
-              <span class="article-date">${formattedDate}</span>
-              <img
-                class="seperator-dot" 
-                src="/public/assets/images/seperator-dot.svg"
-              />
-              <img
-                class="seperator-text-by"
-                src="/public/assets/images/seperator-text-by.svg"
-              />
-              <span class="article-writer">${result.user.name}</span>
-            </footer>            
+        <a href="../../pages/PostPage/detailPage.html?postId=${postId}">
+          <div class="article-title">
+            <h2>${this.highlightKeyword(result.title, this.searchInput.value)}</h2>
           </div>
-          <div class="image-placeholder" style="background-image: url('${articleImage}'); background-size: cover;"></div>
-        </div>
+          
+          <div class="article-contents">
+            <div class="article-letters">
+              <p>
+                ${this.highlightKeyword(textOnlyContent, this.searchInput.value)}
+              </p>
+
+              <footer>
+                <span class="article-date">${formattedDate}</span>
+                <img
+                  class="seperator-dot" 
+                  src="/assets/images/seperator-dot.svg"
+                />
+                <img
+                  class="seperator-text-by"
+                  src="/assets/images/seperator-text-by.svg"
+                />
+                <span class="article-writer">${result.user.name}</span>
+              </footer>            
+            </div>
+
+            <div class="image-placeholder" style="background-image: url('${articleImage}'); background-size: cover;"></div>
+          </div>
+        </a>
       `;
       articlesSection.appendChild(article);
     });
@@ -249,16 +255,19 @@ class SearchPage {
 
       const authorDiv = document.createElement('div');
       authorDiv.className = 'author';
-      authorDiv.innerHTML = `        
+      authorDiv.innerHTML = `
+      <a class="author-contetns" href="../../pages/AuthorPage/index.html?userId=${authorId}">  
         <div class="author-contents">
-          <a href="../../pages/AuthorPage/index.html?userId=${authorId}" style="position: absolute;"></a>
           <div class="author-image" style="background-image: url('${authorImage}'); background-size: cover;"></div>
+
           <div class="author-letters">
             <div class="author-nickname">${this.highlightKeyword(name, this.searchInput.value)}</div>
             <div class="author-description">${description}</div>
           </div>
         </div>
-        <ul class="tags">${keywords.map(tag => `<li class="tag">${tag}</li>`).join('')}</ul>
+      </a>
+      
+      <ul class="tags">${keywords.map(tag => `<li class="tag">${tag}</li>`).join('')}</ul>              
       `;
 
       // 작가의 태그를 클릭했을 때
@@ -301,7 +310,7 @@ class SearchPage {
     const noResultDiv = document.createElement('div');
     noResultDiv.className = 'notify-noresult';
     noResultDiv.innerHTML = `
-        <img src="/public/assets/images/logo-b.svg" alt="No Results" />
+        <img src="/assets/images/logo-b.svg" alt="No Results" />
         <p>검색 결과가 없습니다.</p>
     `;
     this.contents.append(noResultDiv);
