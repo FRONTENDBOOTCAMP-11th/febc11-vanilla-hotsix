@@ -92,6 +92,16 @@ img {
   padding: 70px 0 40px;
   display: flex;
   flex-direction: column;
+  font-size: 17.3px;
+  color: #1b1b1b;
+  font-weight: 300;
+  line-height: 160%;
+}
+
+.main__article div {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
 }
 
 .text-left {
@@ -104,13 +114,6 @@ img {
 
 .text-right {
   text-align: right;
-}
-
-.main__article p {
-  font-size: 17.3px;
-  color: #1b1b1b;
-  font-weight: 300;
-  line-height: 160%;
 }
 
 .main__article img {

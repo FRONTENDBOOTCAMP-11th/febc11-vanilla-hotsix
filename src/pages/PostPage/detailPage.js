@@ -149,6 +149,12 @@ async function printArticle() {
   }
 
   articleNode.classList.add(curruntPost.extra.textAlign);
+
+  // 자동으로 생성되는 span 태그의 인라인 속성 지우기
+  const spans = articleNode.querySelectorAll('span');
+  for (const span of spans) {
+    span.removeAttribute('style');
+  }
 }
 await printArticle();
 
@@ -285,6 +291,8 @@ commentsNode.addEventListener('click', async e => {
           console.log(response);
           closestComment.remove();
           commentCount.innerHTML = parseInt(commentCount.innerHTML) - 1;
+          footerCommentCount.innerHTML =
+            parseInt(footerCommentCount.innerHTML) - 1;
           alert('댓글이 삭제되었습니다.');
         } catch (error) {
           alert('댓글 삭제에 실패했습니다.');
@@ -361,6 +369,8 @@ commentSubmitBtn?.addEventListener('mouseup', () => {
   let btnImg = commentSubmitBtn.querySelector('img');
   btnImg.src = '/assets/images/button-comment-submit_default.svg';
 });
+
+// 구독 버튼 클릭시 구독자 수 실시간 렌더링
 
 // 북마크 목록 가져오기
 async function getBookmarks() {
