@@ -238,11 +238,8 @@ function addComment(comment) {
   commentTxt.setAttribute('class', 'comment__text');
   commentTxt.innerText = comment.content;
 
-  let replyBtn = document.createElement('button');
-  replyBtn.innerText = '답글달기';
   let commentFooter = document.createElement('div');
   commentFooter.setAttribute('class', 'comment__footer');
-  commentFooter.appendChild(replyBtn);
 
   let commentContents = document.createElement('section');
   commentContents.setAttribute('class', 'comment__contents');
