@@ -261,11 +261,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (currentType === 'password') {
       passwordInput.setAttribute('type', 'text');
       eyeIconPassword.style.backgroundImage =
-        'url(/public/assets/images/IconEyeClosed.svg)';
+        'url(/assets/images/IconEyeClosed.svg)';
     } else {
       passwordInput.setAttribute('type', 'password');
-      eyeIconPassword.style.backgroundImage =
-        'url(/public/assets/images/IconEye.png)';
+      eyeIconPassword.style.backgroundImage = 'url(/assets/images/IconEye.png)';
     }
 
     passwordInput.focus(); // 아이콘 클릭 후 포커스를 다시 인풋 필드로 이동
@@ -278,11 +277,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (currentType === 'password') {
       confirmPasswordInput.setAttribute('type', 'text');
       eyeIconConfirmPassword.style.backgroundImage =
-        'url(/public/assets/images/IconEyeClosed.svg)';
+        'url(/assets/images/IconEyeClosed.svg)';
     } else {
       confirmPasswordInput.setAttribute('type', 'password');
       eyeIconConfirmPassword.style.backgroundImage =
-        'url(/public/assets/images/IconEye.png)';
+        'url(/assets/images/IconEye.png)';
     }
 
     confirmPasswordInput.focus(); // 아이콘 클릭 후 포커스를 다시 인풋 필드로 이동
