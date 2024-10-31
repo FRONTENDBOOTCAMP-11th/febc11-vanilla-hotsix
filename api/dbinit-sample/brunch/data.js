@@ -60,7 +60,7 @@ export const initData = async (clientId, nextSeq) => {
         password: '$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2',
         name: '강수정',
         type: 'seller',
-        loginType: 'kakao',
+        loginType: 'email',
         image: `/files/${clientId}/bear.jpg`,
         createdAt: getTime(-20, -60 * 22),
         updatedAt: getTime(-10, -60 * 11),
@@ -76,7 +76,7 @@ export const initData = async (clientId, nextSeq) => {
         password: '$2b$10$S.8GNMDyvUF0xzujPtHBu.j5gtS19.OhRmYbpJBnCHg2S83WLx1T2',
         name: '김주석',
         type: 'seller',
-        loginType: 'kakao',
+        loginType: 'email',
         image: `/files/${clientId}/cat.png`,
         createdAt: getTime(-20, -60 * 22),
         updatedAt: getTime(-10, -60 * 11),
@@ -109,10 +109,10 @@ export const initData = async (clientId, nextSeq) => {
         views: 5,
         user: {
           _id: 2,
-          name: 'AB',
-          image: `/files/${clientId}/user-neo.webp`,
+          name: '장유진',
+          image: `/files/${clientId}/duck.jpg`,
         },
-        image: `/files/${clientId}/park.jpg`,
+        image: `/files/${clientId}/no_shooni.jpg`,
         content: `
 <div class="wrap_body text_align_left finish_txt">
   <blockquote class="blockquote_type1 wrap_item item_type_text"
@@ -416,7 +416,7 @@ export const initData = async (clientId, nextSeq) => {
             _id: await nextSeq('reply'),
             user: {
               _id: 3,
-              name: '자기반성',
+              name: '강진수',
             },
             content: '1등',
             like: 5,
@@ -427,10 +427,10 @@ export const initData = async (clientId, nextSeq) => {
             _id: await nextSeq('reply'),
             user: {
               _id: 4,
-              name: 'AI러 이채문',
+              name: '강수정',
               image: `/files/${clientId}/user-apeach.webp`,
             },
-            content: '좋은글 잘 보고 갑니다.',
+            content: '너무 좋은 글이에요!!',
             like: 7,
             createdAt: getTime(-2, -60 * 60 * 10),
             updatedAt: getTime(-2, -60 * 60 * 1),
@@ -446,7 +446,7 @@ export const initData = async (clientId, nextSeq) => {
         extra: {
           subTitle: '토큰 소비 없이 사고 과정 프롬프팅 활용',
         },
-        image: `/files/${clientId}/flower.jpg`,
+        image: `/files/${clientId}/gpt.png`,
         content: `
 <div class="wrap_body text_align_left finish_txt">
   <p class="wrap_item item_type_text"
@@ -547,30 +547,30 @@ export const initData = async (clientId, nextSeq) => {
         views: 318,
         user: {
           _id: 4,
-          name: 'AI러 이채문',
-          image: '/files/00-next-level/user-apeach.webp',
+          name: '강수정',
+          image: '/files/${clientId}/bear.jpg',
         },
         createdAt: getTime(-3, -60 * 60 * 20),
         updatedAt: getTime(-2, -60 * 60 * 10),
         replies: [
           {
             _id: await nextSeq('reply'),
-            content: '프롬프팅이 중요하군요...',
+            content: '프롬프팅이 중요하네요...',
             user: {
               _id: 2,
-              name: 'AB',
-              image: `/files/${clientId}/user-neo.webp`
+              name: '장유진',
+              image: `/files/${clientId}/duck.jpg`
             },
             createdAt: getTime(-2, -60 * 60 * 20),
             updatedAt: getTime(-2, -60 * 60 * 2)
           },
           {
             _id: await nextSeq('reply'),
-            content: 'IT에 무지한 저에게는 신기한 글이네요^^',
+            content: 'GPT에게 야근을 시키러 가겠습니다!',
             user: {
               _id: 3,
-              name: '자기반성',
-              image: `/files/${clientId}/user-jayg.webp`
+              name: '강진수',
+              image: `/files/${clientId}/white_dog.jpg`
             },
             createdAt: getTime(-2, -60 * 60 * 20),
             updatedAt: getTime(-2, -60 * 60 * 20)

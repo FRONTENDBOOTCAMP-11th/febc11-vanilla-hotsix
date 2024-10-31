@@ -1,5 +1,20 @@
 'use strict';
 
+import isLogin from '../../api/isLogin';
+
+// 페이지 진입 시 즉시 로그인 상태 확인
+(async () => {
+  const loginStatus = await isLogin();
+
+  if (loginStatus) {
+    console.log('로그인 상태입니다.');
+  } else {
+    console.log('로그인이 필요합니다.');
+    // 로그인 필요 시 로그인 페이지 이동
+    window.location.href = '/src/pages/LoginPage/index.html';
+  }
+})();
+
 import axios from 'axios';
 
 // 환경 변수 가져오기
@@ -7,8 +22,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const clientId = import.meta.env.VITE_CLIENT_ID;
 
 // 유저 id
-const userId = localStorage.getItem('id');
-const token = localStorage.getItem('accessToken');
+const userId = localStorage.getItem('id') || sessionStorage.getItem('id');
+const token = localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
 
 // form
 const form = document.querySelector('.author-info');
