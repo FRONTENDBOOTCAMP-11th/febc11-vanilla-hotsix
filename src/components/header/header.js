@@ -46,10 +46,11 @@ class HeaderComponent extends HTMLElement {
     const isMainPage = this.currentURL.includes('MainPage');
     const isAuthorPage = this.currentURL.includes('AuthorPage');
     const isLoginPage = this.currentURL.includes('LoginPage');
-    const isSignupPage = this.currentURL.includes('signupPage');
+    const isSignupPage = this.currentURL.includes('SignupPage');
 
     // MainPage에서는 브런치스토리 로고, 그 외에는 뒤로가기 버튼
     // 로그인 미완료시 시작하기 버튼, 그 외에는 알림/프로필 버튼
+    // 로그인, 회원가입 페이지는 뒤로가기 버튼만, border-bottom 제거
     this.innerHTML = `
       <div class="header-container ${isAuthorPage ? 'change_container' : ''} ${isLoginPage || isSignupPage ? 'border-delete' : ''}">
         ${isMainPage ? '<a href="/src/pages/MainPage/index.html" class="brunchstory">Brunch Story</a>' : '<button class="back">뒤로가기</button>'}
@@ -96,7 +97,14 @@ class HeaderComponent extends HTMLElement {
 
     // 뒤로가기 클릭 시 이전 페이지로 이동
     back?.addEventListener('click', () => {
-      window.history.back();
+      // 이전 페이지 저장
+      const previousPage = document.referrer;
+      // 이전 페이지가 글쓰기 페이지인 경우 메인 페이지로 이동
+      if (previousPage.includes('writePage')) {
+        window.location.href = 'src/pages/MainPage/index.html';
+      } else {
+        window.history.back();
+      }
     });
   }
 }
