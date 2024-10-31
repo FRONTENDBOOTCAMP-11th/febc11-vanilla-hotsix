@@ -204,14 +204,6 @@ function addComment(comment) {
   const [date, time] = curruntPost.createdAt.split(' ');
   const [year, month, day] = date.split('.');
   const dateObj = new Date(year, month, day);
-  // 유저가 프사를 안 해 놨을 때 지정해놓을 기본 이미지 필요
-  let userImage = '';
-  if (comment.user.image) {
-    userImage = `${apiUrl}${comment.user.image}`;
-  } else {
-    userImage = `${apiUrl}/files/${clientId}/user-muzi.webp`;
-  }
-  const imgSrc = userImage;
 
   let span = document.createElement('span');
   span.innerText = comment.user.name;
@@ -249,7 +241,7 @@ function addComment(comment) {
 
   let profileImg = document.createElement('img');
   profileImg.setAttribute('class', 'profile-img');
-  profileImg.src = imgSrc ? imgSrc : '';
+  profileImg.src = `${apiUrl}${comment.user.image}`;
   let commentProfile = document.createElement('section');
   commentProfile.setAttribute('class', 'comment__profile');
   commentProfile.appendChild(profileImg);
