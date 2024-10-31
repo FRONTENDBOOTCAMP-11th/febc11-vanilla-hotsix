@@ -52,10 +52,10 @@ class HeaderComponent extends HTMLElement {
     // 로그인 미완료시 시작하기 버튼, 그 외에는 알림/프로필 버튼
     // 로그인, 회원가입 페이지는 뒤로가기 버튼만, border-bottom 제거
     this.innerHTML = `
-      <div class="header-container ${isAuthorPage ? 'change_container' : ''} ${isLoginPage || isSignupPage || isSearchPage ? 'border-delete' : ''}">
+      <div class="header-container ${isAuthorPage ? 'change_container' : ''} ${isLoginPage || isSignupPage ? 'border-delete' : ''}">
         ${isMainPage ? '<a href="/src/pages/MainPage/index.html" class="brunchstory">Brunch Story</a>' : '<button class="back">뒤로가기</button>'}
         ${
-          !(isLoginPage || isSignupPage || isSearchPage)
+          !(isLoginPage || isSignupPage)
             ? `<div class="header-controllers">
           <button class="header-controller search"></button>
           ${
