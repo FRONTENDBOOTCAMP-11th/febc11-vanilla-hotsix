@@ -43,10 +43,10 @@ class HeaderComponent extends HTMLElement {
 
   // 헤더 렌더링 함수
   renderHeader() {
-    const isMainPage = this.currentURL.includes('MainPage');
-    const isAuthorPage = this.currentURL.includes('AuthorPage');
-    const isLoginPage = this.currentURL.includes('LoginPage');
-    const isSignupPage = this.currentURL.includes('SignupPage');
+    const isMainPage = this.currentURL.includes('ainPage');
+    const isAuthorPage = this.currentURL.includes('uthorPage');
+    const isLoginPage = this.currentURL.includes('oginPage');
+    const isSignupPage = this.currentURL.includes('ignupPage');
 
     // MainPage에서는 브런치스토리 로고, 그 외에는 뒤로가기 버튼
     // 로그인 미완료시 시작하기 버튼, 그 외에는 알림/프로필 버튼
