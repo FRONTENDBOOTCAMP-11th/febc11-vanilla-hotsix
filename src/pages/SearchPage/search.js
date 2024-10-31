@@ -20,6 +20,7 @@ class SearchPage {
     this.loadRecentSearches();
   }
 
+  // 검색어 제출 메서드
   async handleSearchSubmit(e) {
     e.preventDefault();
     const searchText = this.searchInput.value.trim();
@@ -38,34 +39,19 @@ class SearchPage {
       this.filteredArticles = this.getFilteredArticles(searchText);
       this.filteredAuthors = this.getFilteredAuthors(searchText);
 
+      this.createNavTab();
+
       if (this.activeTab === 'articles') {
         this.displayArticleResults();
       } else {
         this.displayAuthorResults();
       }
-      this.createNavTab();
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
   }
 
-  handleTabClick(e) {
-    const clickedTab = e.target;
-    const type = clickedTab.getAttribute('data-type');
-    this.activeTab = type;
-
-    const tabs = document.querySelectorAll('.tabs li');
-    tabs.forEach(tab => tab.classList.remove('active'));
-    clickedTab.classList.add('active');
-
-    if (this.activeTab === 'articles') {
-      this.displayArticleResults();
-    } else {
-      this.displayAuthorResults();
-    }
-  }
-
-  // 데이터 처리 관련 메서드
+  // 최근검색어 관련 메서드
   addSearchToLocalStorage(searchText) {
     let searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
     if (!searches.includes(searchText)) {
@@ -81,76 +67,31 @@ class SearchPage {
     searches.forEach(search => this.createHistoryItem(search));
   }
 
-  async fetchArticles(searchText = '') {
-    try {
-      const url = new URL('https://11.fesp.shop/posts');
-      if (searchText) {
-        url.searchParams.append('keyword', searchText);
-      }
-      const response = await fetch(url, {
-        headers: {
-          'client-id': 'vanilla06',
-        },
-      });
-      const data = await response.json();
-      console.log('API Response: ', data);
-      this.articles = data.item || [];
-      console.log('Fetched articles:', this.articles); // 여기서 콘솔로 확인
-    } catch (error) {
-      console.error('글 목록을 불러오는 데 실패했습니다: ', error);
+  createHistoryItem(search) {
+    const item = document.createElement('li');
+    item.className = 'history-item';
+    item.innerHTML = `<span>${search}</span> <button class="delete-btn"></button>`;
+    item.addEventListener('click', e => this.handleHistoryClick(e, search));
+    this.historyList.appendChild(item);
+  }
+
+  handleHistoryClick(e, search) {
+    if (e.target.classList.contains('delete-btn')) {
+      this.deleteHistory(search);
+    } else {
+      this.searchInput.value = search;
+      this.form.dispatchEvent(new Event('submit'));
     }
   }
 
-  // async fetchAuthors(searchText = '') {
-  //   try {
-  //     const url = new URL('https://11.fesp.shop/users');
-  //     if (searchText) {
-  //       url.searchParams.append('name', searchText);
-  //     }
-  //     const response = await fetch(url, {
-  //       headers: {
-  //         'client-id': 'vanilla06',
-  //       },
-  //     });
-  //     const data = await response.json();
-  //     console.log('API Response: ', data);
-  //     this.authors = data.item || [];
-  //     console.log('Fetched authors: ', this.authors);
-  //   } catch (error) {
-  //     console.error('작가 목록을 불러오는 데 실패했습니다: ', error);
-  //   }
-  // }
-
-  // 작가 이름의 일부만 검색어로 제출해도 검색되게 하기 위해, 일단 모든 작가 목록을 로드함. 이후에 필터링 메서드로 걸러질 것 (api에서 부분일치 기능을 제공하지 않아서)
-  async fetchAuthors() {
-    try {
-      const url = new URL('https://11.fesp.shop/users');
-      const response = await fetch(url, {
-        headers: {
-          'client-id': 'vanilla06',
-        },
-      });
-      const data = await response.json();
-      console.log('API Response: ', data);
-      this.authors = data.item || [];
-    } catch (error) {
-      console.error('작가 목록을 불러오는 데 실패했습니다: ', error);
-    }
+  deleteHistory(searchText) {
+    let searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+    searches = searches.filter(search => search !== searchText);
+    localStorage.setItem('recentSearches', JSON.stringify(searches));
+    this.loadRecentSearches();
   }
 
-  getFilteredArticles(searchText) {
-    return this.articles.filter(
-      article =>
-        article.title.includes(searchText) ||
-        article.content.includes(searchText),
-    );
-  }
-
-  getFilteredAuthors(searchText) {
-    return this.authors.filter(author => author.name.includes(searchText));
-  }
-
-  // 화면 갱신 관련 메서드들
+  // 화면 전환 관련 메서드
   updateViewForSearch() {
     this.searchSection.style.borderBottom = 'none';
     this.recommendSection.style.display = 'none';
@@ -171,6 +112,97 @@ class SearchPage {
     navTab.addEventListener('click', e => this.handleTabClick(e));
   }
 
+  handleTabClick(e) {
+    const clickedTab = e.target;
+    const type = clickedTab.getAttribute('data-type');
+    this.activeTab = type;
+
+    const tabs = document.querySelectorAll('.tabs li');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    clickedTab.classList.add('active');
+
+    if (this.activeTab === 'articles') {
+      this.displayArticleResults();
+    } else {
+      this.displayAuthorResults();
+    }
+  }
+
+  // 글 목록 관련 메서드
+  async fetchArticles(searchText = '') {
+    try {
+      const url = new URL('https://11.fesp.shop/posts');
+      if (searchText) {
+        url.searchParams.append('keyword', searchText);
+      }
+      const response = await fetch(url, {
+        headers: {
+          'client-id': 'vanilla06',
+        },
+      });
+      const data = await response.json();
+      console.log('API Response: ', data);
+      this.articles = data.item || [];
+      console.log('Fetched articles:', this.articles); // 여기서 콘솔로 확인
+    } catch (error) {
+      console.error('글 목록을 불러오는 데 실패했습니다: ', error);
+    }
+  }
+
+  getFilteredArticles(searchText) {
+    return this.articles.filter(
+      article =>
+        article.title.includes(searchText) ||
+        article.content.includes(searchText),
+    );
+  }
+
+  createArticlesSection(results) {
+    const articlesSection = document.createElement('section');
+    articlesSection.className = 'articles';
+
+    results.forEach(result => {
+      const textOnlyContent = result.content.replace(/<[^>]*>/g, '');
+      const articleImage = `https://11.fesp.shop/${result.image}`;
+      const dateObj = new Date(result.createdAt);
+      const options = { month: 'short', day: 'numeric', year: 'numeric' };
+      const formattedDate = dateObj.toLocaleDateString('en-US', options);
+
+      const postId = result._id;
+
+      const article = document.createElement('article');
+      article.innerHTML = `
+        <a href="../../pages/PostPage/detailPage.html?postId=${postId}" style="position: absolute;"></a>
+        <div class="article-title">
+          <h2>${this.highlightKeyword(result.title, this.searchInput.value)}</h2>
+        </div>
+        <div class="article-contents">
+          <div class="article-letters">
+            <p>
+              ${this.highlightKeyword(textOnlyContent, this.searchInput.value)}
+            </p>
+
+            <footer>
+              <span class="article-date">${formattedDate}</span>
+              <img
+                class="seperator-dot" 
+                src="/public/assets/images/seperator-dot.svg"
+              />
+              <img
+                class="seperator-text-by"
+                src="/public/assets/images/seperator-text-by.svg"
+              />
+              <span class="article-writer">${result.user.name}</span>
+            </footer>            
+          </div>
+          <div class="image-placeholder" style="background-image: url('${articleImage}'); background-size: cover;"></div>
+        </div>
+      `;
+      articlesSection.appendChild(article);
+    });
+    return articlesSection;
+  }
+
   displayArticleResults() {
     this.contents.innerHTML = '';
     if (this.filteredArticles.length === 0) {
@@ -180,6 +212,73 @@ class SearchPage {
       this.contents.append(articlesSection);
       this.updateSearchInfo(this.filteredArticles.length, '글');
     }
+  }
+
+  // 작가 목록 관련 메서드
+  async fetchAuthors() {
+    try {
+      const url = new URL('https://11.fesp.shop/users');
+      const response = await fetch(url, {
+        headers: {
+          'client-id': 'vanilla06',
+        },
+      });
+      const data = await response.json();
+      console.log('API Response: ', data);
+      this.authors = data.item || [];
+    } catch (error) {
+      console.error('작가 목록을 불러오는 데 실패했습니다: ', error);
+    }
+  }
+
+  getFilteredAuthors(searchText) {
+    return this.authors.filter(author => author.name.includes(searchText));
+  }
+
+  createAuthorsSection(results) {
+    const authorsSection = document.createElement('section');
+    authorsSection.className = 'authors';
+
+    results.forEach(author => {
+      const authorImage = `https://11.fesp.shop/${author.image}`;
+      const name = author.name || [];
+      const description = author.extra?.biography || [];
+      const keywords = author.extra?.keyword || [];
+
+      const authorId = author._id;
+
+      const authorDiv = document.createElement('div');
+      authorDiv.className = 'author';
+      authorDiv.innerHTML = `        
+        <div class="author-contents">
+          <a href="../../pages/AuthorPage/index.html?userId=${authorId}" style="position: absolute;"></a>
+          <div class="author-image" style="background-image: url('${authorImage}'); background-size: cover;"></div>
+          <div class="author-letters">
+            <div class="author-nickname">${this.highlightKeyword(name, this.searchInput.value)}</div>
+            <div class="author-description">${description}</div>
+          </div>
+        </div>
+        <ul class="tags">${keywords.map(tag => `<li class="tag">${tag}</li>`).join('')}</ul>
+      `;
+
+      // 작가의 태그를 클릭했을 때
+      const tags = authorDiv.querySelectorAll('.tag');
+      tags.forEach(tag => {
+        tag.addEventListener('click', e => {
+          // 링크(작가홈)로 이동 방지
+          e.preventDefault();
+          e.stopPropagation();
+
+          // 태그 내용을 검색어로 제출
+          const tagText = tag.textContent.trim();
+          this.searchInput.value = tagText;
+          this.form.dispatchEvent(new Event('submit'));
+        });
+      });
+
+      authorsSection.appendChild(authorDiv);
+    });
+    return authorsSection;
   }
 
   displayAuthorResults() {
@@ -197,6 +296,7 @@ class SearchPage {
     }
   }
 
+  // 글목록, 작가목록 공통 메서드
   displayNoResults() {
     const noResultDiv = document.createElement('div');
     noResultDiv.className = 'notify-noresult';
@@ -216,96 +316,6 @@ class SearchPage {
     if (!document.contains(searchInfo)) this.contents.prepend(searchInfo);
   }
 
-  createArticlesSection(results) {
-    const articlesSection = document.createElement('section');
-    articlesSection.className = 'articles';
-
-    results.forEach(result => {
-      const textOnlyContent = result.content.replace(/<[^>]*>/g, '');
-      const articleImage = `https://11.fesp.shop/${result.image}`;
-      const dateObj = new Date(result.createdAt);
-      const options = { month: 'short', day: 'numeric', year: 'numeric' };
-      const formattedDate = dateObj.toLocaleDateString('en-US', options);
-
-      const postId = result._id;
-
-      const article = document.createElement('article');
-      article.innerHTML = `
-        <a href="../../pages/PostPage/detailPage.html?postId=${postId}">
-        <div class="article-title">
-          <h2>${this.highlightKeyword(result.title, this.searchInput.value)}</h2>
-        </div>
-        <div class="article-contents">
-          <div class="article-letters">
-            <p>${this.highlightKeyword(textOnlyContent, this.searchInput.value)}</p>
-            <footer>
-              <span class="article-date">${formattedDate}</span>
-              <img
-                class="seperator-dot" 
-                src="/public/assets/images/seperator-dot.svg"
-              />
-              <img
-                class="seperator-text-by"
-                src="/public/assets/images/seperator-text-by.svg"
-              />
-              <span class="article-writer">${result.user.name}</span>
-            </footer>
-          </div>
-          <div class="image-placeholder" style="background-image: url('${articleImage}'); background-size: cover;"></div>
-        </div>
-      `;
-      articlesSection.appendChild(article);
-    });
-    return articlesSection;
-  }
-
-  createAuthorsSection(results) {
-    const authorsSection = document.createElement('section');
-    authorsSection.className = 'authors';
-
-    results.forEach(author => {
-      const authorImage = `https://11.fesp.shop/${author.image}`;
-      const name = author.name || [];
-      const description = author.extra?.biography || [];
-      const keywords = author.extra?.keyword || [];
-
-      const authorId = author._id;
-
-      const authorDiv = document.createElement('div');
-      authorDiv.className = 'author';
-      authorDiv.innerHTML = `        
-        <div class="author-contents">
-          <a href="../../pages/AuthorPage/index.html?userId=${authorId}">
-          <div class="author-image" style="background-image: url('${authorImage}'); background-size: cover;"></div>
-          <div class="author-letters">
-            <div class="author-nickname">${this.highlightKeyword(name, this.searchInput.value)}</div>
-            <div class="author-description">${description}</div>
-          </div>
-        </div>
-        <ul class="tags">${keywords.map(tag => `<li class="tag">${tag}</li>`).join('')}</ul>
-      `;
-
-      // 작가 태그 영역을 클릭했을 때
-      const tags = authorDiv.querySelectorAll('.tag');
-      tags.forEach(tag => {
-        tag.addEventListener('click', e => {
-          // 링크 이동 방지
-          e.preventDefault();
-          e.stopPropagation();
-
-          // 태그 내용을 검색어로 제출
-          const tagText = tag.textContent.trim();
-          this.searchInput.value = tagText;
-          this.form.dispatchEvent(new Event('submit'));
-        });
-      });
-
-      authorsSection.appendChild(authorDiv);
-    });
-    return authorsSection;
-  }
-
-  // 헬퍼 메서드
   highlightKeyword(text, keyword) {
     return text.replace(
       new RegExp(`(${keyword})`, 'gi'),
@@ -335,30 +345,6 @@ class SearchPage {
       )
       .forEach(el => el.remove());
     this.activeTab = 'articles';
-    this.loadRecentSearches();
-  }
-
-  createHistoryItem(search) {
-    const item = document.createElement('li');
-    item.className = 'history-item';
-    item.innerHTML = `<span>${search}</span> <button class="delete-btn"></button>`;
-    item.addEventListener('click', e => this.handleHistoryClick(e, search));
-    this.historyList.appendChild(item);
-  }
-
-  handleHistoryClick(e, search) {
-    if (e.target.classList.contains('delete-btn')) {
-      this.deleteHistory(search);
-    } else {
-      this.searchInput.value = search;
-      this.form.dispatchEvent(new Event('submit'));
-    }
-  }
-
-  deleteHistory(searchText) {
-    let searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
-    searches = searches.filter(search => search !== searchText);
-    localStorage.setItem('recentSearches', JSON.stringify(searches));
     this.loadRecentSearches();
   }
 }
