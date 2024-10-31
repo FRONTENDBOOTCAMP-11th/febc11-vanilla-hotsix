@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function () {
       password: passwordInput.value,
       name: nicknameInput.value,
       type: 'user',
-      image: '/files/vanilla06/basic-profile.svg',
+      image: '/files/vanilla06/basic-profile.png',
       extra: {
         job: '회원',
         biography: '',
