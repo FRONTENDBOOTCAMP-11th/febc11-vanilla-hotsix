@@ -223,19 +223,23 @@ getMyPost();
 const logoutBtn = document.querySelector('.logout-button');
 logoutBtn.addEventListener('click', () => {
   if (confirm('정말 로그아웃 하시겠습니까?')) {
+    // storage 정리
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('image');
     localStorage.removeItem('email');
     localStorage.removeItem('name');
-    localStorage.removeItem('userId');
+    localStorage.removeItem('authorId');
     localStorage.removeItem('posts');
+    localStorage.removeItem('id');
+    localStorage.removeItem('recentSearches');
 
     sessionStorage.removeItem('accessToken');
     sessionStorage.removeItem('refreshToken');
     sessionStorage.removeItem('image');
     sessionStorage.removeItem('email');
     sessionStorage.removeItem('name');
+    sessionStorage.removeItem('id');
 
     alert('로그아웃 되었습니다.');
     window.location.href = '/src/pages/MainPage/index.html';

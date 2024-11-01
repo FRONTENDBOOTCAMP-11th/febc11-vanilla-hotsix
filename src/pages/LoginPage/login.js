@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // '회원가입' 버튼을 누르면 회원가입 페이지로 이동
   signupButton.addEventListener('click', function () {
-    window.location.href = '/src/pages/signupPage/index.html';
+    window.location.href = '/src/pages/SignupPage/index.html';
   });
 
   // 로그인 정보 저장 여부에 따라 인풋 필드 설정
